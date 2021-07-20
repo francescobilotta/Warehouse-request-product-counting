@@ -32,7 +32,11 @@
     <main role="main" class="container">
 
     <?php
-      $mysqli = new mysqli("localhost","root","basilicagoiano","processi");
+    $host = "localhost";
+    $username = "root";
+    $password = "basilicagoiano";
+    $database = "processi";
+    $mysqli = new mysqli($host,$username,$password,$database);
 
       if ($mysqli -> connect_errno) {
         echo "Failed to connect to MySQL: " . $mysqli -> connect_error;

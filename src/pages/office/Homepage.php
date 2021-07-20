@@ -7,7 +7,6 @@
     <link rel="icon" href="../../assets/img/favicon.png">
 
     <title>Warehouse counter</title>
-
     <!-- Bootstrap -->
       <!-- Latest compiled and minified CSS -->
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -31,12 +30,12 @@
     <main role="main" class="container">
 
     <?php
-      $mysqli = new mysqli("localhost","root","basilicagoiano","processi");
-
-      if ($mysqli -> connect_errno) {
-        echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
-        exit();
-      }
+        $host="localhost";
+        $username="root";
+        $password="basilicagoiano";
+        $database="processi";
+        $mysqli = new mysqli($host, $username, $password, $database, 3306) or die("Errore nella connessione MySQL");
+      echo $mysqli->host_info . "\n";
     ?>
 
       <div class="starter-template">
