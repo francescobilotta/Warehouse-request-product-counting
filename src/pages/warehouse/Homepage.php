@@ -34,28 +34,20 @@
     <main role="main" class="container">
 
     <?php
-		$id_oper_loggato=$_GET['id_oper_loggato'];
-		
-		$username="root";
-		$password="basilicagoiano";
-		$database="processi";
-		$db = mysql_connect("localhost", "root", "basilicagoiano")
-		or die("Errore nella connessione MySQL");
-		mysql_select_db($database, $db) or die("Database inesistente");
-			
-			//CHECK SE L'OPERATORE E' DISABILITATO, se si, bisognerà rieffetturare il login
-			$query_check_se_operatore_disabilitato = "SELECT ID_oper, disabilitato FROM Operatore WHERE ID_oper = '$id_oper_loggato'";
-			$dati_check_se_operatore_disabilitato = mysql_query($query_check_se_operatore_disabilitato);
-			$dato = mysql_fetch_assoc($dati_check_se_operatore_disabilitato);
-			$check_se_operatore_disabilitato = $dato['id_oper'];
-			$check_se_operatore_disabilitato = $dato['disabilitato'];
-			if($check_se_operatore_disabilitato == 1){
-				$stringa_file_redirect = "'autenticazione_scadenzario.php'";
-				$stringa_redirect = '"window.location.href='.$stringa_file_redirect.';"';
-				echo "<button id='autenticazione_back_button' class='button' onclick=".$stringa_redirect."> LOG OUT </button>";
-				
-				exit("L'operatore è stato disabilitato dall'amministratore, riprovare con un altro account.");
-			}
+      $mysqli = new mysqli("localhost","root","basilicagoiano","processi");
+
+      if ($mysqli -> connect_errno) {
+        echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
+        exit();
+      }
+    ?>
+
+    <?php
+      $username="root";
+      $password="basilicagoiano";
+      $database="processi";
+      $mysqli = new mysqli("localhost", $username, $password, $database, 3306) or die("Errore nella connessione MySQL");
+      echo $mysqli->host_info . "\n";
 		?>
 
       <div class="starter-template">
@@ -70,5 +62,9 @@
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
     <script src="../../assets/js/vendor/popper.min.js"></script>
     <script src="../../dist/js/bootstrap.min.js"></script>
-  </body>
+    
+    <?php
+      $mysqli -> close();
+    ?>
+    </body>
 </html>
