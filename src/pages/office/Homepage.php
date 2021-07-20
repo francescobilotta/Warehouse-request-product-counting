@@ -31,11 +31,12 @@
     <main role="main" class="container">
 
     <?php
-      $username="root";
-      $password="basilicagoiano";
-      $database="processi";
-      $mysqli = new mysqli("localhost", $username, $password, $database, 3306) or die("Errore nella connessione MySQL");
-      echo $mysqli->host_info . "\n";
+      $mysqli = new mysqli("localhost","root","basilicagoiano","processi");
+
+      if ($mysqli -> connect_errno) {
+        echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
+        exit();
+      }
     ?>
 
       <div class="starter-template">
