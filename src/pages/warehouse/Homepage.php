@@ -25,6 +25,7 @@
       <link href="../../asset/common.css" rel="stylesheet">
     <!-- Custom styles for this template -->
       <link href="Homepage.css" rel="stylesheet">
+    <link href="./res/css/Homepage.css" rel="stylesheet">
   </head>
 
   
@@ -56,7 +57,7 @@
 				exit("L'operatore è stato disabilitato dall'amministratore, riprovare con un altro account.");
 			}
 		?>
-    
+
       <div class="starter-template">
         <h1>Warehouse</h1>
         <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>
