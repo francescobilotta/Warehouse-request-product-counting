@@ -18,10 +18,13 @@
       <!-- Latest compiled JavaScript -->
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
     <!-- Common styles -->
-    <link href="../../asset/common.css" rel="stylesheet">
+      <link href="../../asset/common.css" rel="stylesheet">
     <!-- Custom styles for this template -->
-    <link href="Homepage.css" rel="stylesheet">
+      <link href="Homepage.css" rel="stylesheet">
   </head>
 
   
