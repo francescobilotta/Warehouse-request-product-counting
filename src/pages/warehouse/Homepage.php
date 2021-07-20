@@ -40,14 +40,6 @@
       }
     ?>
 
-    <?php
-      $username="root";
-      $password="basilicagoiano";
-      $database="processi";
-      $mysqli = new mysqli("localhost", $username, $password, $database, 3306) or die("Errore nella connessione MySQL");
-      echo $mysqli->host_info . "\n";
-		?>
-
       <div class="starter-template">
         <h1>Warehouse</h1>
         <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>
