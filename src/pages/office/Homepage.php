@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" href="../../asset/img/favicon.png">
+    <link rel="icon" href="../../assets/img/favicon.png">
 
     <title>Warehouse counter</title>
 
@@ -22,7 +22,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <!-- Common styles -->
-      <link href="../../asset/common.css" rel="stylesheet">
+      <link href="../../assets/common.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="./res/css/Homepage.css" rel="stylesheet">
   </head>
@@ -36,7 +36,7 @@
       $database="processi";
       $mysqli = new mysqli("localhost", $username, $password, $database, 3306) or die("Errore nella connessione MySQL");
       echo $mysqli->host_info . "\n";
-		?>
+    ?>
 
       <div class="starter-template">
         <h1>Office</h1>
@@ -44,12 +44,6 @@
       </div>
 
     </main>
-
-    <!-- Bootstrap core JavaScript | Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
-    <script src="../../assets/js/vendor/popper.min.js"></script>
-    <script src="../../dist/js/bootstrap.min.js"></script>
 
     <?php
       $mysqli -> close();
