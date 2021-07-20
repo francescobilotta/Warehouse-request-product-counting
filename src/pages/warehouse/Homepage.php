@@ -32,6 +32,31 @@
 
     <main role="main" class="container">
 
+    <?php
+		$id_oper_loggato=$_GET['id_oper_loggato'];
+		
+		$username="root";
+		$password="basilicagoiano";
+		$database="processi";
+		$db = mysql_connect("localhost", "root", "basilicagoiano")
+		or die("Errore nella connessione MySQL");
+		mysql_select_db($database, $db) or die("Database inesistente");
+			
+			//CHECK SE L'OPERATORE E' DISABILITATO, se si, bisognerà rieffetturare il login
+			$query_check_se_operatore_disabilitato = "SELECT ID_oper, disabilitato FROM Operatore WHERE ID_oper = '$id_oper_loggato'";
+			$dati_check_se_operatore_disabilitato = mysql_query($query_check_se_operatore_disabilitato);
+			$dato = mysql_fetch_assoc($dati_check_se_operatore_disabilitato);
+			$check_se_operatore_disabilitato = $dato['id_oper'];
+			$check_se_operatore_disabilitato = $dato['disabilitato'];
+			if($check_se_operatore_disabilitato == 1){
+				$stringa_file_redirect = "'autenticazione_scadenzario.php'";
+				$stringa_redirect = '"window.location.href='.$stringa_file_redirect.';"';
+				echo "<button id='autenticazione_back_button' class='button' onclick=".$stringa_redirect."> LOG OUT </button>";
+				
+				exit("L'operatore è stato disabilitato dall'amministratore, riprovare con un altro account.");
+			}
+		?>
+    
       <div class="starter-template">
         <h1>Warehouse</h1>
         <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>
