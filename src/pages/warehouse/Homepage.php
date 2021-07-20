@@ -1,6 +1,5 @@
-
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="it">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -24,7 +23,6 @@
     <!-- Common styles -->
       <link href="../../asset/common.css" rel="stylesheet">
     <!-- Custom styles for this template -->
-      <link href="Homepage.css" rel="stylesheet">
     <link href="./res/css/Homepage.css" rel="stylesheet">
   </head>
 
