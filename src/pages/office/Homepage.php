@@ -24,11 +24,8 @@
     <!-- Common styles -->
       <link href="../../asset/common.css" rel="stylesheet">
     <!-- Custom styles for this template -->
-      <link href="Homepage.css" rel="stylesheet">
     <link href="./res/css/Homepage.css" rel="stylesheet">
   </head>
-
-  
   <body>
 
     <main role="main" class="container">
