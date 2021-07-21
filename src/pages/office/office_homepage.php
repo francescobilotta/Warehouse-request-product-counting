@@ -69,15 +69,15 @@
             <table class="table">
                 <thead class="table-head">
                 <tr class="header-row">
-                    <td class="table-header">Modify</td>
-                    <td class="table-header">Status</td>
-                    <td class="table-header">Product</td>
-                    <td class="table-header">Flavour</td>
-                    <td class="table-header">Notes</td>
-                    <td class="table-header">Request Date</td>
-                    <td class="table-header">Due Date</td>
-                    <td class="table-header">Closed Date</td>
-                    <td class="table-header">Last Count</td>
+                    <td class="table-header">MODIFY</td>
+                    <td class="table-header">STATUS</td>
+                    <td class="table-header">PRODUCT</td>
+                    <td class="table-header">FLAVOUR</td>
+                    <td class="table-header">NOTES</td>
+                    <td class="table-header">REQUEST DATE</td>
+                    <td class="table-header">DUE DATE</td>
+                    <td class="table-header">CLOSED DATE</td>
+                    <td class="table-header">LAST COUNT</td>
                 </tr>
                 </thead>
 
