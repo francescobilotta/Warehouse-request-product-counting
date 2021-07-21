@@ -26,9 +26,9 @@
 
 
         <!-- Common styles -->
-        <link href="../../assets/common.css" rel="stylesheet">
+        <link href="../../assets/css/common.css" rel="stylesheet">
         <!-- Custom styles for this template -->
-        <link href="./res/css/Homepage.css" rel="stylesheet">
+        <link href="./res/css/warehouse_homepage.css" rel="stylesheet">
     </head>
     <body>
 
@@ -44,8 +44,7 @@
         ?>
 
         <div class="header">
-            <h1>Office Section</h1>
-            <p class="lead">Section Title</p>
+            <h1>Warehouse</h1>
         </div>
 
         <div class="sub-header">
