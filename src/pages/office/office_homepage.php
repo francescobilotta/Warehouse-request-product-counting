@@ -66,81 +66,81 @@
             <button type="button" class="btn btn-primary">Add Request</button>
         </div>
         <div class="request-table">
-            <table class="table">
-                <thead class="table-head">
-                <tr class="header-row">
-                    <td class="table-header">MODIFY</td>
-                    <td class="table-header">STATUS</td>
-                    <td class="table-header">PRODUCT</td>
-                    <td class="table-header">FLAVOUR</td>
-                    <td class="table-header">NOTES</td>
-                    <td class="table-header">REQUEST DATE</td>
-                    <td class="table-header">DUE DATE</td>
-                    <td class="table-header">CLOSED DATE</td>
-                    <td class="table-header">LAST COUNT</td>
-                </tr>
+            <table class="table table-striped table-bordered table-hover">
+                <thead class="thead-light">
+                    <tr>
+                        <th>MODIFY</th>
+                        <th>STATUS</th>
+                        <th>PRODUCT</th>
+                        <th>FLAVOUR</th>
+                        <th>NOTES</th>
+                        <th>REQUEST DATE</th>
+                        <th>DUE DATE</th>
+                        <th>CLOSED DATE</th>
+                        <th>LAST COUNT</th>
+                    </tr>
                 </thead>
 
-                <tbody class="table-body">
-                    <tr class="table-row">
-                        <td class="table-data">
+                <tbody>
+                    <tr>
+                        <td>
                             <button type="button" class="btn btn-default" aria-label="Left Align">
                                 <span class="glyphicon glyphicon-pencil"></span>
                             </button>
                         </td>
-                        <td class="table-data">
+                        <td>
                             <button type="button" class="btn btn-default" aria-label="Left Align">
                                 <span class="glyphicon glyphicon-remove"></span>
                             </button>
                         </td>
-                        <td class="table-data"><span>Product Name</span></td>
-                        <td class="table-data"><span>Red</span></td>
-                        <td class="table-data"></td>
-                        <td class="table-data"><span>Some </span></td>
-                        <td class="table-data"><span>Some Date</span></td>
-                        <td class="table-data"><span>Some Date</span></td>
-                        <td class="table-data"><span>Some Date</span></td>
-                        <td class="table-data"></td>
+                        <td><span>Product Name</span></td>
+                        <td><span>Red</span></td>
+                        <td></td>
+                        <td><span>Some </span></td>
+                        <td><span>Some Date</span></td>
+                        <td><span>Some Date</span></td>
+                        <td><span>Some Date</span></td>
+                        <td></td>
                     </tr>
-                    <tr class="table-row">
-                        <td class="table-data">
+                    <tr>
+                        <td>
                             <button type="button" class="btn btn-default" aria-label="Left Align">
                                 <span class="glyphicon glyphicon-pencil"></span>
                             </button>
                         </td>
-                        <td class="table-data">
+                        <td>
                             <button type="button" class="btn btn-default" aria-label="Left Align">
                                 <span class="glyphicon glyphicon-remove"></span>
                             </button>
                         </td>
-                        <td class="table-data"><span>Product Name</span></td>
-                        <td class="table-data"><span>Blue</span></td>
-                        <td class="table-data"></td>
-                        <td class="table-data"><span>Some </span></td>
-                        <td class="table-data"><span>Some Date</span></td>
-                        <td class="table-data"><span>Some Date</span></td>
-                        <td class="table-data"><span>Some Date</span></td>
-                        <td class="table-data"><span>28</span></td>
+                        <td><span>Product Name</span></td>
+                        <td><span>Blue</span></td>
+                        <td></td>
+                        <td><span>Some </span></td>
+                        <td><span>Some Date</span></td>
+                        <td><span>Some Date</span></td>
+                        <td><span>Some Date</span></td>
+                        <td><span>28</span></td>
                     </tr>
-                    <tr class="table-row">
-                        <td class="table-data">
+                    <tr>
+                        <td>
                             <button type="button" class="btn btn-default" aria-label="Left Align">
                                 <span class="glyphicon glyphicon-pencil"></span>
                             </button>
                         </td>
-                        <td class="table-data">
+                        <td>
                             <button type="button" class="btn btn-default" aria-label="Left Align">
                                 <span class="glyphicon glyphicon-ok"></span>
                             </button>
                         </td>
-                        <td class="table-data"><span>Product Name</span></td>
-                        <td class="table-data"></td>
-                        <td class="table-data"><span>Some notes</span></td>
-                        <td class="table-data"><span>Some </span></td>
-                        <td class="table-data"><span>Some Date</span></td>
-                        <td class="table-data"><span>Some Date</span></td>
-                        <td class="table-data"><span>Some Date</span></td>
-                        <td class="table-data"><span>32</span></td>
+                        <td><span>Product Name</span></td>
+                        <td></td>
+                        <td><span>Some notes</span></td>
+                        <td><span>Some </span></td>
+                        <td><span>Some Date</span></td>
+                        <td><span>Some Date</span></td>
+                        <td><span>Some Date</span></td>
+                        <td><span>32</span></td>
                     </tr>
                 </tbody>
             </table>
