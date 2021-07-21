@@ -15,7 +15,7 @@ _structured file_<br/>
 ####- Preview photos can be found in doc/UI
 ![Office view](changelog_images/3_1.png)<br/>
 _Office view_<br/>
-![Warehouse view - Director](changelog_images/3_2.png)<br/>
+![Warehouse view - Director](UI/3_2.png)<br/>
 _Warehouse view - Director_<br/>
-![Warehouse view - Operator](changelog_images/3_3.png)<br/>
+![Warehouse view - Operator](UI/3_3.png)<br/>
 _Warehouse view - Operator_<br/>
