@@ -46,27 +46,149 @@
         <div class="header">
             <h1>Request creation</h1>
         </div>
+        <div class="request-form">
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-        <div class="sub-header">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="filters" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Filters
-            </button>
-            <div class="dropdown-menu" aria-labelledby="filters">
-                <a class="dropdown-item" href="#">Most Recent</a>
-                <a class="dropdown-item" href="#">Oldest</a>
-                <a class="dropdown-item" href="#">Upcoming due date</a>
-
-                <a class="dropdown-item" href="#">
-                    <label class="form-check-label" for="flexCheckChecked">
-                        <input class="" type="checkbox" value="showClosed" id="flexCheckChecked">
-                        Show closed
-                    </label>
-                </a>
-            </div>
-            <button type="button" class="btn btn-primary">Add Request</button>
-        </div>
-        <div class="request-table">
-            
+            <form>
+                <div class="form-group row">
+                    <label class="col-4 col-form-label" for="req_id">Id Request</label>
+                    <div class="col-8">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"><i class="fa fa-hashtag"></i></div>
+                            </div>
+                            <input id="req_id" name="req_id" type="text" class="form-control" aria-describedby="req_idHelpBlock" required="required" disabled>
+                        </div>
+                        <span id="req_idHelpBlock" class="form-text text-muted">Automatically generated request id</span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="prod" class="col-4 col-form-label">Product</label>
+                    <div class="col-8">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fa fa-archive"></i>
+                                </div>
+                            </div>
+                            <input id="prod" name="prod" type="text" class="form-control" aria-describedby="prodHelpBlock" required="required">
+                        </div>
+                        <span id="prodHelpBlock" class="form-text text-muted">Insert a product name in the field and select the correspoding one</span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-4">Flavour</label>
+                    <div class="col-8">
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input name="flavour" id="flavour_0" type="radio" aria-describedby="flavourHelpBlock" required="required" class="custom-control-input" value="red">
+                            <label for="flavour_0" class="custom-control-label">red</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input name="flavour" id="flavour_1" type="radio" aria-describedby="flavourHelpBlock" required="required" class="custom-control-input" value="blue">
+                            <label for="flavour_1" class="custom-control-label">blue</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input name="flavour" id="flavour_2" type="radio" aria-describedby="flavourHelpBlock" required="required" class="custom-control-input" value="green">
+                            <label for="flavour_2" class="custom-control-label">green</label>
+                        </div>
+                        <span id="flavourHelpBlock" class="form-text text-muted">Select the flavour of the product</span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="prod_code" class="col-4 col-form-label">Product Code</label>
+                    <div class="col-8">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"><i class="fa fa-tag"></i></div>
+                            </div>
+                            <input id="prod_code" name="prod_code" type="text" class="form-control" aria-describedby="prod_codeHelpBlock" required="required" disabled>
+                        </div>
+                        <span id="prod_codeHelpBlock" class="form-text text-muted">Automatically generated product code</span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="notes" class="col-4 col-form-label">Notes</label>
+                    <div class="col-8">
+                        <textarea id="notes" name="notes" cols="40" rows="5" class="form-control" aria-describedby="notesHelpBlock"></textarea>
+                        <span id="notesHelpBlock" class="form-text text-muted">Add notes to this request</span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="date_creation" class="col-4 col-form-label">Creation Date</label>
+                    <div class="col-8">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fa fa-calendar-check-o"></i>
+                                </div>
+                            </div>
+                            <input id="date_creation" name="date_creation" type="text" aria-describedby="date_creationHelpBlock" required="required" class="form-control" disabled>
+                        </div>
+                        <span id="date_creationHelpBlock" class="form-text text-muted">Automatically generated creation date</span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="date_due" class="col-4 col-form-label">Due Date</label>
+                    <div class="col-8">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                            </div>
+                            <input id="date_due" name="date_due" type="text" class="form-control" aria-describedby="date_dueHelpBlock" required="required">
+                        </div>
+                        <span id="date_dueHelpBlock" class="form-text text-muted">Date before which the counting should be completed</span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="status" class="col-4 col-form-label">Status</label>
+                    <div class="col-8">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fa fa-circle-thin"></i>
+                                </div>
+                            </div>
+                            <input id="status" name="status" type="text" class="form-control" aria-describedby="statusHelpBlock" required="required" disabled>
+                        </div>
+                        <span id="statusHelpBlock" class="form-text text-muted">Automatically generated status of the request</span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="count_previous" class="col-4 col-form-label">Previous Count</label>
+                    <div class="col-8">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fa fa-bar-chart-o"></i>
+                                </div>
+                            </div>
+                            <input id="count_previous" name="count_previous" type="text" class="form-control" aria-describedby="count_previousHelpBlock" disabled>
+                        </div>
+                        <span id="count_previousHelpBlock" class="form-text text-muted">Automatically generated previous count</span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="count_last" class="col-4 col-form-label">Last Count</label>
+                    <div class="col-8">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fa fa-refresh"></i>
+                                </div>
+                            </div>
+                            <input id="count_last" name="count_last" type="text" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="offset-4 col-8">
+                        <button name="submit" type="submit" class="btn btn-primary">Create</button>
+                    </div>
+                </div>
+            </form>
         </div>
 
     </main>
