@@ -5,6 +5,17 @@
 ####- Created the basic structure of the table
 ####- Added jQuery bindings
 ![Project setup](changelog_images/1_1.png)<br/>
-_image of project setup_
+_image of project setup_<br/>
 ![Structure](changelog_images/1_2.png)<br/>
-_structured file_
+_structured file_<br/>
+
+## 2. [UI Design]
+
+####- Created style of each page
+####- Preview photos can be found in doc/UI
+![Office view](changelog_images/3_1.png)<br/>
+_Office view_<br/>
+![Warehouse view - Director](changelog_images/3_2.png)<br/>
+_Warehouse view - Director_<br/>
+![Warehouse view - Operator](changelog_images/3_3.png)<br/>
+_Warehouse view - Operator_<br/>
