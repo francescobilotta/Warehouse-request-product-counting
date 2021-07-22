@@ -35,12 +35,12 @@
     <main role="main" class="container">
 
         <?php
-            $host="localhost";
+            /* Connection */
+            $host="portale";
             $username="root";
             $password="basilicagoiano";
-            $database="processi";
-            $mysqli = new mysqli($host, $username, $password, $database, 3306) or die("Errore nella connessione MySQL");
-          echo $mysqli->host_info . "\n";
+            $database="testing";
+            $connection = new mysqli($host, $username, $password, $database, 3306) or die("Errore nella connessione MySQL");
         ?>
 
         <div class="header">
@@ -70,78 +70,58 @@
                 <thead class="thead-light">
                 <tr>
                     <th>MODIFY</th>
-                    <th>STATUS</th>
                     <th>PRODUCT</th>
                     <th>FLAVOUR</th>
                     <th>NOTES</th>
                     <th>REQUEST DATE</th>
                     <th>DUE DATE</th>
-                    <th>CLOSED DATE</th>
-                    <th>LAST COUNT</th>
+                    <th>READY TO BE SHIPPED</th>
                 </tr>
                 </thead>
 
                 <tbody>
-                <tr>
-                    <td>
-                        <button type="button" class="btn btn-default" aria-label="Left Align">
-                            <span class="glyphicon glyphicon-pencil"></span>
-                        </button>
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-default" aria-label="Left Align">
-                            <span class="glyphicon glyphicon-remove"></span>
-                        </button>
-                    </td>
-                    <td><span>Product Name</span></td>
-                    <td><span>Red</span></td>
-                    <td></td>
-                    <td><span>Some </span></td>
-                    <td><span>Some Date</span></td>
-                    <td><span>Some Date</span></td>
-                    <td><span>Some Date</span></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>
-                        <button type="button" class="btn btn-default" aria-label="Left Align">
-                            <span class="glyphicon glyphicon-pencil"></span>
-                        </button>
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-default" aria-label="Left Align">
-                            <span class="glyphicon glyphicon-remove"></span>
-                        </button>
-                    </td>
-                    <td><span>Product Name</span></td>
-                    <td><span>Blue</span></td>
-                    <td></td>
-                    <td><span>Some </span></td>
-                    <td><span>Some Date</span></td>
-                    <td><span>Some Date</span></td>
-                    <td><span>Some Date</span></td>
-                    <td><span>28</span></td>
-                </tr>
-                <tr>
-                    <td>
-                        <button type="button" class="btn btn-default" aria-label="Left Align">
-                            <span class="glyphicon glyphicon-pencil"></span>
-                        </button>
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-default" aria-label="Left Align">
-                            <span class="glyphicon glyphicon-ok"></span>
-                        </button>
-                    </td>
-                    <td><span>Product Name</span></td>
-                    <td></td>
-                    <td><span>Some notes</span></td>
-                    <td><span>Some </span></td>
-                    <td><span>Some Date</span></td>
-                    <td><span>Some Date</span></td>
-                    <td><span>Some Date</span></td>
-                    <td><span>32</span></td>
-                </tr>
+                    <?php
+                        /* Table creation */
+                        $queryGetRequests = "SELECT requestId, productCode, productName, productFlavour, notes, requestDate, dueDate, requestState, isClosed, expectedCount, previousCount, lastCount, terminationDate, expectedGroundCount FROM Request ORDER BY requestId";
+                        $results = mysqli_query($connection, $queryGetRequests);
+                        $rowcount = mysqli_num_rows($results);
+                        $i = 0; 
+                        while ($i < $rowcount) {
+                            $row = mysqli_fetch_row($results);
+                            $requestId = $row[0];
+                            $productCode = $row[1];
+                            $productName = $row[2];
+                            $productFlavour = $row[3];
+                            $requestNotes = $row[4];
+                            $requestCreationDate = $row[5];
+                            $requestDueDate = $row[6];
+                            $requestState = $row[7];
+                            $requestIsClosed = $row[8];
+                            $requestExpectedCount = $row[9];
+                            $requestPreviousCount = $row[10];
+                            $requestLastCount = $row[11];
+                            $requestTerminationDate = $row[12];
+                            $expectedGroundCount = $row[13];
+                    ?>
+
+                    <tr>
+                        <td>
+                            <a type="button" class="btn btn-default" aria-label="Left Align" href='warehouse_update_operator.php?requestId=<?php echo $requestId;?>'>
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </a>
+                        </td>
+                        <td> <?php echo $productName;?> </td>
+                        <td> <?php echo $productFlavour;?> </td>
+                        <td> <?php echo $requestNotes;?> </td>
+                        <td> <?php echo $requestCreationDate;?> </td>
+                        <td> <?php echo $requestDueDate;?> </td>
+                        <td> <?php echo $expectedGroundCount;?> </td>
+                    </tr>
+
+                    <?php 
+                        $i++;
+                        }
+                    ?> 
                 </tbody>
             </table>
         </div>
@@ -149,7 +129,7 @@
     </main>
 
     <?php
-      $mysqli -> close();
+      $connection -> close();
     ?>
   </body>
 </html>
