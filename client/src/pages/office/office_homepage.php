@@ -85,7 +85,7 @@
                 <tbody>
                     <?php
                         /* Table creation */
-                        $queryGetRequests = "SELECT requestId, productCode, productName, productFlavour, notes, requestDate, dueDate, requestState, isClosed, expectedCount, previousCount, lastCount, terminationDate, expectedGroundCount FROM Request ORDER BY requestId";
+                        $queryGetRequests = "SELECT requestId, productCode, productName, productFlavour, notes, requestDate, dueDate, requestState, isClosed, expectedCount, previousCount, lastCount, terminationDate, expectedGroundCount FROM testing.Request ORDER BY requestId";
                         $results = mysqli_query($connection, $queryGetRequests);
                         $rowcount = mysqli_num_rows($results);
                         $i = 0; 
