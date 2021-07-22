@@ -24,8 +24,4 @@ $ROUTES = [
     },
 ];
 
-
-
-
-
-
+$ROUTES[$type]($query);

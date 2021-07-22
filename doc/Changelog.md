@@ -79,3 +79,9 @@ _Example_<br/><br/>
 ## 6.1 [API designed + Example script] UPDATED
 
 ####- Added type field into db_name.db.json
+
+## 7. [Working API]
+
+####- Fixed a little bug and then the API worked with a test query
+![Working API](API/7.png)<br/>
+_Working API_<br/><br/>
