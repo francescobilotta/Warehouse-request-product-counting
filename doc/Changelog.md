@@ -60,3 +60,22 @@ _Warehouse update operator_<br/><br/>
 
 ![Getting ready to create the API](changelog_images/5.png)<br/>
 _Getting ready to create the API_<br/><br/>
+
+## 6. [API designed + Example script]
+
+####- Designed API and created example script
+
+![Whole System + Example](API/6.png)<br/>
+_Whole System + Example_<br/><br/>
+![Send request](API/6_1-Send-request.png)<br/>
+_Send request_<br/><br/>
+![API](API/6_2-API.png)<br/>
+_Whole API_<br/><br/>
+![Result retrieval](API/6_3.png)<br/>
+_Result retrieval_<br/><br/>
+![Example](API/6_4.png)<br/>
+_Example_<br/><br/>
+
+## 6.1 [API designed + Example script] UPDATED
+
+####- Added type field into db_name.db.json
