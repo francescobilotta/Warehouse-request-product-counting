@@ -70,7 +70,7 @@
                 <tbody>
                     <?php
                         /* Table creation */
-                        $queryGetRequests = "SELECT requestId, productCode, productName, productFlavour, notes, requestDate, dueDate, requestState, isClosed, expectedCount, previousCount, lastCount, terminationDate, expectedGroundCount FROM Request WHERE requestId = '$requestId' AND isClosed = 0";
+                        $queryGetRequests = "SELECT requestId, productCode, productName, productFlavour, notes, requestDate, dueDate, requestState, isClosed, expectedCount, previousCount, lastCount, terminationDate, expectedGroundCount FROM Request WHERE requestId = '$requestId'";
                         $results = mysqli_query($connection, $queryGetRequests);
                         $row = mysqli_fetch_row($results);
                         $requestId = $row[0];
