@@ -51,3 +51,12 @@ _Warehouse update director_<br/><br/>
 _Warehouse homepage operator_<br/><br/>
 ![Warehouse update operator](changelog_images/4_3_2-Warehouse-update-operator.png)<br/>
 _Warehouse update operator_<br/><br/>
+
+## 5. [Getting ready to create the API]
+
+####- Moved src folder in client folder
+####- Created API folder
+####- Renamed diagrams
+
+![Getting ready to create the API](changelog_images/5.png)<br/>
+_Getting ready to create the API_<br/><br/>
