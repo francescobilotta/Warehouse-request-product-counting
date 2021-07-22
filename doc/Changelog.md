@@ -75,3 +75,7 @@ _Whole API_<br/><br/>
 _Result retrieval_<br/><br/>
 ![Example](API/6_4.png)<br/>
 _Example_<br/><br/>
+
+## 6.1 [API designed + Example script] UPDATED
+
+####- Added type field into db_name.db.json
