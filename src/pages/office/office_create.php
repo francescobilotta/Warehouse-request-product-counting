@@ -35,12 +35,11 @@
     <main role="main" class="container">
 
         <?php
-            $host="localhost";
+            $host="portale";
             $username="root";
             $password="basilicagoiano";
-            $database="processi";
-            $mysqli = new mysqli($host, $username, $password, $database, 3306) or die("Errore nella connessione MySQL");
-          echo $mysqli->host_info . "\n";
+            $database="testing";
+            $connection = new mysqli($host, $username, $password, $database, 3306) or die("Errore nella connessione MySQL");
         ?>
 
         <div class="header">
@@ -72,7 +71,7 @@
     </main>
 
     <?php
-      $mysqli -> close();
+      $connection -> close();
     ?>
   </body>
 </html>

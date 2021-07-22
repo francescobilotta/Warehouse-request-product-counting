@@ -28,7 +28,7 @@
         <!-- Common styles -->
         <link href="../../assets/css/common.css" rel="stylesheet">
         <!-- Custom styles for this template -->
-        <link href="./res/css/office_update.css" rel="stylesheet">
+        <link href="./res/css/warehouse_update.css" rel="stylesheet">
     </head>
     <body>
 
@@ -49,21 +49,21 @@
         <div class="header">
             <h1>Request details</h1>
         </div>
+
         <div class="request-table">
             <table class="table table-striped table-bordered table-hover">
                 <thead class="thead-light">
-                <tr>
-                    <th>ID REQUEST</th>
-                    <th>PRODUCT CODE</th>
-                    <th>FLAVOUR</th>
-                    <th>PRODUCT</th>
-                    <th>NOTES</th>
-                    <th>REQUEST DATE</th>
-                    <th>DUE DATE</th>
-                    <th>STATUS</th>
-                    <th>PREVIOUS COUNT</th>
-                    <th>LAST COUNT</th>
-                </tr>
+                    <tr>
+                        <th>ID REQUEST</th>
+                        <th>PRODUCT CODE</th>
+                        <th>FLAVOUR</th>
+                        <th>PRODUCT</th>
+                        <th>NOTES</th>
+                        <th>REQUEST DATE</th>
+                        <th>DUE DATE</th>
+                        <th>READY TO BE SHIPPED</th>
+                        <th>COUNT</th>
+                    </tr>
                 </thead>
 
                 <tbody>
@@ -96,13 +96,14 @@
                         <td> <?php echo $requestNotes;?> </td>
                         <td> <?php echo $requestCreationDate;?> </td>
                         <td> <?php echo $requestDueDate;?> </td>
-                        <td> <?php echo $requestState;?> </td>
-                        <td> <?php echo $requestPreviousCount;?> </td>
-                        <td> <?php echo $requestLastCount;?> </td>
+                        <td> <?php echo $requestExpectedCount;?> </td>
+                        <td>
+                            <input type="number" id="">
+                        </td>
                     </tr>
                 </tbody>
             </table>
-            <button id="" class="" onclick="window.location.href='office_homepage.php';"> BACK </button>
+            <button id="" class="" onclick="window.location.href='warehouse_homepage_operator.php';"> BACK </button>
         </div>
 
     </main>

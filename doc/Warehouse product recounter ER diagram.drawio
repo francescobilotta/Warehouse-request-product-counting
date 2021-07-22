@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="R2lEEEUBdFMjLlhIrx00" name="Page-1">
-        <mxGraphModel dx="1331" dy="398" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0" extFonts="Permanent Marker^https://fonts.googleapis.com/css?family=Permanent+Marker">
+        <mxGraphModel dx="1287" dy="254" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0" extFonts="Permanent Marker^https://fonts.googleapis.com/css?family=Permanent+Marker">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -94,7 +94,7 @@
                 <mxCell id="-y-X6ht0F3sfz6vZydc6-28" value="" style="shape=partialRectangle;overflow=hidden;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;" parent="-y-X6ht0F3sfz6vZydc6-27" vertex="1">
                     <mxGeometry width="30" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="-y-X6ht0F3sfz6vZydc6-29" value="lastCount unsigned int" style="shape=partialRectangle;overflow=hidden;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;" parent="-y-X6ht0F3sfz6vZydc6-27" vertex="1">
+                <mxCell id="-y-X6ht0F3sfz6vZydc6-29" value="previousCount unsigned int" style="shape=partialRectangle;overflow=hidden;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;" parent="-y-X6ht0F3sfz6vZydc6-27" vertex="1">
                     <mxGeometry x="30" width="290" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="-y-X6ht0F3sfz6vZydc6-30" value="" style="shape=partialRectangle;collapsible=0;dropTarget=0;pointerEvents=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;top=0;left=0;right=0;bottom=0;" parent="C-vyLk0tnHw3VtMMgP7b-23" vertex="1">
@@ -103,7 +103,7 @@
                 <mxCell id="-y-X6ht0F3sfz6vZydc6-31" value="" style="shape=partialRectangle;overflow=hidden;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;" parent="-y-X6ht0F3sfz6vZydc6-30" vertex="1">
                     <mxGeometry width="30" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="-y-X6ht0F3sfz6vZydc6-32" value="newCount unsigned int" style="shape=partialRectangle;overflow=hidden;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;" parent="-y-X6ht0F3sfz6vZydc6-30" vertex="1">
+                <mxCell id="-y-X6ht0F3sfz6vZydc6-32" value="lastCount unsigned int" style="shape=partialRectangle;overflow=hidden;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;" parent="-y-X6ht0F3sfz6vZydc6-30" vertex="1">
                     <mxGeometry x="30" width="290" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="-y-X6ht0F3sfz6vZydc6-16" value="&lt;b&gt;Possible request states&lt;/b&gt;:&lt;br&gt;countRequest&lt;br&gt;countDone&lt;br&gt;recountRequest&lt;br&gt;recountDone" style="text;html=1;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=3;strokeColor=#000000;" parent="1" vertex="1">
