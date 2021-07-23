@@ -1,5 +1,5 @@
 {
-  "name": "office_create_requests",
+  "name": "create_requests",
   "database": "portale",
   "schema": "testing",
   "dialect": "mysql",

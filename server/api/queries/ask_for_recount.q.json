@@ -1,5 +1,5 @@
 {
-  "name": "office_recount",
+  "name": "ask_for_recount",
   "database": "portale",
   "schema": "testing",
   "dialect": "mysql",

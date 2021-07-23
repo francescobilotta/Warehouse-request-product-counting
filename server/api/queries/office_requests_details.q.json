@@ -1,0 +1,7 @@
+{
+  "name": "office_requests_details",
+  "database": "portale",
+  "schema": "testing",
+  "dialect": "mysql",
+  "query": "SELECT requestId, productCode, productName, productFlavour, notes, requestDate, dueDate, requestState, previousCount, lastCount FROM testing.Request WHERE requestId = '{f.requestId}'"
+}

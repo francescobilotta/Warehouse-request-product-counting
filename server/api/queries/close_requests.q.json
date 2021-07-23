@@ -1,5 +1,5 @@
 {
-  "name": "office_close_requests",
+  "name": "close_requests",
   "database": "portale",
   "schema": "testing",
   "dialect": "mysql",
