@@ -83,5 +83,13 @@ _Example_<br/><br/>
 ## 7. [Working API]
 
 ####- Fixed a little bug and then the API worked with a test query
-![Working API](API/7.png)<br/>
+![Working API](changelog_images/7.png)<br/>
 _Working API_<br/><br/>
+
+## 8. [First use of API from client]
+
+####- Fixed some bugs
+####- Added real time updates
+####- Linked API to client
+![First use of API from client](changelog_images/8_1.png)<br/>
+_First use of API from client_<br/><br/>
