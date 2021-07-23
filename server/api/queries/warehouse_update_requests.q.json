@@ -1,0 +1,7 @@
+{
+  "name": "warehouse_update_requests",
+  "database": "portale",
+  "schema": "testing",
+  "dialect": "mysql",
+  "query": "UPDATE testing.Request SET requestId = '{d.requestId}', lastCount = '{d.lastCount}' WHERE requestId = '{f.requestId}'"
+}

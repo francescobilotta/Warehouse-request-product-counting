@@ -1,0 +1,7 @@
+{
+  "name": "office_recount",
+  "database": "portale",
+  "schema": "testing",
+  "dialect": "mysql",
+  "query": "UPDATE testing.Request SET requestState = 'recountRequest' WHERE requestId = '{f.requestId}'"
+}

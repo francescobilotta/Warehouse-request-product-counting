@@ -1,0 +1,7 @@
+{
+  "name": "office_update_requests",
+  "database": "portale",
+  "schema": "testing",
+  "dialect": "mysql",
+  "query": "UPDATE testing.Request SET productCode = '{d.productCode}', notes = '{d.notes}', dueDate = '{d.dueDate}'  WHERE requestId = '{f.requestId}'"
+}

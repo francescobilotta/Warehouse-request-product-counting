@@ -2,5 +2,6 @@
   "name": "office_requests",
   "database": "portale",
   "schema": "testing",
-  "query": "SELECT requestId, productCode, productName, productFlavour, notes, requestDate, dueDate, requestState, isClosed, expectedCount, previousCount, lastCount, terminationDate, expectedGroundCount FROM testing.Request ORDER BY requestId"
+  "dialect": "mysql",
+  "query": "SELECT requestId, requestState, productName, productFlavour, notes, requestDate, dueDate, terminationDate, previousCount, lastCount, isClosed FROM testing.Request ORDER BY dueDate"
 }
