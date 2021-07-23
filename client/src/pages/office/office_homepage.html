@@ -50,7 +50,9 @@
           type: "POST",
           url: "../../../../server/api/request_receiver.php",
           dataType: "json",
-          data: { "q_name": "office_requests" },
+          data: {
+            "q_name": "office_requests",
+          },
           success: function (data) {
             const headers_strings = {
               "MODIFY": "",

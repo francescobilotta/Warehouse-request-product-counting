@@ -21,13 +21,11 @@ class MYSQL {
     }
 
     static function query($db, $query) {
-        $q_results = $db->query($query);
+        return $db->query($query)->fetch_all(MYSQLI_ASSOC);
+    }
 
-        if (!$q_results) {
-            echo json_encode(array("status"=>"bad_results.q"));
-            trigger_error("Wrong ($query).\nError: $db->error", E_USER_ERROR);
-        }
-        else { return $q_results->fetch_all(MYSQLI_ASSOC); }
+    static function close($db) {
+        mysqli_close($db);
     }
 }
 ?>
