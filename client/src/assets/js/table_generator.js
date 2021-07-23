@@ -11,7 +11,6 @@ function table_maker(table_data, destination_id, headers) {
   });
 
   for (const row of table_data) {
-    console.log(row);
     let current_row = $("<tr>");
 
     current_row.append(
@@ -24,7 +23,6 @@ function table_maker(table_data, destination_id, headers) {
       )
     );
     Object.keys(headers).forEach(function(key) {
-      console.log(`key=${key}  interValue=${headers[key]}  finalValue=${row[headers[key]]}`)
       if (headers[key]) { current_row.append($("<td>").text(row[headers[key]])) }
     });
 
