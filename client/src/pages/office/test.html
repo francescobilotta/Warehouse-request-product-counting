@@ -9,6 +9,15 @@
     <link rel="icon" href="../../assets/img/favicon.png" />
 
     <title>Warehouse counter</title>
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Common styles -->
+    <link href="../../assets/css/common.css" rel="stylesheet" />
+    <!-- Custom styles for this template -->
+    <link href="./res/css/office_homepage.css" rel="stylesheet" />
+
     <!-- Bootstrap -->
 
     <!-- Latest compiled and minified CSS -->
@@ -34,13 +43,47 @@
       crossorigin="anonymous"
     ></script>
 
-    <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="../../assets/js/table_generator.js"></script>
+    <script>
+      function getTableData() {
+        $.ajax({
+          type: "POST",
+          url: "../../../../server/api/request_receiver.php",
+          dataType: "json",
+          data: { "q_name": "office_requests" },
+          success: function (data) {
+            const headers_strings = {
+              "MODIFY": "",
+              "STATUS": "requestState",
+              "PRODUCT": "productName",
+              "FLAVOUR": "productFlavour",
+              "NOTES": "notes",
+              "REQUEST DATE": "requestDate",
+              "DUE DATE": "dueDate",
+              "CLOSED DATE": "terminationDate",
+              "LAST COUNT": "lastCount",
+            };
+            // alert(data.status)
+            if (data.status === "ok") {
+              table_maker(data.results, "request-table-container", headers_strings);
+            }
+          },
+          error: function(error) {
+            alert(error);
+          }
+        });
+      }
+    </script>
 
-    <!-- Common styles -->
-    <link href="../../assets/css/common.css" rel="stylesheet" />
-    <!-- Custom styles for this template -->
-    <link href="./res/css/office_homepage.css" rel="stylesheet" />
+    <script>
+      $(document).ready(function () {
+        getTableData();
+      });
+      let intervalId = window.setInterval(function(){
+        getTableData();
+      }, 5000);
+    </script>
+
   </head>
   <body>
     <main role="main" class="container">
@@ -76,40 +119,10 @@
             </label>
           </a>
         </div>
-        <button type="button" class="btn btn-primary">Add Request</button>
+        <button type="button" class="btn btn-primary" onclick="getTableData()">Add Request</button>
       </div>
 
       <div class="request-table" id="request-table-container">
-        <script>
-          $(document).ready(function () {
-            $.ajax({
-              type: "POST",
-              url: "../../../../server/api/request_receiver.php",
-              dataType: "json",
-              data: { q_name: "office_requests" },
-              success: function (data) {
-                let header = [
-                  "MODIFY",
-                  "STATUS",
-                  "PRODUCT",
-                  "FLAVOUR",
-                  "NOTES",
-                  "REQUEST DATE",
-                  "DUE DATE",
-                  "CLOSED DATE",
-                  "LAST COUNT",
-                ];
-                if (data.status == "ok") {
-                  create_table(
-                    data.results,
-                    "request-table-container",
-                    headers
-                  );
-                }
-              },
-            });
-          });
-        </script>
       </div>
     </main>
   </body>

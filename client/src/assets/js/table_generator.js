@@ -1,34 +1,35 @@
 function table_maker(table_data, destination_id, headers) {
-  let table = $("<table>").addClass(
-    "table table-striped table-bordered table-hover"
-  );
+  let table = $("<table>").addClass("table table-striped table-bordered table-hover");
   let thead_tr = $("<tr>");
   let tbody = $("<tbody>");
 
-  table.append($("<thead>").class("thead-light").append(thead_tr));
+  table.append($("<thead>").addClass("thead-light").append(thead_tr));
   table.append(tbody);
 
-  for (const header in headers) {
-    thead_tr.append($("<th>").text(header));
-  }
+  Object.keys(headers).forEach(function(key) {
+    thead_tr.append($("<th>").text(key));
+  });
 
-  for (const row in table_data) {
+  for (const row of table_data) {
+    console.log(row);
     let current_row = $("<tr>");
 
     current_row.append(
       $("<td>").append(
-        $("<a>")
-          .type("button")
-          .class("btn btn-default")
-          .href("office_update.php?requestId=" + row.requestId)
-          .append($("<span>").class("glyphicon glyphicon-pencil"))
+        $("<a>", {
+          type: "button",
+          addClass: "btn btn-default",
+          href: "office_update.php?requestId=" + row.requestId
+        }).append($("<span>").addClass("glyphicon glyphicon-pencil"))
       )
     );
+    Object.keys(headers).forEach(function(key) {
+      console.log(`key=${key}  interValue=${headers[key]}  finalValue=${row[headers[key]]}`)
+      if (headers[key]) { current_row.append($("<td>").text(row[headers[key]])) }
+    });
 
-    for (const item in row) {
-      current_row.append($("<td>").text(item));
-    }
 
     tbody.append(current_row);
   }
+  $("#"+destination_id).html(table);
 }
