@@ -11,7 +11,10 @@ class MYSQL {
         $schema = $_GET['schema'];
 
         $db = new mysqli($host, $username, $password, $schema, $port);
-        if ($db->connect_error) { die("Could not create database object$db->connect_error"); }
+        if ($db->connect_error) {
+            echo json_encode(array("status"=>"bad_connection.db"));
+            die("Could not create database object$db->connect_error");
+        }
         else {
             return $db;
         }
@@ -20,7 +23,10 @@ class MYSQL {
     static function query($db, $query) {
         $q_results = $db->query($query);
 
-        if (!$q_results) { trigger_error("Wrong ($query).\nError: $db->error", E_USER_ERROR); }
+        if (!$q_results) {
+            echo json_encode(array("status"=>"bad_results.q"));
+            trigger_error("Wrong ($query).\nError: $db->error", E_USER_ERROR);
+        }
         else { return $q_results->fetch_all(MYSQLI_ASSOC); }
     }
 }
