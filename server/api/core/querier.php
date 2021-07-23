@@ -10,8 +10,8 @@ $query = $_GET['query'];
 $type = $_GET['type'];
 
 function redirect($rows) {
-    $query = http_build_query(array('q_result' => $rows));
-    header("Location: formatter.php?$query");
+    $url_data = http_build_query(array('q_result' => $rows));
+    header("Location: formatter.php?$url_data");
     exit();
 }
 
