@@ -1,5 +1,6 @@
 <?php
-
+//error_reporting(E_ALL);
+//ini_set('display_errors', '1');
 use mysql\MYSQL;
 use oracleDB\OracleDB;
 
@@ -19,8 +20,14 @@ function redirect($data) {
 
 function fill_query_data($query, $data) {
     // using regex replaces all patterns like: {<d||f>.<name>} with the value passed to the api in q_data
-    return preg_replace_callback('/\{(\w)\.(.+?)\}/i',
-        function($matches) use($data) { return $data[$matches[0]]; },
+    return preg_replace_callback('/\{((\w)\.(.+?))\}/i',
+        function($matches) use($data) {
+            if (!in_array($matches[1], array_keys($data))) {
+                echo json_encode(array("status"=>"bad_data. Not all values have been given. Missing: " . $matches[1]));
+                exit();
+            }
+            return $data[$matches[1]];
+        },
         $query);
 }
 
@@ -35,5 +42,5 @@ $ROUTES = [
         redirect(array());
     },
 ];
-
-$ROUTES[$dialect](fill_query_data($query, $q_data));
+$filled_query = fill_query_data($query, $q_data);
+$ROUTES[$dialect]($filled_query);
