@@ -2,33 +2,6 @@
 <html>
   <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<<<<<<< HEAD
-    <script>
-      $("head").load("../../components/head.html");
-    </script>
-    <script>
-      $(document).ready(function () {
-        const headers_strings = {
-          MODIFY: "",
-          STATUS: "requestState",
-          PRODUCT: "productName",
-          FLAVOUR: "productFlavour",
-          NOTES: "notes",
-          "REQUEST DATE": "requestDate",
-          "DUE DATE": "dueDate",
-          "CLOSED DATE": "terminationDate",
-          "LAST COUNT": "lastCount",
-          "PREVIOUS COUNT": "previousCount",
-        };
-
-        const data = {
-          q_name: "office_requests",
-          q_data: {
-            "f.requestId": 2,
-            "d.lastCount": 10,
-          },
-        };
-=======
 
     <!-- Common styles -->
     <link href="../../assets/css/common.css" rel="stylesheet" />
@@ -86,7 +59,6 @@
         q_name: "office_requests",
         q_data: {},
       };
->>>>>>> 2745cd963b09bba149e9457fa847904eab3da050
 
         const requester = new Requester(data, function (result) {
           table_maker(
@@ -97,15 +69,12 @@
         });
         requester.query();
       });
-<<<<<<< HEAD
-=======
       requester.query();
 
       $(".table-row").click((eventObj) => {
         const requestId = eventObj.attr('id');
 
       })
->>>>>>> 2745cd963b09bba149e9457fa847904eab3da050
     </script>
   </head>
   <body>
