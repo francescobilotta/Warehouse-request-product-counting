@@ -7,6 +7,10 @@
         <link rel="icon" href="../../assets/img/favicon.png">
 
         <title>Warehouse counter</title>
+
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
         <!-- Bootstrap -->
 
         <!-- Latest compiled and minified CSS -->
@@ -19,26 +23,13 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
 
 
-        <!-- jQuery library -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
         <!-- Common styles -->
         <link href="../../assets/css/common.css" rel="stylesheet">
         <!-- Custom styles for this template -->
         <link href="./res/css/office_create.css" rel="stylesheet">
     </head>
     <body>
-
     <main role="main" class="container">
-
-        <?php
-            $host="portale";
-            $username="root";
-            $password="basilicagoiano";
-            $database="testing";
-            $connection = new mysqli($host, $username, $password, $database, 3306) or die("Errore nella connessione MySQL");
-        ?>
-
         <div class="header">
             <h1>Request creation</h1>
         </div>
@@ -176,11 +167,6 @@
                 </div>
             </form>
         </div>
-
     </main>
-
-    <?php
-      $connection -> close();
-    ?>
   </body>
 </html>
