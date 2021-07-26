@@ -37,30 +37,3 @@
 
 <script src="../../assets/js/table_generator.js"></script>
 <script src="../../assets/js/request.js"></script>
-<script>
-  const headers_strings = {
-    MODIFY: "",
-    STATUS: "requestState",
-    PRODUCT: "productName",
-    FLAVOUR: "productFlavour",
-    NOTES: "notes",
-    "REQUEST DATE": "requestDate",
-    "DUE DATE": "dueDate",
-    "CLOSED DATE": "terminationDate",
-    "LAST COUNT": "lastCount",
-    "PREVIOUS COUNT": "previousCount",
-  };
-
-  const data = {
-    q_name: "office_requests",
-    q_data: {
-      "f.requestId": 2,
-      "d.lastCount": 10,
-    },
-  };
-
-  const requester = new Requester(data, function (result) {
-    table_maker(result.results, "request-table-container", headers_strings);
-  });
-  requester.query();
-</script>

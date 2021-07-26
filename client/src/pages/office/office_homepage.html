@@ -5,6 +5,39 @@
     <script>
       $("head").load("../../components/head.html");
     </script>
+    <script>
+      $(document).ready(function () {
+        const headers_strings = {
+          MODIFY: "",
+          STATUS: "requestState",
+          PRODUCT: "productName",
+          FLAVOUR: "productFlavour",
+          NOTES: "notes",
+          "REQUEST DATE": "requestDate",
+          "DUE DATE": "dueDate",
+          "CLOSED DATE": "terminationDate",
+          "LAST COUNT": "lastCount",
+          "PREVIOUS COUNT": "previousCount",
+        };
+
+        const data = {
+          q_name: "office_requests",
+          q_data: {
+            "f.requestId": 2,
+            "d.lastCount": 10,
+          },
+        };
+
+        const requester = new Requester(data, function (result) {
+          table_maker(
+            result.results,
+            "request-table-container",
+            headers_strings
+          );
+        });
+        requester.query();
+      });
+    </script>
   </head>
   <body>
     <main role="main" class="container">
