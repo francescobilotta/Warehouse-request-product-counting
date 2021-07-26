@@ -45,16 +45,16 @@
 
       <div class="sub-header">
         <button
-          class="btn btn-secondary dropdown-toggle"
+          class="btn dropdown-toggle"
           type="button"
-          id="filters"
+          id="btn-filters"
           data-toggle="dropdown"
           aria-haspopup="true"
           aria-expanded="false"
         >
           Filters
         </button>
-        <div class="dropdown-menu" aria-labelledby="filters">
+        <div class="dropdown-menu" aria-labelledby="btn-filters">
           <a class="dropdown-item" href="#">Most Recent</a>
           <a class="dropdown-item" href="#">Oldest</a>
           <a class="dropdown-item" href="#">Upcoming due date</a>
@@ -71,7 +71,9 @@
             </label>
           </a>
         </div>
-        <button type="button" class="btn btn-primary">Add Request</button>
+        <button type="button" id="btn-add-request" class="btn">
+          Add Request
+        </button>
       </div>
 
       <div class="request-table" id="request-table-container"></div>

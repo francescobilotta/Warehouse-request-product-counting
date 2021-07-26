@@ -22,11 +22,27 @@ body {
   font-size: 1.3rem;
 }
 
+/* Header */
 .header {
   text-align: center;
   font-size: 50px;
   font-weight: 800;
   color: #7da8c5;
+}
+
+/* Sub header */
+.sub-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+.btn {
+  padding: 10px 15px 10px 15px !important;
+  background-color: white !important;
+  border: 5px solid #7da8c5 !important;
+}
+.btn:hover {
+  background-color: #7da8c5 !important;
 }
 
 /* Table */
