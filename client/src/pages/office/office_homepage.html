@@ -47,11 +47,14 @@
     <script>
       function getTableData() {
         $.ajax({
-          type: "POST",
+          type: "GET",
           url: "../../../../server/api/request_receiver.php",
           dataType: "json",
           data: {
-            "q_name": "office_requests",
+            "q_name": "office_requests_details",
+            "q_data": {
+              "f.requestId": 2
+            }
           },
           success: function (data) {
             const headers_strings = {
@@ -64,9 +67,10 @@
               "DUE DATE": "dueDate",
               "CLOSED DATE": "terminationDate",
               "LAST COUNT": "lastCount",
+              "PREVIOUS COUNT": "previousCount"
             };
-            // alert(data.status)
             if (data.status === "ok") {
+              console.log(data);
               table_maker(data.results, "request-table-container", headers_strings);
             }
           },
