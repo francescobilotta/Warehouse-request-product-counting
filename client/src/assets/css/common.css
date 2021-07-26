@@ -1,3 +1,9 @@
 body {
-   padding-top: 5rem;
+  font-size: 1.3rem;
+}
+
+td {
+  max-width: 300px;
+  word-wrap: break-word;
+  text-align: center;
 }

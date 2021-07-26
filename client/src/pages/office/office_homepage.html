@@ -51,32 +51,36 @@
           url: "../../../../server/api/request_receiver.php",
           dataType: "json",
           data: {
-            "q_name": "office_requests_details",
-            "q_data": {
-              "f.requestId": 2
-            }
+            q_name: "office_requests_details",
+            q_data: {
+              "f.requestId": 2,
+            },
           },
           success: function (data) {
             const headers_strings = {
-              "MODIFY": "",
-              "STATUS": "requestState",
-              "PRODUCT": "productName",
-              "FLAVOUR": "productFlavour",
-              "NOTES": "notes",
+              MODIFY: "",
+              STATUS: "requestState",
+              PRODUCT: "productName",
+              FLAVOUR: "productFlavour",
+              NOTES: "notes",
               "REQUEST DATE": "requestDate",
               "DUE DATE": "dueDate",
               "CLOSED DATE": "terminationDate",
               "LAST COUNT": "lastCount",
-              "PREVIOUS COUNT": "previousCount"
+              "PREVIOUS COUNT": "previousCount",
             };
             if (data.status === "ok") {
               console.log(data);
-              table_maker(data.results, "request-table-container", headers_strings);
+              table_maker(
+                data.results,
+                "request-table-container",
+                headers_strings
+              );
             }
           },
-          error: function(error) {
-            console.log(error)
-          }
+          error: function (error) {
+            console.log(error);
+          },
         });
       }
     </script>
@@ -85,11 +89,10 @@
       $(document).ready(function () {
         getTableData();
       });
-      let intervalId = window.setInterval(function(){
+      let intervalId = window.setInterval(function () {
         getTableData();
       }, 30000);
     </script>
-
   </head>
   <body>
     <main role="main" class="container">
@@ -125,11 +128,12 @@
             </label>
           </a>
         </div>
-        <button type="button" class="btn btn-primary" onclick="getTableData()">Add Request</button>
+        <button type="button" class="btn btn-primary" onclick="getTableData()">
+          Add Request
+        </button>
       </div>
 
-      <div class="request-table" id="request-table-container">
-      </div>
+      <div class="request-table" id="request-table-container"></div>
     </main>
   </body>
 </html>

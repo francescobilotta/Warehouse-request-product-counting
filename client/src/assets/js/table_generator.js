@@ -1,12 +1,14 @@
 function table_maker(table_data, destination_id, headers) {
-  let table = $("<table>").addClass("table table-striped table-bordered table-hover");
+  let table = $("<table>").addClass(
+    "table table-striped table-bordered table-hover"
+  );
   let thead_tr = $("<tr>");
   let tbody = $("<tbody>");
 
   table.append($("<thead>").addClass("thead-light").append(thead_tr));
   table.append(tbody);
 
-  Object.keys(headers).forEach(function(key) {
+  Object.keys(headers).forEach(function (key) {
     thead_tr.append($("<th>").text(key));
   });
 
@@ -18,16 +20,21 @@ function table_maker(table_data, destination_id, headers) {
         $("<a>", {
           type: "button",
           addClass: "btn btn-default",
-          href: "office_update.php?requestId=" + row.requestId
+          href: "office_update.php?requestId=" + row.requestId,
         }).append($("<span>").addClass("glyphicon glyphicon-pencil"))
       )
     );
-    Object.keys(headers).forEach(function(key) {
-      if (headers[key]) { current_row.append($("<td>").text(row[headers[key]])) }
+    Object.keys(headers).forEach(function (key) {
+      if (headers[key]) {
+        current_row.append(
+          $("<td>", {
+            addClass: "align-middle",
+          }).text(row[headers[key]])
+        );
+      }
     });
-
 
     tbody.append(current_row);
   }
-  $("#"+destination_id).html(table);
+  $("#" + destination_id).html(table);
 }
