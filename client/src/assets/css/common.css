@@ -1,9 +1,35 @@
 body {
+  padding-top: 5rem;
   font-size: 1.3rem;
+  background-color: #68bbe3;
 }
 
+.header {
+  text-align: center;
+  font-size: 50px;
+  font-weight: 800;
+}
+
+/* Table */
+.table-hover tbody tr td,
+.table-hover tbody tr th {
+  vertical-align: middle !important;
+}
+.table-hover tbody tr:hover td,
+.table-hover tbody tr:hover th {
+  background-color: #a9e0fc;
+}
+th {
+  text-align: center;
+  background-color: #4fb4e7;
+}
+.table th:hover,
+.table td:hover {
+  background-color: #48a7d6;
+}
 td {
   max-width: 300px;
   word-wrap: break-word;
   text-align: center;
+  border: none;
 }

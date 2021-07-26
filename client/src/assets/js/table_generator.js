@@ -1,11 +1,9 @@
 function table_maker(table_data, destination_id, headers) {
-  let table = $("<table>").addClass(
-    "table table-striped table-bordered table-hover"
-  );
+  let table = $("<table>").addClass("table table-hover");
   let thead_tr = $("<tr>");
   let tbody = $("<tbody>");
 
-  table.append($("<thead>").addClass("thead-light").append(thead_tr));
+  table.append($("<thead>").append(thead_tr));
   table.append(tbody);
 
   Object.keys(headers).forEach(function (key) {
@@ -26,11 +24,7 @@ function table_maker(table_data, destination_id, headers) {
     );
     Object.keys(headers).forEach(function (key) {
       if (headers[key]) {
-        current_row.append(
-          $("<td>", {
-            addClass: "align-middle",
-          }).text(row[headers[key]])
-        );
+        current_row.append($("<td>").text(row[headers[key]]));
       }
     });
 
