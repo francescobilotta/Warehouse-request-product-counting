@@ -11,7 +11,7 @@ function table_maker(table_data, destination_id, headers) {
   });
 
   for (const row of table_data) {
-    let current_row = $("<tr>");
+    let current_row = $("<tr>").addClass("table-row").attr("id", row["requestId"]);
 
     current_row.append(
       $("<td>").append(

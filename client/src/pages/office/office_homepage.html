@@ -36,7 +36,7 @@
     />
 
     <!-- Common styles -->
-    <link href="../../assets/css/common.css" rel="stylesheet" />
+    <link href="../../assets/css/common.css?1" rel="stylesheet" />
     <!-- Custom styles for this template -->
     <link href="./res/css/office_homepage.css" rel="stylesheet" />
 
@@ -49,13 +49,15 @@
 
     <script src="../../assets/js/table_generator.js"></script>
     <script src="../../assets/js/request.js"></script>
+    <script src="../../assets/js/record_edit.js"></script>
+
     <script>
       const headers_strings = {
-        MODIFY: "",
-        STATUS: "requestState",
-        PRODUCT: "productName",
-        FLAVOUR: "productFlavour",
-        NOTES: "notes",
+        "MODIFY": "",
+        "STATUS": "requestState",
+        "PRODUCT": "productName",
+        "FLAVOUR": "productFlavour",
+        "NOTES": "notes",
         "REQUEST DATE": "requestDate",
         "DUE DATE": "dueDate",
         "CLOSED DATE": "terminationDate",
@@ -65,20 +67,25 @@
 
       const data = {
         q_name: "office_requests",
-        q_data: {
-          "f.requestId": 2,
-          "d.lastCount": 10,
-        },
+        q_data: {},
       };
 
       const requester = new Requester(data, function (result) {
         table_maker(result.results, "request-table-container", headers_strings);
       });
       requester.query();
+
+      $(".table-row").click((eventObj) => {
+        const requestId = eventObj.attr('id');
+
+      })
     </script>
   </head>
   <body>
     <main role="main" class="container">
+      <div class="popup-container">
+        <h1>ROBAAAAA</h1>
+      </div>
       <div class="header">Office</div>
 
       <div class="sub-header">
