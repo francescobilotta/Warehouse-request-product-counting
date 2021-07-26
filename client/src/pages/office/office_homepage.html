@@ -44,50 +44,33 @@
     ></script>
 
     <script src="../../assets/js/table_generator.js"></script>
+    <script src="../../assets/js/request.js"></script>
     <script>
-      function getTableData() {
-        $.ajax({
-          type: "GET",
-          url: "../../../../server/api/request_receiver.php",
-          dataType: "json",
-          data: {
-            "q_name": "office_requests_details",
-            "q_data": {
-              "f.requestId": 2
-            }
-          },
-          success: function (data) {
-            const headers_strings = {
-              "MODIFY": "",
-              "STATUS": "requestState",
-              "PRODUCT": "productName",
-              "FLAVOUR": "productFlavour",
-              "NOTES": "notes",
-              "REQUEST DATE": "requestDate",
-              "DUE DATE": "dueDate",
-              "CLOSED DATE": "terminationDate",
-              "LAST COUNT": "lastCount",
-              "PREVIOUS COUNT": "previousCount"
-            };
-            if (data.status === "ok") {
-              console.log(data);
-              table_maker(data.results, "request-table-container", headers_strings);
-            }
-          },
-          error: function(error) {
-            console.log(error)
-          }
-        });
-      }
-    </script>
+      const headers_strings = {
+        "MODIFY": "",
+        "STATUS": "requestState",
+        "PRODUCT": "productName",
+        "FLAVOUR": "productFlavour",
+        "NOTES": "notes",
+        "REQUEST DATE": "requestDate",
+        "DUE DATE": "dueDate",
+        "CLOSED DATE": "terminationDate",
+        "LAST COUNT": "lastCount",
+        "PREVIOUS COUNT": "previousCount"
+      };
 
-    <script>
-      $(document).ready(function () {
-        getTableData();
+      const data = {
+        "q_name": "office_requests",
+        "q_data": {
+          "f.requestId": 2,
+          "d.lastCount": 10,
+        }
+      }
+
+      const requester = new Requester(data, function (result) {
+        table_maker(result.results, "request-table-container", headers_strings);
       });
-      let intervalId = window.setInterval(function(){
-        getTableData();
-      }, 30000);
+      requester.query();
     </script>
 
   </head>
@@ -125,7 +108,7 @@
             </label>
           </a>
         </div>
-        <button type="button" class="btn btn-primary" onclick="getTableData()">Add Request</button>
+        <button type="button" class="btn btn-primary">Add Request</button>
       </div>
 
       <div class="request-table" id="request-table-container">
