@@ -111,7 +111,6 @@
 
 ###### Variables needed:
 
-- {d.lastCount}
 - {f.requestId}
 
 ---
