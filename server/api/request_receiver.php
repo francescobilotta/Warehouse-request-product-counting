@@ -1,6 +1,6 @@
 <?php
 $query_name = $_POST['q_name'];
-$query_name = $_POST['q_data'];
+$query_data = $_POST['q_data'];
 
 if (isset($query_name))
 {
