@@ -6,10 +6,9 @@
         $("head").load("../../components/head.html?123123");
     </script>
     <script>
-
-        function make_editable(element) {
-            $('#edit-popup').show();
-            const popup = $('#popup-data');
+      function make_editable(element) {
+        $("#edit-popup").show();
+        const popup = $("#popup-data");
 
             // popup.text("id is : " + element.attr('id'));
         }
@@ -23,17 +22,17 @@
                 if (e.target === this) {
                     $(this).hide();
                 }
-            })
+            });
 
             $(".exit-button").click(function (e) {
                 if (e.target === this) {
                     $("#edit-popup").hide();
                 }
-            })
+            });
         }
 
         $(document).ready(function () {
-            $('#edit-popup').hide();
+            $("#edit-popup").hide();
 
             const table_headers_strings = {
                 STATUS: "requestState",
@@ -231,7 +230,6 @@
                 <li><a class="dropdown-item" href="#">Oldest</a></li>
                 <li><a class="dropdown-item" href="#">Upcoming due date</a></li>
                 <li><hr class="dropdown-divider" /></li>
-                <li><a class="dropdown-item" href="#">Separated link</a></li>
                 <li>
                     <a class="dropdown-item" href="#">
                         <label class="form-check-label" for="flexCheckChecked">
