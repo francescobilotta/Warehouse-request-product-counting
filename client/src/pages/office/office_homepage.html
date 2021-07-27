@@ -2,86 +2,48 @@
 <html>
   <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-    <!-- Common styles -->
-    <link href="../../assets/css/common.css" rel="stylesheet" />
-    <link href="../../assets/css/colors.css" rel="stylesheet" />
-
-    <!-- Bootstrap -->
-
-    <!-- Latest compiled and minified CSS -->
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
-      integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
-      crossorigin="anonymous"
-    />
-
-    <!-- Optional theme -->
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css"
-      integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ"
-      crossorigin="anonymous"
-    />
-
-    <!-- Common styles -->
-    <link href="../../assets/css/common.css?1" rel="stylesheet" />
-    <!-- Custom styles for this template -->
-    <link href="./res/css/office_homepage.css" rel="stylesheet" />
-
-    <!-- Latest compiled and minified JavaScript -->
-    <script
-      src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
-      integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
-      crossorigin="anonymous"
-    ></script>
-
-    <script src="../../assets/js/table_generator.js"></script>
-    <script src="../../assets/js/request.js"></script>
-    <script src="../../assets/js/record_edit.js"></script>
-
     <script>
-      const headers_strings = {
-        "MODIFY": "",
-        "STATUS": "requestState",
-        "PRODUCT": "productName",
-        "FLAVOUR": "productFlavour",
-        "NOTES": "notes",
-        "REQUEST DATE": "requestDate",
-        "DUE DATE": "dueDate",
-        "CLOSED DATE": "terminationDate",
-        "LAST COUNT": "lastCount",
-        "PREVIOUS COUNT": "previousCount",
-      };
+      $("head").load("../../components/head.html");
+    </script>
+    <script>
+      $(document).ready(function () {
+        const headers_strings = {
+          MODIFY: "",
+          STATUS: "requestState",
+          PRODUCT: "productName",
+          FLAVOUR: "productFlavour",
+          NOTES: "notes",
+          "REQUEST DATE": "requestDate",
+          "DUE DATE": "dueDate",
+          "CLOSED DATE": "terminationDate",
+          "LAST COUNT": "lastCount",
+          "PREVIOUS COUNT": "previousCount",
+        };
 
-      const data = {
-        q_name: "office_requests",
-        q_data: {},
-      };
+        const data = {
+          q_name: "office_requests",
+          q_data: {
+            "f.requestId": 2,
+            "d.lastCount": 10,
+          },
+        };
 
         const requester = new Requester(data, function (result) {
-          table_maker(
-            result.results,
-            "request-table-container",
-            headers_strings
-          );
+          table_maker(result.results, "request-table-container", headers_strings);
         });
         requester.query();
       });
-      requester.query();
 
       $(".table-row").click((eventObj) => {
-        const requestId = eventObj.attr('id');
-
-      })
+        const requestId = eventObj.attr("id");
+      });
     </script>
   </head>
   <body>
     <main role="main" class="container">
-      <div class="popup-container">
+      <!-- <div class="popup-container">
         <h1>ROBAAAAA</h1>
-      </div>
+      </div> -->
       <div class="header">Office</div>
 
       <div class="sub-header">
@@ -102,19 +64,12 @@
 
           <a class="dropdown-item" href="#">
             <label class="form-check-label" for="flexCheckChecked">
-              <input
-                class=""
-                type="checkbox"
-                value="showClosed"
-                id="flexCheckChecked"
-              />
+              <input class="" type="checkbox" value="showClosed" id="flexCheckChecked" />
               Show closed
             </label>
           </a>
         </div>
-        <button type="button" id="btn-add-request" class="btn">
-          Add Request
-        </button>
+        <button type="button" id="btn-add-request" class="btn">Add Request</button>
       </div>
 
       <div class="request-table" id="request-table-container"></div>
