@@ -48,7 +48,20 @@ body {
   background-color: #7da8c5 !important;
   color: white !important;
 }
-.btn {
+
+/* Dropdown */
+.dropdown-menu > li:hover {
+  background-color: #7da8c5;
+}
+.dropdown-menu > li > a {
+  font-weight: 600;
+  color: #7da8c5;
+}
+.dropdown-menu > li:hover > a {
+  color: #7da8c5;
+}
+#flexCheckChecked {
+  cursor: pointer;
 }
 /* Table */
 tr:hover,
@@ -76,6 +89,7 @@ td {
   vertical-align: middle !important;
 }
 
+/* Blinker */
 .blinker {
   height: 32px;
   margin-bottom: -4px;
@@ -96,6 +110,7 @@ td {
   }
 }
 
+/* Popup */
 .popup-container {
   position: fixed;
   top: 0;
