@@ -135,6 +135,7 @@ td {
   height: 100%;
   background-color: white;
   border-radius: 1.5rem;
+    padding-bottom: 0.5rem;
 
   display: flex;
   flex-flow: column nowrap;
@@ -152,11 +153,17 @@ td {
     "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
-.form-holder {
-  overflow: scroll;
-  height: 100%;
+/* Hide scrollbar for Chrome, Safari and Opera */
+.form-holder::-webkit-scrollbar {
+    display: none;
+}
 
-  padding-top: 2.75rem;
+.form-holder {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+    overflow: scroll;
+    height: 100%;
+    padding-top: 1.75rem;
 }
 
 .exit-button-wrapper {
@@ -183,4 +190,17 @@ td {
   font-size: 2.5rem;
   font-weight: 800;
   color: #52667a;
+}
+
+.popup-buttons-wrapper {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+.button-image {
+    width: 70px;
+    height: auto;
 }
