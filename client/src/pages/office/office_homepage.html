@@ -44,29 +44,28 @@
       <div class="header">Office</div>
 
       <div class="sub-header">
-        <button
-          class="btn styled-btn dropdown-toggle"
-          type="button"
-          id="btn-filters"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
-          Filters
-        </button>
-        <div class="dropdown-menu" aria-labelledby="btn-filters">
-          <a class="dropdown-item" href="#">Most Recent</a>
-          <a class="dropdown-item" href="#">Oldest</a>
-          <a class="dropdown-item" href="#">Upcoming due date</a>
-
-          <a class="dropdown-item" href="#">
-            <label class="form-check-label" for="flexCheckChecked">
-              <input class="" type="checkbox" value="showClosed" id="flexCheckChecked" />
-              Show closed
-            </label>
-          </a>
+        <div class="dropdown">
+          <button class="styled-btn dropdown-toggle" type="button" id="btn-filters" data-bs-toggle="dropdown" aria-expanded="false">
+            Filters
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="btn-filters">
+            <li><a class="dropdown-item" href="#">Most Recent</a></li>
+            <li><a class="dropdown-item" href="#">Oldest</a></li>
+            <li><a class="dropdown-item" href="#">Upcoming due date</a></li>
+            <li><hr class="dropdown-divider" /></li>
+            <li><a class="dropdown-item" href="#">Separated link</a></li>
+            <li>
+              <a class="dropdown-item" href="#">
+                <label class="form-check-label" for="flexCheckChecked">
+                  <input class="" type="checkbox" value="showClosed" id="flexCheckChecked" />
+                  Show closed
+                </label>
+              </a>
+            </li>
+          </ul>
         </div>
-        <button type="button" id="btn-add-request" class="btn styled-btn">Add Request</button>
+
+        <button type="button" id="btn-add-request" class="styled-btn">Add Request</button>
       </div>
 
       <div class="request-table" id="request-table-container"></div>

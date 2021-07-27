@@ -44,21 +44,24 @@ body {
   background-color: #7da8c5 !important;
   color: white !important;
 }
-
+.btn {
+}
 /* Table */
-.table-hover tbody tr:hover td,
-.table-hover tbody tr:hover th {
+tr:hover,
+tr:hover {
   background-color: #e0f5ff;
 }
-.table th:hover,
-.table td:hover {
-  background-color: #48a7d6;
+td:hover {
+  background-color: #bed6e5 !important;
 }
 th {
   text-align: center !important;
   vertical-align: middle !important;
-  background-color: #7da8c5;
-  color: white;
+  background-color: #7da8c5 !important;
+  color: white !important;
+}
+th:hover {
+  background-color: #48a7d6 !important;
 }
 
 td {
