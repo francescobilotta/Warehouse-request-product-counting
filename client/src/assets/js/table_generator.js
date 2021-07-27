@@ -17,40 +17,23 @@ function table_maker(table_data, destination_id, headers) {
       if (headers[key]) {
         switch (row[headers[key]]) {
           case "countRequest":
-            //<a href='ruoli_mod.php?id_ruolo=<?php echo $id_ruolo;?>'> <img title="Modifica" src="../../processi_images/modify_icon.png" style="width: 35px; height: 35px;"> </a>
             current_row.append(
-              $("<td>").append(
-                $("<a>", {
-                  href: "office_update.php?requestId=" + row.requestId,
-                }).append($("<img src='../../assets/img/countRequest_icon.png' height='40px' width='40px'>"))
-              )
+              $("<td>").append($("<img src='../../assets/img/countRequest.png' height='40px' width='40px' title='Asked for count'>"))
             );
             break;
           case "countDone":
             current_row.append(
-              $("<td>").append(
-                $("<a>", {
-                  href: "office_update.php?requestId=" + row.requestId,
-                }).append($("<img src='../../assets/img/countDone_icon.png' height='40px' width='40px'>"))
-              )
+              $("<td>").append($("<img src='../../assets/img/countDone.png' height='40px' width='40px' title='Count done'>"))
             );
             break;
           case "recountRequest":
             current_row.append(
-              $("<td>").append(
-                $("<a>", {
-                  href: "office_update.php?requestId=" + row.requestId,
-                }).append($("<img src='../../assets/img/recountRequest_icon.png' height='40px' width='40px'>"))
-              )
+              $("<td>").append($("<img src='../../assets/img/recountRequest.png' height='40px' width='40px' title='Asked for recount'>"))
             );
             break;
           case "recountDone":
             current_row.append(
-              $("<td>").append(
-                $("<a>", {
-                  href: "office_update.php?requestId=" + row.requestId,
-                }).append($("<img src='../../assets/img/recountDone_icon.png' height='40px' width='40px'>"))
-              )
+              $("<td>").append($("<img src='../../assets/img/recountDone.png' height='40px' width='40px' title='Recount done'>"))
             );
             break;
           default:
