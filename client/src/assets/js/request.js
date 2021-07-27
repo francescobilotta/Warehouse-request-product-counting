@@ -11,6 +11,7 @@ class Requester {
     query() {
         let request = $.ajax(
             {
+                async: true,
                 type: this.req_type,
                 url: this.req_url,
                 dataType: this.req_ret_type,

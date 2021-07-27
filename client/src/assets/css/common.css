@@ -9,6 +9,10 @@
   }
 }
 
+html {
+  font-size: 12px;
+}
+
 main {
   animation: 650ms ease-out 0s 1 appear;
 }
@@ -80,7 +84,7 @@ td {
   background: dodgerblue;
   opacity: 0;
   display: inline-block;
-  animation: blink 1s linear infinite alternate;
+  animation: blink 650ms linear infinite alternate;
 }
 
 @keyframes blink {
@@ -93,15 +97,37 @@ td {
 }
 
 .popup-container {
-  z-index: 10001;
-  position: absolute;
-  width: 85%;
-  height: 75%;
-  margin: auto;
-  background-color: papayawhip;
-  border-radius: 1.5rem;
-  padding: 1.5rem;
+  position: fixed;
+  top: 0;
+  left: 0;
 
-  -webkit-box-shadow: 0px 0px 500px 500px rgba(0, 0, 0, 0.52);
-  box-shadow: 0px 0px 500px 500px rgba(0, 0, 0, 0.52);
+  z-index: 10001;
+  padding: 6rem;
+  width: 100%;
+  height: 100%;
+
+  background: rgba(0,0,0,0.5);
+}
+
+.popup {
+   z-index: 10002;
+   width: 100%;
+   height: 100%;
+   background-color: papayawhip;
+   border-radius: 1.5rem;
+ }
+
+.exit-button-wrapper {
+  width: 100%;
+  height: auto;
+  padding: 0 1rem;
+
+  text-align: right;
+  font-size: xx-large;
+  font-weight: bolder;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+.exit-button {
+  cursor: pointer;
 }
