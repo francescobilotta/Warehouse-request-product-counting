@@ -31,19 +31,24 @@ body {
   justify-content: space-between;
   padding: 20px;
 }
-.btn {
+
+/* Buttons */
+.styled-btn {
   padding: 10px 15px 10px 15px !important;
   background-color: white !important;
   border: 5px solid #7da8c5 !important;
+  color: #7da8c5 !important;
+  font-weight: 800 !important;
 }
-.btn:hover {
+.styled-btn:hover {
   background-color: #7da8c5 !important;
+  color: white !important;
 }
 
 /* Table */
 .table-hover tbody tr:hover td,
 .table-hover tbody tr:hover th {
-  background-color: #a9e0fc;
+  background-color: #e0f5ff;
 }
 .table th:hover,
 .table td:hover {
@@ -53,6 +58,7 @@ th {
   text-align: center !important;
   vertical-align: middle !important;
   background-color: #7da8c5;
+  color: white;
 }
 
 td {
