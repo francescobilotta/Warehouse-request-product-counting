@@ -115,3 +115,12 @@ _Icons in Inkscape_<br/><br/>
 _Website style 1/2_<br/><br/>
 ![Website style 2/2](changelog_images/11_2.png)<br/>
 _Website style 2/2_<br/><br/>
+
+## 12. [Popup created and styled]
+
+####- Completely finished to style the popup
+
+![Popup created and styled](changelog_images/12.png)<br/>
+_Popup created and styled_<br/><br/>
+![Popup created and styled](changelog_images/12.png)<br/>
+_Popup created and styled_<br/><br/>
