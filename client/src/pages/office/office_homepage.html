@@ -73,7 +73,7 @@
                     <!-- Request info -->
                     <div class="form-group row">
                         <label for="req_id" class="col-1 col-form-label">Request Id</label>
-                        <div class="col-11">
+                        <div class="row col-11">
                             <div class="input-group">
                                 <div class="input-group-prepend">X</div>
                                 <input id="req_id" name="req_id" type="text" class="form-control" aria-describedby="req_idHelpBlock" required="required" readonly>
@@ -134,8 +134,10 @@
                     <!-- Notes -->
                     <div class="form-group row">
                         <label for="notes" class="col-1 col-form-label">Notes</label>
-                        <div class="col-11">
-                            <textarea id="notes" name="notes" cols="20" rows="2" class="form-control" aria-describedby="notesHelpBlock"></textarea>
+                        <div class="row col-11">
+                            <div class="input-group">
+                                <textarea id="notes" name="notes" cols="20" rows="2" class="form-control" aria-describedby="notesHelpBlock"></textarea>
+                            </div>
                             <span id="notesHelpBlock" class="form-text text-muted">Add notes to this request</span>
                         </div>
                     </div>
@@ -160,7 +162,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row">
+                            <div class="form-group col no-gutters">
                                 <label for="date_creation" class="col-12 col-form-label">Creation Date</label>
                                 <div class="col-12">
                                     <div class="input-group">
@@ -181,33 +183,38 @@
                     <!-- Counts -->
                     <div class="row">
                         <label class="col-1 col-form-label">Counts</label>
-                        <div class="form-group col no-gutters">
-                            <label for="count_previous" class="col-12 col-form-label">Previous Count</label>
-                            <div class="col-12">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">
-                                            <i class="fa fa-bar-chart-o"></i>
+                        <div class="row col-11">
+
+                            <div class="form-group col no-gutters">
+                                <label for="count_previous" class="col-12 col-form-label">Previous Count</label>
+                                <div class="col-12">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <i class="fa fa-bar-chart-o"></i>
+                                            </div>
                                         </div>
+                                        <input id="count_previous" name="count_previous" type="text" class="form-control" aria-describedby="count_previousHelpBlock" readonly>
                                     </div>
-                                    <input id="count_previous" name="count_previous" type="text" class="form-control" aria-describedby="count_previousHelpBlock" readonly>
+                                    <span id="count_previousHelpBlock" class="form-text text-muted">Automatically generated previous count</span>
                                 </div>
-                                <span id="count_previousHelpBlock" class="form-text text-muted">Automatically generated previous count</span>
                             </div>
-                        </div>
-                        <div class="form-group col no-gutters">
-                            <label for="count_last" class="col-12 col-form-label">Last Count</label>
-                            <div class="col-12">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">
-                                            <i class="fa fa-refresh"></i>
+
+                            <div class="form-group col no-gutters">
+                                <label for="count_last" class="col-12 col-form-label">Last Count</label>
+                                <div class="col-12">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <i class="fa fa-refresh"></i>
+                                            </div>
                                         </div>
+                                        <input id="count_last" name="count_last" type="text" class="form-control" readonly>
                                     </div>
-                                    <input id="count_last" name="count_last" type="text" class="form-control" readonly>
+                                    <span id="count_lastHelpBlock" class="form-text text-muted">Latest count created.</span>
                                 </div>
-                                <span id="count_lastHelpBlock" class="form-text text-muted">Latest count created.</span>
                             </div>
+
                         </div>
                     </div>
 
