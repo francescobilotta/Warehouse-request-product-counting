@@ -93,3 +93,25 @@ _Working API_<br/><br/>
 ####- Linked API to client
 ![First use of API from client](changelog_images/8_1.png)<br/>
 _First use of API from client_<br/><br/>
+
+## 9. [Worked on API]
+
+####- Added possibility to use queries with variables from API
+####- Added error handlers
+
+## 10. [Created icons]
+
+####- Created icons for requestState
+
+![Icons in Inkscape](changelog_images/10.png)<br/>
+_Icons in Inkscape_<br/><br/>
+
+## 11. [Website styled]
+
+####- Created style for website
+####- Still working on double-click popup form for requestDetails
+
+![Website style 1/2](changelog_images/11_1.png)<br/>
+_Website style 1/2_<br/><br/>
+![Website style 2/2](changelog_images/11_2.png)<br/>
+_Website style 2/2_<br/><br/>
