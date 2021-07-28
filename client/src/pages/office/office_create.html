@@ -21,30 +21,20 @@
         }
 
         $("document").ready(() => {
-            class product_flavour_data {
-                constructor(q_data) {
-                    this.q_name = "get_product_flavours";
-                    this.q_data = q_data;
-                }
-            }
-            new flavour_data({
-                "f.productCode": "valore"
-            })
+            set_date();
 
-            const product_flavour_requester = new Requester(product_flavour_data, function (result) {
+            const product_flavour_requester = new Requester(function (result) {
                 console.log("printing flavours");
                 console.log(result);
             });
 
-            const product_codes_requester = new Requester(product_codes_data, function (result) {
+            const product_codes_requester = new Requester(function (result) {
                 console.log("all products:");
                 console.log(result);
             });
 
-            set_date();
-
-            product_codes_requester.query(11210);
-            product_flavour_requester.query(11210);
+            product_codes_requester.query(new ajax_data("get_products_names"));
+            product_flavour_requester.query(new ajax_data("get_product_flavours", {"f.productCode": 11210}));
         });
     </script>
 </head>
