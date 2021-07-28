@@ -1,4 +1,5 @@
 <?php
+session_start();
 $data = array("results"=>$_SESSION['q_result']);
 
 $data['status'] = 'ok';
