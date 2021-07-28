@@ -9,8 +9,6 @@
       function make_editable(element) {
         $("#edit-popup").show();
         const popup = $("#popup-data");
-
-        // popup.text("id is : " + element.attr('id'));
       }
 
       function register_clicks() {
@@ -59,6 +57,9 @@
   </head>
   <body>
     <main role="main" class="container">
+      <!--  -->
+      <!-- Popup -->
+      <!--  -->
       <div id="edit-popup" class="popup-container">
         <div class="popup">
           <div class="card-section exit-button-wrapper">
@@ -281,8 +282,15 @@
           </div>
         </div>
       </div>
-      <div class="header test-class">Office</div>
 
+      <!--  -->
+      <!-- Header -->
+      <!--  -->
+      <div class="header weight-800">Office</div>
+
+      <!--  -->
+      <!-- Sub Header -->
+      <!--  -->
       <div class="sub-header">
         <div class="dropdown">
           <button
@@ -310,7 +318,9 @@
           </ul>
         </div>
 
-        <button type="button" id="btn-add-request" class="styled-btn btn-blue">Add Request</button>
+        <a type="button" id="btn-add-request" class="styled-btn btn-blue text-align-center no-text-decoration" href="office_create.html"
+          >Add Request</a
+        >
       </div>
 
       <div class="request-table" id="request-table-container"></div>
