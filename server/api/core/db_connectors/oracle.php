@@ -15,7 +15,7 @@ class OracleDB {
                 (CONNECT_DATA = (SERVER = DEDICATED)(SERVICE_NAME = ferrari.ferrari.locale))
             )";
 
-        $conn = oci_connect($username, $password, $db);
+        $conn = oci_pconnect($username, $password, $db);
         if (!$conn) {
             $e = oci_error();
             echo json_encode(array("status"=>"bad_connection.db"));
