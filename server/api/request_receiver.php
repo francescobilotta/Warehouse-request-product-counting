@@ -10,8 +10,6 @@ $_SESSION['q_data'] = $_GET['q_data'];
 if (isset($_SESSION['q_name']))
 {
     header("Location: core/dispatcher.php");
-    session_write_close();
-    session_regenerate_id(true);
     exit();
 }
 else {

@@ -35,17 +35,13 @@ $ROUTES = [
         $db_conn = MYSQL::init();
         $data = MYSQL::query($db_conn, $query);
         MYSQL::close($db_conn);
-        var_dump($query);
-        var_dump($data);
-//        redirect($data);
+        redirect($data);
     },
     "oracle" => function ($query) {
         $db_conn = OracleDB::init();
         $data = OracleDB::query($db_conn, $query);
         OracleDB::close($db_conn);
-        var_dump($query);
-        var_dump($data);
-//        redirect($data);
+        redirect($data);
     },
 ];
 
@@ -57,5 +53,4 @@ if ($q_data) {
 else {
     $filled_query = $query;
 }
-    var_dump($filled_query);
 $ROUTES[$dialect]($filled_query);
