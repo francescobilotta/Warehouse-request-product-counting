@@ -2,12 +2,14 @@
 <html lang="it">
   <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/xcash/bootstrap-autocomplete@v2.3.7/dist/latest/bootstrap-autocomplete.min.js"></script>
+
     <script>
       $("head").load("../../components/head.html?1232123");
     </script>
 
     <script>
-      $("document").ready(() => {
+      function set_date() {
         const now = new Date();
         const day = ("0" + now.getDate()).slice(-2);
         const month = ("0" + (now.getMonth() + 1)).slice(-2);
@@ -16,22 +18,45 @@
         $("#date_due").val(today).attr({
           min: today,
         });
+      }
 
-        //Query
+      function get_products() {
         const product_codes_data = {
-          q_name: "office_requests",
-          q_data: {},
+          q_name: "get_products_names",
         };
-        const product_codes_requester = new Requester(product_codes_data, function (result) {});
-        product_codes_requester.query();
 
+        const product_codes_requester = new Requester(product_codes_data, function (result) {
+          console.log(result);
+        });
+
+        product_codes_requester.query();
+      }
+
+      function generate_flavours(productCode) {
         const product_flavour_data = {
-          q_name: "office_requests",
-          q_data: {},
-        };
-        const product_flavour_requester = new Requester(product_codes_data, function (result) {});
-        product_codes_requester.query();
+          q_name: "get_product_flavours",
+          q_data: {
+            "f.articleCode": productCode
+          }
+        }
 
+        const product_flavour_requester = new Requester(product_flavour_data, function (result) {
+          console.log(result);
+        });
+
+        product_flavour_requester.query();
+      }
+
+      function activate_auto_compilation() {
+        $('req_id').focusout(function (e) {
+          generate_flavours(this.value);
+        });
+      }
+
+      $("document").ready(() => {
+        set_date();
+        get_products();
+        activate_auto_compilation();
       });
     </script>
   </head>
