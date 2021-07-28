@@ -1,244 +1,230 @@
 <!DOCTYPE html>
 <html lang="it">
-  <head>
+<head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/xcash/bootstrap-autocomplete@v2.3.7/dist/latest/bootstrap-autocomplete.min.js"></script>
 
     <script>
-      $("head").load("../../components/head.html?1232123");
+        $("head").load("../../components/head.html?1232123");
     </script>
 
     <script>
-      function set_date() {
-        const now = new Date();
-        const day = ("0" + now.getDate()).slice(-2);
-        const month = ("0" + (now.getMonth() + 1)).slice(-2);
-        const today = now.getFullYear() + "-" + month + "-" + day;
+        function set_date() {
+            const now = new Date();
+            const day = ("0" + now.getDate()).slice(-2);
+            const month = ("0" + (now.getMonth() + 1)).slice(-2);
+            const today = now.getFullYear() + "-" + month + "-" + day;
 
-        $("#date_due").val(today).attr({
-          min: today,
-        });
-      }
-
-      function get_products() {
-        const product_codes_data = {
-          q_name: "get_products_names",
-          q_data: {}
-        };
-
-        const product_codes_requester = new Requester(product_codes_data, function (result) {
-          console.log(result);
-        });
-
-        product_codes_requester.query();
-      }
-
-      function generate_flavours(productCode) {
-        const product_flavour_data = {
-          q_name: "get_product_flavours",
-          q_data: {
-            "f.articleCode": productCode
-          }
+            $("#date_due").val(today).attr({
+                min: today,
+            });
         }
 
-        const product_flavour_requester = new Requester(product_flavour_data, function (result) {
-          console.log(result);
+        $("document").ready(() => {
+            class product_flavour_data {
+                constructor(q_data) {
+                    this.q_name = "get_product_flavours";
+                    this.q_data = q_data;
+                }
+            }
+            new flavour_data({
+                "f.productCode": "valore"
+            })
+
+            const product_flavour_requester = new Requester(product_flavour_data, function (result) {
+                console.log("printing flavours");
+                console.log(result);
+            });
+
+            const product_codes_requester = new Requester(product_codes_data, function (result) {
+                console.log("all products:");
+                console.log(result);
+            });
+
+            set_date();
+
+            product_codes_requester.query(11210);
+            product_flavour_requester.query(11210);
         });
-
-        product_flavour_requester.query();
-      }
-
-      function activate_auto_compilation() {
-        $("#req_id").blur(function (e) {
-          generate_flavours(this.value);
-        });
-      }
-
-      $("document").ready(() => {
-        set_date();
-        get_products();
-        activate_auto_compilation();
-        generate_flavours(11210);
-      });
     </script>
-  </head>
-  <body>
-    <main role="main" class="container">
-      <div class="header weight-800">Request creation<span class="blinker"></span></div>
-      <div class="request-form">
+</head>
+<body>
+<main role="main" class="container">
+    <div class="header weight-800">Request creation<span class="blinker"></span></div>
+    <div class="request-form">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" />
 
         <form class="form" role="form">
-          <div class="row">
-            <label class="col-1 col-form-label">Product</label>
-            <div class="col">
-              <input
-                id="req_id"
-                name="req_id"
-                type="text"
-                class="form-control"
-                aria-describedby="req_idHelpBlock"
-                required="required"
-                readonly
-                hidden
-              />
-              <div class="row">
-                <div class="form-group col no-gutters">
-                  <label class="col-12 col-form-label" for="prod_code">Product Code</label>
-                  <div class="col-12">
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <div class="input-group-text"><i class="fa fa-tag"></i></div>
-                      </div>
-                      <input
-                        id="prod_code"
-                        name="prod_code"
-                        type="text"
-                        class="form-control"
-                        aria-describedby="prod_codeHelpBlock"
-                        required="required"
-                      />
-                    </div>
-                    <span id="prod_codeHelpBlock" class="form-text text-muted"
-                      >Insert a product code in the field and select the corresponding one.</span
-                    >
-                  </div>
-                </div>
-                <div class="form-group col no-gutters">
-                  <label for="prod" class="col-2 col-form-label">Product</label>
-                  <div class="col-12">
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <div class="input-group-text">
-                          <i class="fa fa-archive"></i>
+            <div class="row">
+                <label class="col-1 col-form-label">Product</label>
+                <div class="col">
+                    <input
+                            id="req_id"
+                            name="req_id"
+                            type="text"
+                            class="form-control"
+                            aria-describedby="req_idHelpBlock"
+                            required="required"
+                            readonly
+                            hidden
+                    />
+                    <div class="row">
+                        <div class="form-group col no-gutters">
+                            <label class="col-12 col-form-label" for="prod_code">Product Code</label>
+                            <div class="col-12">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text"><i class="fa fa-tag"></i></div>
+                                    </div>
+                                    <input
+                                            id="prod_code"
+                                            name="prod_code"
+                                            type="text"
+                                            class="form-control"
+                                            aria-describedby="prod_codeHelpBlock"
+                                            required="required"
+                                    />
+                                </div>
+                                <span id="prod_codeHelpBlock" class="form-text text-muted"
+                                >Insert a product code in the field and select the corresponding one.</span
+                                >
+                            </div>
                         </div>
-                      </div>
-                      <input
-                        id="prod"
-                        name="prod"
-                        type="text"
-                        class="form-control"
-                        aria-describedby="prodHelpBlock"
-                        required="required"
-                        readonly
-                      />
+                        <div class="form-group col no-gutters">
+                            <label for="prod" class="col-2 col-form-label">Product</label>
+                            <div class="col-12">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="fa fa-archive"></i>
+                                        </div>
+                                    </div>
+                                    <input
+                                            id="prod"
+                                            name="prod"
+                                            type="text"
+                                            class="form-control"
+                                            aria-describedby="prodHelpBlock"
+                                            required="required"
+                                            readonly
+                                    />
+                                </div>
+                                <span id="prodHelpBlock" class="form-text text-muted">Automatically generated product name.</span>
+                            </div>
+                        </div>
                     </div>
-                    <span id="prodHelpBlock" class="form-text text-muted">Automatically generated product name.</span>
-                  </div>
+                    <div class="row">
+                        <div class="form-group col no-gutters">
+                            <label class="col-2">Flavour</label>
+                            <div class="col-12">
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input
+                                            name="flavour"
+                                            id="flavour_0"
+                                            type="radio"
+                                            aria-describedby="flavourHelpBlock"
+                                            required="required"
+                                            class="custom-control-input"
+                                            value="red"
+                                    />
+                                    <label for="flavour_0" class="custom-control-label">red</label>
+                                </div>
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input
+                                            name="flavour"
+                                            id="flavour_1"
+                                            type="radio"
+                                            aria-describedby="flavourHelpBlock"
+                                            required="required"
+                                            class="custom-control-input"
+                                            value="blue"
+                                    />
+                                    <label for="flavour_1" class="custom-control-label">blue</label>
+                                </div>
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input
+                                            name="flavour"
+                                            id="flavour_2"
+                                            type="radio"
+                                            aria-describedby="flavourHelpBlock"
+                                            required="required"
+                                            class="custom-control-input"
+                                            value="green"
+                                    />
+                                    <label for="flavour_2" class="custom-control-label">green</label>
+                                </div>
+                                <span id="flavourHelpBlock" class="form-text text-muted">Select the flavour of the product</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-              <div class="row">
-                <div class="form-group col no-gutters">
-                  <label class="col-2">Flavour</label>
-                  <div class="col-12">
-                    <div class="custom-control custom-radio custom-control-inline">
-                      <input
-                        name="flavour"
-                        id="flavour_0"
-                        type="radio"
-                        aria-describedby="flavourHelpBlock"
-                        required="required"
-                        class="custom-control-input"
-                        value="red"
-                      />
-                      <label for="flavour_0" class="custom-control-label">red</label>
+
+                <div class="form-group row">
+                    <label for="notes" class="col-1 col-form-label">Notes</label>
+                    <div class="col-11">
+                        <textarea id="notes" name="notes" cols="40" rows="3" class="form-control" aria-describedby="notesHelpBlock"></textarea>
+                        <span id="notesHelpBlock" class="form-text text-muted">Add notes to this request</span>
                     </div>
-                    <div class="custom-control custom-radio custom-control-inline">
-                      <input
-                        name="flavour"
-                        id="flavour_1"
-                        type="radio"
-                        aria-describedby="flavourHelpBlock"
-                        required="required"
-                        class="custom-control-input"
-                        value="blue"
-                      />
-                      <label for="flavour_1" class="custom-control-label">blue</label>
-                    </div>
-                    <div class="custom-control custom-radio custom-control-inline">
-                      <input
-                        name="flavour"
-                        id="flavour_2"
-                        type="radio"
-                        aria-describedby="flavourHelpBlock"
-                        required="required"
-                        class="custom-control-input"
-                        value="green"
-                      />
-                      <label for="flavour_2" class="custom-control-label">green</label>
-                    </div>
-                    <span id="flavourHelpBlock" class="form-text text-muted">Select the flavour of the product</span>
-                  </div>
                 </div>
-              </div>
+                <div class="form-group row">
+                    <input
+                            hidden
+                            id="date_creation"
+                            name="date_creation"
+                            type="text"
+                            aria-describedby="date_creationHelpBlock"
+                            required="required"
+                            class="form-control"
+                            readonly
+                    />
+                </div>
+                <div class="form-group row">
+                    <label for="date_due" class="col-1 col-form-label">Due Date</label>
+                    <div class="col-11">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                            </div>
+                            <input
+                                    id="date_due"
+                                    name="date_due"
+                                    type="date"
+                                    class="form-control"
+                                    aria-describedby="date_dueHelpBlock"
+                                    required="required"
+                            />
+                        </div>
+                        <span id="date_dueHelpBlock" class="form-text text-muted">Date before which the counting should be completed</span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <input
+                            hidden
+                            id="status"
+                            name="status"
+                            type="text"
+                            class="form-control"
+                            aria-describedby="statusHelpBlock"
+                            required="required"
+                            readonly
+                    />
+                </div>
             </div>
 
-            <div class="form-group row">
-              <label for="notes" class="col-1 col-form-label">Notes</label>
-              <div class="col-11">
-                <textarea id="notes" name="notes" cols="40" rows="3" class="form-control" aria-describedby="notesHelpBlock"></textarea>
-                <span id="notesHelpBlock" class="form-text text-muted">Add notes to this request</span>
-              </div>
+            <div class="form-group row col-12 justify-content-evenly">
+                <button name="submit" type="submit" class="col-5 styled-btn btn-blue">Create</button>
+                <a
+                        name="submit"
+                        type="submit"
+                        class="col-5 styled-btn btn-red-dark text-align-center no-text-decoration"
+                        href="office_homepage.html"
+                >Back</a
+                >
             </div>
-            <div class="form-group row">
-              <input
-                hidden
-                id="date_creation"
-                name="date_creation"
-                type="text"
-                aria-describedby="date_creationHelpBlock"
-                required="required"
-                class="form-control"
-                readonly
-              />
-            </div>
-            <div class="form-group row">
-              <label for="date_due" class="col-1 col-form-label">Due Date</label>
-              <div class="col-11">
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <div class="input-group-text">
-                      <i class="fa fa-calendar"></i>
-                    </div>
-                  </div>
-                  <input
-                    id="date_due"
-                    name="date_due"
-                    type="date"
-                    class="form-control"
-                    aria-describedby="date_dueHelpBlock"
-                    required="required"
-                  />
-                </div>
-                <span id="date_dueHelpBlock" class="form-text text-muted">Date before which the counting should be completed</span>
-              </div>
-            </div>
-            <div class="form-group row">
-              <input
-                hidden
-                id="status"
-                name="status"
-                type="text"
-                class="form-control"
-                aria-describedby="statusHelpBlock"
-                required="required"
-                readonly
-              />
-            </div>
-          </div>
-
-          <div class="form-group row col-12 justify-content-evenly">
-            <button name="submit" type="submit" class="col-5 styled-btn btn-blue">Create</button>
-            <a
-              name="submit"
-              type="submit"
-              class="col-5 styled-btn btn-red-dark text-align-center no-text-decoration"
-              href="office_homepage.html"
-              >Back</a
-            >
-          </div>
         </form>
-      </div>
-    </main>
-  </body>
+    </div>
+</main>
+</body>
 </html>

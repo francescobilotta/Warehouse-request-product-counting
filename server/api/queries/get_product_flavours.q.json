@@ -2,6 +2,6 @@
   "name": "get_product_flavours",
   "database": "gestionale",
   "dialect": "oracle",
-  "query": "select a.cod_articolo, a.descrizione, a.cod_combi, abb.progressivo VARIANTE from anart055 a, abbin072 abb where a.cod_azienda = 'FG' and a.disabilitato = 0 and a.cod_articolo = '{f.articleCode}' and abb.cod_azienda (+) = a.cod_azienda and abb.cod_articolo (+) = a.cod_articolo and abb.disabilitato (+) = a.disabilitato"
+  "query": "select a.cod_articolo, a.descrizione, a.cod_combi, abb.progressivo VARIANTE from anart055 a, abbin072 abb where a.cod_azienda = 'FG' and a.disabilitato = 0 and a.cod_articolo = '{f.productCode}' and abb.cod_azienda (+) = a.cod_azienda and abb.cod_articolo (+) = a.cod_articolo and abb.disabilitato (+) = a.disabilitato"
 }
 

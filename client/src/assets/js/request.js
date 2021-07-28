@@ -37,3 +37,8 @@ class Requester {
     });
   }
 }
+
+class q_data {
+  constructor() {
+  }
+}
