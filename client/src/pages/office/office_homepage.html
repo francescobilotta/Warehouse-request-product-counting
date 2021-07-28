@@ -9,6 +9,77 @@
       function make_editable(element) {
         $("#edit-popup").show();
         const popup = $("#popup-data");
+        popup.attr("id", element.attr("id"));
+
+        const table_query_data = {
+          q_name: "office_requests_details",
+          q_data: {
+            "f.requestId": element.attr("id"),
+          },
+        };
+        const table_data_requester = new Requester(table_query_data, function (result) {
+          console.log(result.results[0]);
+          var image_size = "40px";
+          if (result.results[0].isClosed == 0) {
+            switch (result.results[0].requestState) {
+              case "countRequest":
+                $("#img_request_state").append(
+                  $(
+                    "<img src='../../assets/img/countRequest.png' height=' " +
+                      image_size +
+                      " ' width=' " +
+                      image_size +
+                      " ' title='Asked for count'>"
+                  )
+                );
+                break;
+              case "countDone":
+                $("#img_request_state").append(
+                  $(
+                    "<img src='../../assets/img/countDone.png' height=' " +
+                      image_size +
+                      " ' width=' " +
+                      image_size +
+                      " ' title='Count done'>"
+                  )
+                );
+                break;
+              case "recountRequest":
+                $("#img_request_state").append(
+                  $(
+                    "<img src='../../assets/img/recountRequest.png' height=' " +
+                      image_size +
+                      " ' width=' " +
+                      image_size +
+                      " ' title='Asked for recount'>"
+                  )
+                );
+                break;
+              case "recountDone":
+                $("#img_request_state").append(
+                  $(
+                    "<img src='../../assets/img/recountDone.png' height=' " +
+                      image_size +
+                      " ' width=' " +
+                      image_size +
+                      " ' title='Recount done'>"
+                  )
+                );
+                break;
+              default:
+            }
+          } else {
+            $("#img_request_state").append(
+              $("<img src='../../assets/img/closed.png' height=' " + image_size + " ' width=' " + image_size + " ' title='Recount done'>")
+            );
+          }
+        });
+        table_data_requester.query();
+        //switch(element.attr("requestState"))
+
+        //current_row.append(
+        //      $("<td>").append($("<img src='../../assets/img/countRequest.png' height='80px' width='80px' title='Asked for count'>"))
+        //  );
       }
 
       function register_clicks() {
@@ -73,7 +144,7 @@
                 <label for="req_id" class="col-1 col-form-label">Request Id</label>
                 <div class="row col-11">
                   <div class="input-group">
-                    <div class="input-group-prepend">X</div>
+                    <div class="input-group-prepend" id="img_request_state"></div>
                     <input
                       id="req_id"
                       name="req_id"
@@ -265,11 +336,11 @@
                 </div>
               </div>
 
-              <div class="col" style="padding-top: 10px">
-                <div class="form-group row col-12 justify-content-center">
+              <div class="row col-12 justify-content-center" style="padding-top: 10px">
+                <div class="form-group row col-10 margin-top-10 margin-bottom-10">
                   <button name="update" type="submit" class="styled-btn btn-blue">Update</button>
                 </div>
-                <div class="popup-buttons-wrapper justify-content-evenly">
+                <div class="popup-buttons-wrapper justify-content-evenly margin-top-10 margin-bottom-10">
                   <button name="close" type="submit" class="col-5 styled-btn btn-red">
                     <img src="../../assets/img/closed_icon.png" alt="Close" />
                   </button>
