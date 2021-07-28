@@ -15,8 +15,8 @@ try {
 
     $_SESSION = $_SESSION + array("q_data"=>$q_data) + (array) json_decode($q_details) + (array) json_decode($db_data);
 
-
-    header("Location: querier.php");
+    var_dump($_SESSION);
+//    header("Location: querier.php");
 
 }
 catch (Exception $e) {
