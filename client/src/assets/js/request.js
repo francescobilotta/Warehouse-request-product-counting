@@ -27,7 +27,7 @@ class Requester {
         console.log(error);
         this.result = undefined;
       },
-    }.done((data) => {
+    }).done((data) => {
       if (data.status === "ok") {
         this.result = data;
         this.results_callback(this.result);
@@ -35,7 +35,7 @@ class Requester {
         console.log("Error, the api has encountered a problem. Status: " + data.status);
         this.result = undefined;
       }
-    }));
+    });
   }
 }
 
