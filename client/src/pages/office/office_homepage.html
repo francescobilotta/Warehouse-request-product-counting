@@ -24,6 +24,7 @@
           if (result.results[0].isClosed == 0) {
             switch (result.results[0].requestState) {
               case "countRequest":
+                alert("ciao");
                 create_img_request_state("request_state", "../../assets/img/countRequest.png", image_size, "Asked for count");
                 break;
               case "countDone":
@@ -86,11 +87,18 @@
           q_name: "office_requests",
           q_data: {},
         };
-        const table_data_requester = new Requester(table_query_data, function (result) {
-          table_maker(result.results, "request-table-container", table_headers_strings);
-          register_clicks();
-        });
-        table_data_requester.query();
+        //const table_data_requester = new Requester(table_query_data, function (result) {
+        //  table_maker(result.results, "request-table-container", table_headers_strings);
+        //  register_clicks();
+        //});
+        //table_data_requester.query();
+
+        //function getJSON(path) {
+        //  return fetch(path).then((response) => response.json());
+        //}
+        //getJSON("./datatest.json").then((info) => {
+        //  table_maker(info, "request-table-container", table_headers_strings);
+        //});
       });
     </script>
   </head>
