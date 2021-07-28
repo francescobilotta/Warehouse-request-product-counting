@@ -53,17 +53,6 @@ class OracleDB {
 
 }
 
-
-
-$k=0;
-while($row=oci_fetch_assoc($stid)) {
-    $materiale = $row['COD'];
-    $descrizione = $row['DESCRIZIONE'];
-    echo $materiale;
-    echo $descrizione;
-    $k=$k+1;
-
-}
 ?>
 
 
