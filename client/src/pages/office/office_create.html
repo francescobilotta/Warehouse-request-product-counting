@@ -49,7 +49,7 @@
       }
 
       function activate_auto_compilation() {
-        $("#req_id").focusout(function (e) {
+        $("#req_id").blur(function (e) {
           generate_flavours(this.value);
         });
       }

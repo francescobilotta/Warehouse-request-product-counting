@@ -16,6 +16,11 @@ and abb.cod_articolo (+) = a.cod_articolo
 and abb.disabilitato (+) = a.disabilitato
 
 
+
+---!!! SEZIONE WAREHOUSE !!!---
+
+
+
 -- Selezione dell'ubicazione predefinita (può non esserci), inserire come input il cod_articolo e il cod_variante --
 -- ATTENZIONE: potete trovare record multipli
 select l.cod_articolo, l.cod_variante, l.loc_default, l.zona, l.corridoio, l.traversa, l.altezza
