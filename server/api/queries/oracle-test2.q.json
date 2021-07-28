@@ -1,0 +1,6 @@
+{
+  "name": "oracle-test2",
+  "database": "gestionale",
+  "dialect": "oracle",
+  "query": "select a.cod_articolo, a.descrizione from anart055 a where a.cod_azienda = 'FG' and a.disabilitato = 0 Order by a.cod_articolo"
+}
