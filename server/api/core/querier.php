@@ -44,6 +44,7 @@ $ROUTES = [
         redirect($data);
     },
 ];
+$filled_query = $query;
 if ($q_data) {
     $filled_query = fill_query_data($query, $q_data);
 }
