@@ -19,33 +19,28 @@
         };
         const table_data_requester = new Requester(table_query_data, function (result) {
           var image_size = "40px";
+          console.log(result);
+          console.log(result.results);
           console.log(result.results[0]);
           $("#req_id").val(element.attr("id"));
           if (result.results[0].isClosed == 0) {
             switch (result.results[0].requestState) {
               case "countRequest":
-                alert("ciao");
-                create_img_request_state("request_state", "../../assets/img/countRequest.png", image_size, "Asked for count");
+                append_img_request_state("request_state", "../../assets/img/countRequest.png", image_size, "Asked for count");
                 break;
               case "countDone":
-                create_img_request_state("request_state", "../../assets/img/countDone.png", image_size, "Count done");
+                append_img_request_state("request_state", "../../assets/img/countDone.png", image_size, "Count done");
                 break;
               case "recountRequest":
-                create_img_request_state("request_state", "../../assets/img/recountRequest.png", image_size, "Asked for recount");
-                $("#img_request_state").remove();
+                append_img_request_state("request_state", "../../assets/img/recountRequest.png", image_size, "Asked for recount");
                 break;
               case "recountDone":
-                create_img_request_state("request_state", "../../assets/img/recountDone.png", image_size, "Recount done");
+                append_img_request_state("request_state", "../../assets/img/recountDone.png", image_size, "Recount done");
                 break;
               default:
             }
           } else {
-            $("#img_request_state").remove();
-            $("#request_state").append(
-              $("<div id='img_request_state'>").append(
-                $("<img src='../../assets/img/closed.png' height=' " + image_size + " ' width=' " + image_size + " ' title='Recount done'>")
-              )
-            );
+            append_img_request_state("request_state", "../../assets/img/closed.png", image_size, "Recount done");
           }
         });
         table_data_requester.query();
@@ -87,11 +82,11 @@
           q_name: "office_requests",
           q_data: {},
         };
-        //const table_data_requester = new Requester(table_query_data, function (result) {
-        //  table_maker(result.results, "request-table-container", table_headers_strings);
-        //  register_clicks();
-        //});
-        //table_data_requester.query();
+        const table_data_requester = new Requester(table_query_data, function (result) {
+          table_maker(result.results, "request-table-container", table_headers_strings);
+          register_clicks();
+        });
+        table_data_requester.query();
 
         //function getJSON(path) {
         //  return fetch(path).then((response) => response.json());
