@@ -23,6 +23,7 @@
       function get_products() {
         const product_codes_data = {
           q_name: "get_products_names",
+          q_data: {}
         };
 
         const product_codes_requester = new Requester(product_codes_data, function (result) {
