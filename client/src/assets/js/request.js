@@ -22,21 +22,20 @@ class Requester {
       url: this.req_url,
       dataType: this.req_ret_type,
       data: ajax_data,
-      success: (data) => {
-        if (data.status === "ok") {
-          this.result = data;
-          this.results_callback(this.result);
-        } else {
-          console.log("Error, the api has encountered a problem. Status: " + data.status);
-          this.result = undefined;
-        }
-      },
       error: (error) => {
         console.log("Error, the ajax request could not be completed. Message: " + error);
         console.log(error);
         this.result = undefined;
       },
-    });
+    }.done((data) => {
+      if (data.status === "ok") {
+        this.result = data;
+        this.results_callback(this.result);
+      } else {
+        console.log("Error, the api has encountered a problem. Status: " + data.status);
+        this.result = undefined;
+      }
+    }));
   }
 }
 
