@@ -12,67 +12,38 @@
         popup.attr("id", element.attr("id"));
 
         const table_query_data = {
-          /* q_name: "office_requests_details",
+          q_name: "office_requests_details",
           q_data: {
             "f.requestId": element.attr("id"),
-          }, */
-          q_name: "oracle-test",
-          q_data: {},
+          },
         };
         const table_data_requester = new Requester(table_query_data, function (result) {
-          console.log(result.results[0]);
           var image_size = "40px";
+          console.log(result.results[0]);
+          $("#req_id").val(element.attr("id"));
           if (result.results[0].isClosed == 0) {
             switch (result.results[0].requestState) {
               case "countRequest":
-                $("#img_request_state").append(
-                  $(
-                    "<img src='../../assets/img/countRequest.png' height=' " +
-                      image_size +
-                      " ' width=' " +
-                      image_size +
-                      " ' title='Asked for count'>"
-                  )
-                );
+                create_img_request_state("request_state", "../../assets/img/countRequest.png", image_size, "Asked for count");
                 break;
               case "countDone":
-                $("#img_request_state").append(
-                  $(
-                    "<img src='../../assets/img/countDone.png' height=' " +
-                      image_size +
-                      " ' width=' " +
-                      image_size +
-                      " ' title='Count done'>"
-                  )
-                );
+                create_img_request_state("request_state", "../../assets/img/countDone.png", image_size, "Count done");
                 break;
               case "recountRequest":
-                $("#img_request_state").append(
-                  $(
-                    "<img src='../../assets/img/recountRequest.png' height=' " +
-                      image_size +
-                      " ' width=' " +
-                      image_size +
-                      " ' title='Asked for recount'>"
-                  )
-                );
+                create_img_request_state("request_state", "../../assets/img/recountRequest.png", image_size, "Asked for recount");
+                $("#img_request_state").remove();
                 break;
               case "recountDone":
-                $("#img_request_state").append(
-                  $(
-                    "<img src='../../assets/img/recountDone.png' height=' " +
-                      image_size +
-                      " ' width=' " +
-                      image_size +
-                      " ' title='Recount done'>"
-                  )
-                );
+                create_img_request_state("request_state", "../../assets/img/recountDone.png", image_size, "Recount done");
                 break;
               default:
             }
           } else {
-            $("#img_request_state").append(
-              $("<img src='../../assets/img/closed.png' height=' " + image_size + " ' width=' " + image_size + " ' title='Recount done'>")
+            $("#img_request_state").remove();
+            $("#request_state").append(
+              $("<div id='img_request_state'>").append(
+                $("<img src='../../assets/img/closed.png' height=' " + image_size + " ' width=' " + image_size + " ' title='Recount done'>")
+              )
             );
           }
         });
@@ -141,7 +112,7 @@
                 <label for="req_id" class="col-1 col-form-label">Request Id</label>
                 <div class="row col-11">
                   <div class="input-group">
-                    <div class="input-group-prepend" id="img_request_state"></div>
+                    <div class="input-group-prepend" id="request_state"></div>
                     <input
                       id="req_id"
                       name="req_id"
