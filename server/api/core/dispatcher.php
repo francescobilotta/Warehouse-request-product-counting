@@ -1,9 +1,11 @@
 <?php
+session_start();
 
-$query_file = $_SESSION['q_file'];
+$query_file = $_SESSION['q_name'] . ".q.json";
 $q_data = $_SESSION['q_data'];
 
 try {
+
     $q_details = file_get_contents("../queries/" . $query_file);
     if (!$q_details) { throw new Exception("bad_json.q. File name = '$query_file'"); };
 

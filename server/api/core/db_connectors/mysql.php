@@ -1,7 +1,7 @@
 <?php
 namespace mysql;
 use mysqli;
-
+session_start();
 class MYSQL {
     static function init() {
         $host = $_SESSION['host'];

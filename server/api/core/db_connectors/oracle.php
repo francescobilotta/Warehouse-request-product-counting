@@ -1,7 +1,7 @@
 <?php
 namespace oracleDB;
 use Exception;
-
+session_start();
 class OracleDB {
     static function init()
     {
