@@ -39,7 +39,10 @@ $ROUTES = [
         redirect($data);
     },
     "oracle" => function ($query) {
-        redirect(array());
+        $db_conn = OracleDB::init();
+        $data = OracleDB::query($db_conn, $query);
+        OracleDB::close($db_conn);
+        redirect($data);
     },
 ];
 $filled_query = fill_query_data($query, $q_data);

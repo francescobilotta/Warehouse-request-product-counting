@@ -21,6 +21,7 @@ class OracleDB {
             echo json_encode(array("status"=>"bad_connection.db"));
             trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
         }
+        return $conn;
     }
 
     static function query($db, $query)
