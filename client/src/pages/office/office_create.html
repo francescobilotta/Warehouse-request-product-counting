@@ -31,8 +31,8 @@
                 console.log(result);
             });
 
-            product_codes_requester.query(new ajax_data("get_products_names"));
             product_flavour_requester.query(new ajax_data("get_product_flavours", {"f.productCode": 11210}));
+            product_codes_requester.query(new ajax_data("get_products_names"));
         });
     </script>
 </head>
