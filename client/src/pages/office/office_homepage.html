@@ -11,31 +11,78 @@
         const popup = $("#popup-data");
         popup.attr("id", element.attr("id"));
 
+        //Get details data
         const table_query_data = {
           q_name: "office_requests_details",
           q_data: {
             "f.requestId": element.attr("id"),
           },
         };
+
+        //For popup
         const table_data_requester = new Requester(table_query_data, function (result) {
+          //Get today data
+          const now = new Date();
+          const day = ("0" + now.getDate()).slice(-2);
+          const month = ("0" + (now.getMonth() + 1)).slice(-2);
+          const today = now.getFullYear() + "-" + month + "-" + day;
           var image_size = "40px";
-          console.log(result);
-          console.log(result.results);
-          console.log(result.results[0]);
+
+          //Product Info
+          $("#prod_code").val(result.results[0].productCode);
+          $("#prod_name").val(result.results[0].productName);
+          $("#prod_variant").val(result.results[0].productFlavour);
+          $("#notes").val(result.results[0].notes);
+          $("#date_due").val(result.results[0].dueDate.split(" ")[0]).attr({
+            min: today,
+          });
+          $("#date_creation").val(result.results[0].requestDate);
+          $("#count_previous").val(result.results[0].previousCount);
+          $("#count_last").val(result.results[0].lastCount);
+
+          //Hide all buttons before selecting which to show
+          $("#btn-update-container").hide();
+          $("#btn-close-container").hide();
+          $("#btn-recount-container").hide();
+
+          //RequestState
           $("#req_id").val(element.attr("id"));
           if (result.results[0].isClosed == 0) {
             switch (result.results[0].requestState) {
               case "countRequest":
-                append_img_request_state("request_state", "../../assets/img/countRequest.png", image_size, "Asked for count");
+                append_img_request_state(
+                  "request_state",
+                  "../../assets/img/countRequest.png",
+                  image_size,
+                  "Asked for count"
+                );
+                $("#btn-update-container").show();
+                $("#btn-close-container").show();
                 break;
               case "countDone":
                 append_img_request_state("request_state", "../../assets/img/countDone.png", image_size, "Count done");
+                $("#btn-update-container").show();
+                $("#btn-close-container").show();
+                $("#btn-recount-container").show();
                 break;
               case "recountRequest":
-                append_img_request_state("request_state", "../../assets/img/recountRequest.png", image_size, "Asked for recount");
+                append_img_request_state(
+                  "request_state",
+                  "../../assets/img/recountRequest.png",
+                  image_size,
+                  "Asked for recount"
+                );
+                $("#btn-close-container").show();
                 break;
               case "recountDone":
-                append_img_request_state("request_state", "../../assets/img/recountDone.png", image_size, "Recount done");
+                append_img_request_state(
+                  "request_state",
+                  "../../assets/img/recountDone.png",
+                  image_size,
+                  "Recount done"
+                );
+                $("#btn-close-container").show();
+                $("#btn-recount-container").show();
                 break;
               default:
             }
@@ -64,10 +111,12 @@
         });
       }
 
+      //Get table data
       $(document).ready(function () {
         $("#edit-popup").hide();
 
         const table_headers_strings = {
+          "IS CLOSED": "isClosed",
           STATUS: "requestState",
           PRODUCT: "productName",
           FLAVOUR: "productFlavour",
@@ -189,7 +238,9 @@
                           readonly
                         />
                       </div>
-                      <span id="prod_variantHelpBlock" class="form-text text-muted">The specific variant of this product</span>
+                      <span id="prod_variantHelpBlock" class="form-text text-muted"
+                        >The specific variant of this product</span
+                      >
                     </div>
                   </div>
                 </div>
@@ -200,7 +251,14 @@
                 <label for="notes" class="col-1 col-form-label">Notes</label>
                 <div class="row col-11">
                   <div class="input-group">
-                    <textarea id="notes" name="notes" cols="20" rows="2" class="form-control" aria-describedby="notesHelpBlock"></textarea>
+                    <textarea
+                      id="notes"
+                      name="notes"
+                      cols="20"
+                      rows="2"
+                      class="form-control"
+                      aria-describedby="notesHelpBlock"
+                    ></textarea>
                   </div>
                   <span id="notesHelpBlock" class="form-text text-muted">Add notes to this request</span>
                 </div>
@@ -228,7 +286,9 @@
                           required="required"
                         />
                       </div>
-                      <span id="date_dueHelpBlock" class="form-text text-muted">Date before which the counting should be completed</span>
+                      <span id="date_dueHelpBlock" class="form-text text-muted"
+                        >Date before which the counting should be completed</span
+                      >
                     </div>
                   </div>
 
@@ -251,7 +311,9 @@
                           readonly
                         />
                       </div>
-                      <span id="date_creationHelpBlock" class="form-text text-muted">The creation date of the request</span>
+                      <span id="date_creationHelpBlock" class="form-text text-muted"
+                        >The creation date of the request</span
+                      >
                     </div>
                   </div>
                 </div>
@@ -279,7 +341,9 @@
                           readonly
                         />
                       </div>
-                      <span id="count_previousHelpBlock" class="form-text text-muted">Automatically generated previous count</span>
+                      <span id="count_previousHelpBlock" class="form-text text-muted"
+                        >Automatically generated previous count</span
+                      >
                     </div>
                   </div>
 
@@ -301,14 +365,29 @@
               </div>
 
               <div class="row col-12 justify-content-center" style="padding-top: 10px">
-                <div class="form-group row col-10 margin-top-10 margin-bottom-10">
-                  <button name="update" type="submit" class="styled-btn btn-blue">Update</button>
+                <div class="col-10 form-group row col-10 margin-10" id="btn-update-container">
+                  <button name="update" type="submit" class="styled-btn btn-blue" onclick="alert('ciao')">
+                    Update
+                  </button>
                 </div>
-                <div class="popup-buttons-wrapper justify-content-evenly margin-top-10 margin-bottom-10">
-                  <button name="close" type="submit" class="col-5 styled-btn btn-red">
+                <div class="row col-12 popup-buttons-wrapper justify-content-evenly margin-10">
+                  <button
+                    name="close"
+                    type="submit"
+                    class="col-5 styled-btn btn-red"
+                    onclick="closeRequest()"
+                    id="btn-close-container"
+                  >
                     <img src="../../assets/img/closed_icon.png" alt="Close" />
                   </button>
-                  <button name="recount" type="submit" class="col-5 styled-btn btn-yellow">
+
+                  <button
+                    name="recount"
+                    type="submit"
+                    class="col-5 styled-btn btn-yellow"
+                    onclick="askRecount()"
+                    id="btn-recount-container"
+                  >
                     <img src="../../assets/img/recountRequest_icon.png" alt="Recount" />
                   </button>
                 </div>
@@ -323,6 +402,7 @@
       <!--  -->
       <div class="header weight-800">Office</div>
 
+      <button onClick="updateRequest('ciao', '2021-12-12', '2')">Click</button>
       <!--  -->
       <!-- Sub Header -->
       <!--  -->
@@ -353,7 +433,11 @@
           </ul>
         </div>
 
-        <a type="button" id="btn-add-request" class="styled-btn btn-blue text-align-center no-text-decoration" href="office_create.html"
+        <a
+          type="button"
+          id="btn-add-request"
+          class="styled-btn btn-blue text-align-center no-text-decoration"
+          href="office_create.html"
           >Add Request</a
         >
       </div>

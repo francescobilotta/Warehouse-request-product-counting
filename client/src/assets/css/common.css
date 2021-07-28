@@ -107,12 +107,13 @@ body {
 .weight-800 {
   font-weight: 800;
 }
-/* Margin */
-.margin-top-10 {
-  margin-top: 10px;
+/* Display */
+.missing {
+  display: none;
 }
-.margin-bottom-10 {
-  margin-bottom: 10px;
+/* Margin */
+.margin-10 {
+  margin: 10px 10px 10px 10px;
 }
 /* Dropdown */
 .dropdown-menu > li:hover {
