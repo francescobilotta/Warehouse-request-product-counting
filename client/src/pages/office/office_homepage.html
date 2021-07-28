@@ -3,7 +3,7 @@
   <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-      $("head").load("../../components/head.html?123123");
+      $("head").load("../../components/head.html?1231234");
     </script>
     <script>
       function make_editable(element) {
@@ -12,10 +12,12 @@
         popup.attr("id", element.attr("id"));
 
         const table_query_data = {
-          q_name: "office_requests_details",
+          /* q_name: "office_requests_details",
           q_data: {
             "f.requestId": element.attr("id"),
-          },
+          }, */
+          q_name: "oracle-test",
+          q_data: {},
         };
         const table_data_requester = new Requester(table_query_data, function (result) {
           console.log(result.results[0]);
@@ -75,11 +77,6 @@
           }
         });
         table_data_requester.query();
-        //switch(element.attr("requestState"))
-
-        //current_row.append(
-        //      $("<td>").append($("<img src='../../assets/img/countRequest.png' height='80px' width='80px' title='Asked for count'>"))
-        //  );
       }
 
       function register_clicks() {
