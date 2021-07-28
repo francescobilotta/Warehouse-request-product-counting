@@ -7,14 +7,14 @@ use oracleDB\OracleDB;
 require 'db_connectors/mysql.php';
 require 'db_connectors/oracle.php';
 
-$query = $_GET['query'];
-$dialect = $_GET['dialect'];
-$q_data = $_GET['q_data'];
+$query = $_SESSION['query'];
+$dialect = $_SESSION['dialect'];
+$q_data = $_SESSION['q_data'];
 
 
 function redirect($data) {
-    $url_data = http_build_query(array('q_result' => $data));
-    header("Location: formatter.php?$url_data");
+    $_SESSION['q_result'] = $data;
+    header("Location: formatter.php");
     exit();
 }
 

@@ -5,10 +5,10 @@ use Exception;
 class OracleDB {
     static function init()
     {
-        $host = $_GET['host'];
-        $port = $_GET['port'];
-        $username = $_GET['username'];
-        $password = $_GET['password'];
+        $host = $_SESSION['host'];
+        $port = $_SESSION['port'];
+        $username = $_SESSION['username'];
+        $password = $_SESSION['password'];
 
         $db="(DESCRIPTION = 
                 (ADDRESS = (PROTOCOL = TCP)(HOST = $host)(PORT = $port))
@@ -19,6 +19,7 @@ class OracleDB {
         if (!$conn) {
             $e = oci_error();
             echo json_encode(array("status"=>"bad_connection.db"));
+            session_destroy();
             trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
         }
         return $conn;
@@ -42,6 +43,7 @@ class OracleDB {
         }
         catch (Exception $e) {
             echo json_encode(array("status"=>"$e"));
+            session_destroy();
             die("Could not execute query");
         }
 
