@@ -3,5 +3,5 @@
   "database": "portale",
   "schema": "testing",
   "dialect": "mysql",
-  "query": "INSERT INTO testing.Request (requestDate, productCode, productName, productFlavour, dueDate, requestState, expectedCount, previousCount, lastCount, notes, expectedGroundCount) VALUES ('{d.requestDate}', '{d.productCode}', '{d.productName}', '{d.productFlavour}', '{d.dueDate}', '{d.requestState}', '{d.expectedCount}', '{d.previousCount}', '{d.lastCount}', '{d.notes}','{d.expectedGroundCount}')"
+  "query": "INSERT INTO testing.Request (requestDate, productCode, productName, productFlavour, dueDate, requestState, notes) VALUES ('{d.requestDate}', '{d.productCode}', '{d.productName}', '{d.productFlavour}', '{d.dueDate}', '{d.requestState}', '{d.notes}')"
 }

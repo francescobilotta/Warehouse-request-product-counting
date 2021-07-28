@@ -21,11 +21,7 @@
 - {d.productFlavour}
 - {d.dueDate}
 - {d.requestState}
-- {d.expectedCount}
-- {d.previousCount}
-- {d.lastCount}
 - {d.notes}
-- {d.expectedGroundCount}
 
 ---
 

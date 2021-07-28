@@ -76,6 +76,20 @@ body {
 .btn-yellow:hover {
   background-color: #ffe680 !important;
 }
+.btn-green {
+  border: 5px solid #90de87 !important;
+  color: #90de87 !important;
+}
+.btn-green:hover {
+  background-color: #90de87 !important;
+}
+.btn-orange {
+  border: 5px solid #ffccaa !important;
+  color: #ffccaa !important;
+}
+.btn-orange:hover {
+  background-color: #ffccaa !important;
+}
 
 /* Dropdown */
 .dropdown-menu > li:hover {
