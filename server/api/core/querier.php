@@ -44,5 +44,8 @@ $ROUTES = [
         redirect($data);
     },
 ];
-$filled_query = fill_query_data($query, $q_data);
+if ($q_data) {
+    $filled_query = fill_query_data($query, $q_data);
+}
+
 $ROUTES[$dialect]($filled_query);
