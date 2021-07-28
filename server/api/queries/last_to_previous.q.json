@@ -1,7 +1,4 @@
 {
-  "name": "last_to_previous",
   "database": "portale",
-  "schema": "testing",
-  "dialect": "mysql",
   "query": "UPDATE testing.Request SET previousCount = lastCount WHERE requestId = '{f.requestId}'"
 }

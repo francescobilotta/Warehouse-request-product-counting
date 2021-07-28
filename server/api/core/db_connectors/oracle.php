@@ -1,17 +1,15 @@
 <?php
 namespace oracleDB;
-//ini_set('display_errors', 1);
-//ini_set('display_startup_errors', 1);
-//error_reporting(E_ALL);
 use Exception;
-
+///  Received post variables:
+///  host, port, username, password, dialect, database, query, data
 class OracleDB {
     static function init()
     {
-        $host = $_SESSION['host'];
-        $port = $_SESSION['port'];
-        $username = $_SESSION['username'];
-        $password = $_SESSION['password'];
+        $host = $_POST['host'];
+        $port = $_POST['port'];
+        $username = $_POST['username'];
+        $password = $_POST['password'];
 
         $db="(DESCRIPTION = 
                 (ADDRESS = (PROTOCOL = TCP)(HOST = $host)(PORT = $port))
@@ -22,7 +20,6 @@ class OracleDB {
         if (!$conn) {
             $e = oci_error();
             echo json_encode(array("status"=>"bad_connection.db"));
-            session_destroy();
             trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
         }
         return $conn;
@@ -46,7 +43,6 @@ class OracleDB {
         }
         catch (Exception $e) {
             echo json_encode(array("status"=>"$e"));
-            session_destroy();
             die("Could not execute query");
         }
 
@@ -58,7 +54,4 @@ class OracleDB {
     }
 
 }
-
 ?>
-
-

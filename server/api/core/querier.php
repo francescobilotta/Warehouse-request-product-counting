@@ -2,27 +2,24 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-session_start();
+
 use mysql\MYSQL;
 use oracleDB\OracleDB;
 
 require 'db_connectors/mysql.php';
 require 'db_connectors/oracle.php';
 
-$query = $_SESSION['query'];
-$dialect = $_SESSION['dialect'];
-$q_data = $_SESSION['q_data'];
 
-
-function redirect($data) {
-    $_SESSION['q_result'] = $data;
-    header("Location: formatter.php");
+function format($raw_data) {
+    echo json_encode(array("results"=>$raw_data, "status"=>"ok"));
     exit();
 }
 
 function fill_query_data($query, $data) {
     // using regex replaces all patterns like: {<d||f>.<name>} with the value passed to the api in q_data
-    return preg_replace_callback('/\{((\w)\.(.+?))\}/i',
+    $pattern = '/\{((\w)\.(.+?))\}/i';
+
+    return preg_replace_callback($pattern,
         function($matches) use($data) {
             if (!in_array($matches[1], array_keys($data))) {
                 echo json_encode(array("status"=>"bad_data. Not all values have been given. Missing: " . $matches[1]));
@@ -38,22 +35,17 @@ $ROUTES = [
         $db_conn = MYSQL::init();
         $data = MYSQL::query($db_conn, $query);
         MYSQL::close($db_conn);
-        redirect($data);
+        format($data);
     },
     "oracle" => function ($query) {
         $db_conn = OracleDB::init();
         $data = OracleDB::query($db_conn, $query);
         OracleDB::close($db_conn);
-        redirect($data);
+        format($data);
     },
 ];
 
-var_dump($q_data);
+///  Received post variables:
+///  host, port, username, password, dialect, database, query, data
 
-if ($q_data) {
-    $filled_query = fill_query_data($query, $q_data);
-}
-else {
-    $filled_query = $query;
-}
-$ROUTES[$dialect]($filled_query);
+$ROUTES[$_POST['dialect']](fill_query_data($_POST['query'], $_POST['data']));

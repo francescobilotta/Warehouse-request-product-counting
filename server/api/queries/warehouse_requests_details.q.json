@@ -1,7 +1,4 @@
 {
-  "name": "warehouse_requests_details",
   "database": "portale",
-  "schema": "testing",
-  "dialect": "mysql",
   "query": "SELECT requestId, productCode, productName, productFlavour, notes, requestDate, dueDate, expectedCount, expectedGroundCount FROM testing.Request WHERE requestId = '{f.requestId}'"
 }
