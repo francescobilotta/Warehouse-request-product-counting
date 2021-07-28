@@ -1,6 +1,6 @@
 <?php
 
-$query_file = $_SESSION['q_file'];
+$query_file = $_SESSION['q_name'] . ".q.json";
 $q_data = $_SESSION['q_data'];
 
 try {
