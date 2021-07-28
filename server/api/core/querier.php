@@ -35,13 +35,15 @@ $ROUTES = [
         $db_conn = MYSQL::init();
         $data = MYSQL::query($db_conn, $query);
         MYSQL::close($db_conn);
-        redirect($data);
+        var_dump($data);
+//        redirect($data);
     },
     "oracle" => function ($query) {
         $db_conn = OracleDB::init();
         $data = OracleDB::query($db_conn, $query);
         OracleDB::close($db_conn);
-        redirect($data);
+        var_dump($data);
+//        redirect($data);
     },
 ];
 $filled_query = $query;
