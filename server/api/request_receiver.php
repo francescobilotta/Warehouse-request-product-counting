@@ -1,7 +1,9 @@
 <?php
+
 //ini_set('display_errors', 1);
 //ini_set('display_startup_errors', 1);
 //error_reporting(E_ALL);
+session_destroy();
 session_start();
 
 $_SESSION['q_name'] = $_GET['q_name'];
