@@ -3,7 +3,7 @@
   <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-      $("head").load("../../components/head.html?123123");
+      $("head").load("../../components/head.html?1232123");
     </script>
 
     <script>
@@ -13,18 +13,25 @@
         const month = ("0" + (now.getMonth() + 1)).slice(-2);
         const today = now.getFullYear() + "-" + month + "-" + day;
 
-        $("#date_due").val(today);
-        $("#date_due").attr({
+        $("#date_due").val(today).attr({
           min: today,
         });
 
         //Query
-        const table_query_data = {
+        const product_codes_data = {
           q_name: "office_requests",
           q_data: {},
         };
-        const table_data_requester = new Requester(table_query_data, function (result) {});
-        table_data_requester.query();
+        const product_codes_requester = new Requester(product_codes_data, function (result) {});
+        product_codes_requester.query();
+
+        const product_flavour_data = {
+          q_name: "office_requests",
+          q_data: {},
+        };
+        const product_flavour_requester = new Requester(product_codes_data, function (result) {});
+        product_codes_requester.query();
+
       });
     </script>
   </head>
