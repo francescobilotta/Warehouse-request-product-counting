@@ -3,7 +3,6 @@ function append_img_request_state(divToAppend, url, imgSize, title) {
   var url = url;
   var imgSize = imgSize;
   var title = title;
-  alert("#");
   $("#img_request_state").remove();
   $("#" + divToAppend + "").append(
     $("<div id='img_request_state'>").append(
