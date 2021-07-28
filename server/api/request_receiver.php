@@ -13,4 +13,4 @@ else {
     session_destroy();
 }
 
-exit();
+exit;
