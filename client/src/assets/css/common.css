@@ -107,6 +107,13 @@ body {
 .weight-800 {
   font-weight: 800;
 }
+/* Margin */
+.margin-top-10 {
+  margin-top: 10px;
+}
+.margin-bottom-10 {
+  margin-bottom: 10px;
+}
 /* Dropdown */
 .dropdown-menu > li:hover {
   background-color: #7da8c5;
