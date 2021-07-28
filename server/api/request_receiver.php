@@ -4,7 +4,7 @@ session_start();
 $_SESSION['q_name'] = $_GET['q_name'];
 $_SESSION['q_data'] = $_GET['q_data'];
 
-if (isset($query_name))
+if (isset($_SESSION['q_name']))
 {
     header("Location: core/dispatcher.php");
 }
