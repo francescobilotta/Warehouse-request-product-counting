@@ -20,6 +20,7 @@
 - Show locations of products
 - Show amount of products ready to be shipped (expectedGroundCount)
 - On input count: change state to countDone or recountDone, update previousCount and lastCount,
+- Count input doesn't accept empty field or negative numbers
 
 ### In warehouse director
 
