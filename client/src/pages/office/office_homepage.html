@@ -50,12 +50,7 @@
           if (result.results[0].isClosed == 0) {
             switch (result.results[0].requestState) {
               case "countRequest":
-                append_img_request_state(
-                  "request_state",
-                  "../../assets/img/countRequest.png",
-                  image_size,
-                  "Asked for count"
-                );
+                append_img_request_state("request_state", "../../assets/img/countRequest.png", image_size, "Asked for count");
                 $("#btn-update-container").show();
                 $("#btn-close-container").show();
                 break;
@@ -66,21 +61,13 @@
                 $("#btn-recount-container").show();
                 break;
               case "recountRequest":
-                append_img_request_state(
-                  "request_state",
-                  "../../assets/img/recountRequest.png",
-                  image_size,
-                  "Asked for recount"
-                );
+                append_img_request_state("request_state", "../../assets/img/recountRequest.png", image_size, "Asked for recount");
+                $("#btn-update-container").show();
                 $("#btn-close-container").show();
                 break;
               case "recountDone":
-                append_img_request_state(
-                  "request_state",
-                  "../../assets/img/recountDone.png",
-                  image_size,
-                  "Recount done"
-                );
+                append_img_request_state("request_state", "../../assets/img/recountDone.png", image_size, "Recount done");
+                $("#btn-update-container").show();
                 $("#btn-close-container").show();
                 $("#btn-recount-container").show();
                 break;
@@ -238,9 +225,7 @@
                           readonly
                         />
                       </div>
-                      <span id="prod_variantHelpBlock" class="form-text text-muted"
-                        >The specific variant of this product</span
-                      >
+                      <span id="prod_variantHelpBlock" class="form-text text-muted">The specific variant of this product</span>
                     </div>
                   </div>
                 </div>
@@ -251,14 +236,7 @@
                 <label for="notes" class="col-1 col-form-label">Notes</label>
                 <div class="row col-11">
                   <div class="input-group">
-                    <textarea
-                      id="notes"
-                      name="notes"
-                      cols="20"
-                      rows="2"
-                      class="form-control"
-                      aria-describedby="notesHelpBlock"
-                    ></textarea>
+                    <textarea id="notes" name="notes" cols="20" rows="2" class="form-control" aria-describedby="notesHelpBlock"></textarea>
                   </div>
                   <span id="notesHelpBlock" class="form-text text-muted">Add notes to this request</span>
                 </div>
@@ -286,9 +264,7 @@
                           required="required"
                         />
                       </div>
-                      <span id="date_dueHelpBlock" class="form-text text-muted"
-                        >Date before which the counting should be completed</span
-                      >
+                      <span id="date_dueHelpBlock" class="form-text text-muted">Date before which the counting should be completed</span>
                     </div>
                   </div>
 
@@ -311,9 +287,7 @@
                           readonly
                         />
                       </div>
-                      <span id="date_creationHelpBlock" class="form-text text-muted"
-                        >The creation date of the request</span
-                      >
+                      <span id="date_creationHelpBlock" class="form-text text-muted">The creation date of the request</span>
                     </div>
                   </div>
                 </div>
@@ -341,9 +315,7 @@
                           readonly
                         />
                       </div>
-                      <span id="count_previousHelpBlock" class="form-text text-muted"
-                        >Automatically generated previous count</span
-                      >
+                      <span id="count_previousHelpBlock" class="form-text text-muted">Automatically generated previous count</span>
                     </div>
                   </div>
 
@@ -366,28 +338,14 @@
 
               <div class="row col-12 justify-content-center" style="padding-top: 10px">
                 <div class="col-10 form-group row col-10 margin-10" id="btn-update-container">
-                  <button name="update" type="submit" class="styled-btn btn-blue" onclick="alert('ciao')">
-                    Update
-                  </button>
+                  <button name="update" type="submit" class="styled-btn btn-blue" onclick="alert('ciao')">Update</button>
                 </div>
                 <div class="row col-12 popup-buttons-wrapper justify-content-evenly margin-10">
-                  <button
-                    name="close"
-                    type="submit"
-                    class="col-5 styled-btn btn-red"
-                    onclick="closeRequest()"
-                    id="btn-close-container"
-                  >
+                  <button name="close" type="submit" class="col-5 styled-btn btn-red" onclick="closeRequest()" id="btn-close-container">
                     <img src="../../assets/img/closed_icon.png" alt="Close" />
                   </button>
 
-                  <button
-                    name="recount"
-                    type="submit"
-                    class="col-5 styled-btn btn-yellow"
-                    onclick="askRecount()"
-                    id="btn-recount-container"
-                  >
+                  <button name="recount" type="submit" class="col-5 styled-btn btn-yellow" onclick="askRecount()" id="btn-recount-container">
                     <img src="../../assets/img/recountRequest_icon.png" alt="Recount" />
                   </button>
                 </div>
@@ -408,13 +366,7 @@
       <!--  -->
       <div class="sub-header">
         <div class="dropdown">
-          <button
-            class="styled-btn dropdown-toggle btn-blue"
-            type="button"
-            id="btn-filters"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
+          <button class="styled-btn dropdown-toggle btn-blue" type="button" id="btn-filters" data-bs-toggle="dropdown" aria-expanded="false">
             Filters
           </button>
           <ul class="dropdown-menu btn-blue" aria-labelledby="btn-filters">
@@ -433,11 +385,7 @@
           </ul>
         </div>
 
-        <a
-          type="button"
-          id="btn-add-request"
-          class="styled-btn btn-blue text-align-center no-text-decoration"
-          href="office_create.html"
+        <a type="button" id="btn-add-request" class="styled-btn btn-blue text-align-center no-text-decoration" href="office_create.html"
           >Add Request</a
         >
       </div>
