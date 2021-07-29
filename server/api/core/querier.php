@@ -11,7 +11,9 @@ require 'db_connectors/oracle.php';
 
 
 function format($raw_data) {
-    echo json_encode(array("results"=>$raw_data, "status"=>"ok"));
+    $formatted_data = array("results"=>$raw_data);
+    if (!$raw_data['status']) { $formatted_data["status"] = "ok"; }
+    echo json_encode($formatted_data);
     exit();
 }
 

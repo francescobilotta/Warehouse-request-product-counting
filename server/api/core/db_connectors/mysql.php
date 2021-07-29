@@ -21,7 +21,14 @@ class MYSQL {
     }
 
     static function query($db, $query) {
-        return $db->query($query)->fetch_all(MYSQLI_ASSOC);
+        $query_string = mysqli_real_escape_string($db, $query);
+        $result =  $db->query($query_string);
+        if (is_bool($result)) {
+            return array("status"=>"no_data. Query execution success: $result");
+        }
+        else {
+            return $result->fetch_all(MYSQLI_ASSOC);
+        }
     }
 
     static function close($db) {

@@ -107,9 +107,22 @@ body {
 .weight-800 {
   font-weight: 800;
 }
+/* Display */
+.missing {
+  display: none;
+}
 /* Margin */
-.margin-top-10 {
-  margin-top: 10px;
+.margin-10 {
+  margin: 10px 10px 10px 10px;
+}
+.margin-top-20 {
+  margin-top: 20px;
+}
+.margin-left-10 {
+  margin-left: 10px;
+}
+.margin-right-10 {
+  margin-right: 10px;
 }
 .margin-bottom-10 {
   margin-bottom: 10px;
@@ -213,8 +226,8 @@ td {
   flex: 1 1 auto;
   padding: 0 1rem;
 
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
-    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */

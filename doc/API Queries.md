@@ -63,9 +63,6 @@
 
 ###### Variables needed:
 
-- {d.productCode}
-- {d.productName}
-- {d.productFlavour}
 - {d.notes}
 - {d.dueDate}
 - {f.requestId}
