@@ -28,7 +28,7 @@ function get_query_data($query_file) {
  * @throws Exception bad_json.db
  */
 function get_db_data($db_file) {
-    $db_data = file_get_contents("../databases/$db_file.db.json");
+    $db_data = file_get_contents("../databases/$db_file");
     if (!$db_data){ throw new Exception("bad_json.db"); }
     return json_decode($db_data);
 }
@@ -39,16 +39,16 @@ $query_file = $_GET['q_name'];
 $query_data = $_GET['q_data'];
 
 try {
-    if (!isset($query_name)) { throw new Exception("bad_name, query name is: $query_file"); }
+    if (!isset($query_file)) { throw new Exception("bad_name, query name is: $query_file"); }
 
     $url = "core/querier.php";
 
-    $query_data = get_query_data($query_file);
-    $database_data = get_db_data($query_data['database']);
+    $query_info = get_query_data("$query_file.q.json");
+    $database_info = get_db_data($query_info['database'].".db.json");
 
     $fields_string = http_build_query(['data' => $query_data] +
-                                            (array)$query_data +
-                                            (array)$database_data);
+                                            (array)$query_info +
+                                            (array)$database_info);
 
     $results = get_results($url, $fields_string);
     echo $results;
