@@ -58,12 +58,13 @@ try {
 
     $results = get_results($url, $fields_string);
     if ($_GET['debug']) {
-        echo "---DEBUG DATA---<br><br>";
+        echo "<hr>---DEBUG DATA---<br><br>";
         echo "The following data will be sent to querrier:<br>";
         var_export($fields_string);
         echo"<hr>";
         echo "<br><br>The following has been received:<br>";
         var_export($_GET);
+        echo "<hr>";
     }
     echo $results;
 }
