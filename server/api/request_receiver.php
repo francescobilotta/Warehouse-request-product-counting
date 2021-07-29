@@ -19,7 +19,7 @@ function get_results($url, $fields_string) {
  * @throws Exception bad_json.q
  */
 function get_query_data($query_file) {
-    $q_details = file_get_contents("../queries/$query_file");
+    $q_details = file_get_contents("./queries/$query_file");
     if (!$q_details) { throw new Exception("bad_json.q. File name = $query_file"); };
     return json_decode($q_details);
 }
@@ -28,7 +28,7 @@ function get_query_data($query_file) {
  * @throws Exception bad_json.db
  */
 function get_db_data($db_file) {
-    $db_data = file_get_contents("../databases/$db_file");
+    $db_data = file_get_contents("./databases/$db_file");
     if (!$db_data){ throw new Exception("bad_json.db"); }
     return json_decode($db_data);
 }
