@@ -1,4 +1,4 @@
 {
   "database": "portale",
-  "query": "UPDATE testing.Request SET isClosed = \"1\", terminationDate = \"{d.terminationDate}\" WHERE requestId = \"{f.requestId}\""
+  "query": "UPDATE testing.Request SET isClosed = '1', terminationDate = \"{d.terminationDate}\" WHERE requestId = \"{f.requestId}\""
 }

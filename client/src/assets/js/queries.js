@@ -1,6 +1,35 @@
-function updateRequest(notes, dueDate, requestId) {
+/*
+For office
+*/
+
+function officeUpdate(requestId, notes, dueDate) {
   const table_data_requester = new Requester(function (result) {
-    alert("updated");
+    console.log(`Request ${requestId} updated`);
+  });
+  table_data_requester.query({
+    q_name: "office_update_requests",
+    q_data: {
+      "d.notes": notes,
+      "d.dueDate": dueDate,
+      "f.requestId": requestId,
+    },
+  });
+}
+function officeClose(requestId, terminationDate) {
+  const table_data_requester = new Requester(function (result) {
+    console.log(`Request ${requestId} closed at ${terminationDate}`);
+  });
+  table_data_requester.query({
+    q_name: "close_requests",
+    q_data: {
+      "d.terminationDate": terminationDate,
+      "f.requestId": requestId,
+    },
+  });
+}
+function officeRecount(requestId, notes, dueDate) {
+  const table_data_requester = new Requester(function (result) {
+    console.log(`Request ${requestId} updated`);
   });
   table_data_requester.query({
     q_name: "office_update_requests",
@@ -20,6 +49,9 @@ function askRecount() {
   //TODO
 }
 
+/*
+For warehouse
+*/
 function lastToPrevious(requestId) {
   const table_data_requester = new Requester(function (result) {
     console.log(`Moved lastCount of request ${requestId} from lastCount to previousCount`);
