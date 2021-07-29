@@ -7,12 +7,6 @@ require "./core/db_connectors/oracle.php";
 use mysql\MYSQL;
 use oracleDB\OracleDB;
 
-if ($_GET['debug']) {
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
-}
-
 /**
  * @throws Exception bad_json.q
  */
@@ -47,6 +41,14 @@ $ROUTES = [
     },
 ];
 
+if (isset($_GET['debug'])) { $debug = $_GET['debug']; }
+else { $debug = false; }
+
+if ($debug) {
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+}
 
 try {
     if (isset($_GET['q_name'])) { $query_name = $_GET['q_name']; }
@@ -55,8 +57,7 @@ try {
     if (isset($_GET['q_data'])) { $query_data = $_GET['q_data']; }
     else { $query_data = []; }
 
-    if (isset($_GET['debug'])) { $debug = $_GET['debug']; }
-    else { $debug = false; }
+
 
 
     $query_info = get_query_data("$query_name.q.json");
