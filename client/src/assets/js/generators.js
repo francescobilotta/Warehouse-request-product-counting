@@ -109,8 +109,7 @@ function create_flavour(flavour) {
 
 function flavour_builder(flavours, container_id) {
     const flavour_group = $('<div>')
-        .addClass("form-group col no-gutters")
-        .appendTo($('#' + container_id));
+        .addClass("form-group col no-gutters");
     const label = $('<label>')
         .addClass("col-2")
         .text("Flavour")
@@ -128,4 +127,5 @@ function flavour_builder(flavours, container_id) {
         .text("Select the flavour of the product")
         .attr("id", "flavourHelpBlock")
         .appendTo(helper);
+    $('#' + container_id).html(flavour_group);
 }
