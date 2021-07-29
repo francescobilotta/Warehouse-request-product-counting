@@ -3,5 +3,5 @@
   "database": "portale",
   "schema": "testing",
   "dialect": "mysql",
-  "query": "SELECT requestId, productCode, productName, productFlavour, notes, requestDate, dueDate, expectedCount, expectedGroundCount FROM testing.Request WHERE requestId = '{f.requestId}'"
+  "query": "SELECT requestId, requestState, productCode, productName, productFlavour, notes, requestDate, isClosed, dueDate, expectedCount, expectedGroundCount FROM testing.Request WHERE requestId = '{f.requestId}'"
 }

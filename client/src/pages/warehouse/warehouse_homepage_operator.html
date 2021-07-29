@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+      $("head").load("../../components/head.html?1231234");
+    </script>
+    <script>
+      function make_editable(element) {
+        $("#edit-popup").show();
+        const popup = $("#popup-data");
+        popup.attr("id", element.attr("id"));
+
+        //Get details data
+        const table_query_data = {
+          q_name: "warehouse_requests_details",
+          q_data: {
+            "f.requestId": element.attr("id"),
+          },
+        };
+
+        //For popup
+        const table_data_requester = new Requester(table_query_data, function (result) {
+          //Get today data
+          const now = new Date();
+          const day = ("0" + now.getDate()).slice(-2);
+          const month = ("0" + (now.getMonth() + 1)).slice(-2);
+          const today = now.getFullYear() + "-" + month + "-" + day;
+          var image_size = "40px";
+
+          //Product Info
+          $("#prod_code").val(result.results[0].productCode);
+          $("#prod_name").val(result.results[0].productName);
+          $("#prod_variant").val(result.results[0].productFlavour);
+          $("#notes").val(result.results[0].notes);
+          $("#date_due").val(result.results[0].dueDate.split(" ")[0]).attr({
+            min: today,
+          });
+          $("#date_creation").val(result.results[0].requestDate);
+          $("#count_previous").val(result.results[0].previousCount);
+          $("#count_last").val(result.results[0].lastCount);
+
+          //Hide all buttons before selecting which to show
+          $("#btn-update-container").hide();
+          $("#btn-close-container").hide();
+          $("#btn-recount-container").hide();
+
+          //RequestState
+          $("#req_id").val(element.attr("id"));
+          if (result.results[0].isClosed == 0) {
+            switch (result.results[0].requestState) {
+              case "countRequest":
+                append_img_request_state(
+                  "request_state",
+                  "../../assets/img/countRequest.png",
+                  image_size,
+                  "Asked for count"
+                );
+                $("#btn-update-container").show();
+                $("#btn-close-container").show();
+                break;
+              case "countDone":
+                append_img_request_state("request_state", "../../assets/img/countDone.png", image_size, "Count done");
+                $("#btn-update-container").show();
+                $("#btn-close-container").show();
+                $("#btn-recount-container").show();
+                break;
+              case "recountRequest":
+                append_img_request_state(
+                  "request_state",
+                  "../../assets/img/recountRequest.png",
+                  image_size,
+                  "Asked for recount"
+                );
+                $("#btn-close-container").show();
+                break;
+              case "recountDone":
+                append_img_request_state(
+                  "request_state",
+                  "../../assets/img/recountDone.png",
+                  image_size,
+                  "Recount done"
+                );
+                $("#btn-close-container").show();
+                $("#btn-recount-container").show();
+                break;
+              default:
+            }
+          } else {
+            append_img_request_state("request_state", "../../assets/img/closed.png", image_size, "Recount done");
+          }
+        });
+        table_data_requester.query();
+      }
+
+      function register_clicks() {
+        $(".table-row").dblclick(function (e) {
+          make_editable($(this));
+        });
+
+        $("#edit-popup").click(function (e) {
+          if (e.target === this) {
+            $(this).hide();
+          }
+        });
+
+        $(".exit-button").click(function (e) {
+          if (e.target === this) {
+            $("#edit-popup").hide();
+          }
+        });
+      }
+
+      //Get table data
+      $(document).ready(function () {
+        $("#edit-popup").hide();
+
+        const table_headers_strings = {
+          STATUS: "requestState",
+          PRODUCT: "productName",
+          FLAVOUR: "productFlavour",
+          NOTES: "notes",
+          "REQUEST DATE": "requestDate",
+          "DUE DATE": "dueDate",
+          "EXPECTED IN TOTAL": "expectedCount",
+        };
+        const table_query_data = {
+          q_name: "warehouse_requests",
+          q_data: {},
+        };
+        const table_data_requester = new Requester(table_query_data, function (result) {
+          table_maker(result.results, "request-table-container", table_headers_strings);
+          register_clicks();
+        });
+        table_data_requester.query();
+      });
+    </script>
+  </head>
+  <body>
+    <main role="main" class="container">
+      <!--  -->
+      <!-- Popup -->
+      <!--  -->
+      <div id="edit-popup" class="popup-container">
+        <div class="popup">
+          <div class="card-section exit-button-wrapper">
+            <div class="card-header-title">Details</div>
+            <div class="exit-button">&times;</div>
+          </div>
+          <div id="popup-data" class="card-section form-holder">
+            <form id="edit-form" class="form" role="form">
+              <!-- Request info -->
+              <div class="form-group row">
+                <label for="req_id" class="col-1 col-form-label">Request Id</label>
+                <div class="row col-11">
+                  <div class="input-group">
+                    <div class="input-group-prepend" id="request_state"></div>
+                    <input
+                      id="req_id"
+                      name="req_id"
+                      type="text"
+                      class="form-control"
+                      aria-describedby="req_idHelpBlock"
+                      required="required"
+                      readonly
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Product info -->
+              <div class="row">
+                <label class="col-1 col-form-label">Product Info</label>
+
+                <div class="row col-11">
+                  <div class="form-group col no-gutters">
+                    <label class="col-12 col-form-label" for="prod_code">Product Code</label>
+                    <div class="col-12">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <div class="input-group-text"><i class="fa fa-barcode"></i></div>
+                        </div>
+                        <input
+                          id="prod_code"
+                          name="prod_code"
+                          type="text"
+                          class="form-control"
+                          aria-describedby="prod_codeHelpBlock"
+                          required="required"
+                          readonly
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group col no-gutters">
+                    <label class="col-12 col-form-label" for="prod_name">Product Name</label>
+                    <div class="col-12">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <div class="input-group-text"><i class="fa fa-tag"></i></div>
+                        </div>
+                        <input
+                          id="prod_name"
+                          name="prod_name"
+                          type="text"
+                          class="form-control"
+                          aria-describedby="prod_nameHelpBlock"
+                          required="required"
+                          readonly
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group col no-gutters">
+                    <label for="prod_variant" class="col-12 col-form-label">Product flavour</label>
+                    <div class="col-12">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <div class="input-group-text">
+                            <i class="fa fa-archive"></i>
+                          </div>
+                        </div>
+                        <input
+                          id="prod_variant"
+                          name="prod_variant"
+                          type="text"
+                          class="form-control"
+                          aria-describedby="prod_variantHelpBlock"
+                          required="required"
+                          readonly
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Notes -->
+              <div class="form-group row" style="margin-top: 13px !important">
+                <label for="notes" class="col-1 col-form-label">Notes</label>
+                <div class="row col-11">
+                  <div class="input-group">
+                    <textarea
+                      id="notes"
+                      name="notes"
+                      cols="20"
+                      rows="2"
+                      class="form-control"
+                      aria-describedby="notesHelpBlock"
+                      readonly
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Dates -->
+              <div class="row">
+                <label class="col-1 col-form-label">Dates</label>
+                <div class="row col-11">
+                  <div class="form-group col no-gutters">
+                    <label for="date_due" class="col-12 col-form-label">Due Date</label>
+                    <div class="col-12">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <div class="input-group-text">
+                            <i class="fa fa-calendar"></i>
+                          </div>
+                        </div>
+                        <input
+                          id="date_due"
+                          name="date_due"
+                          type="date"
+                          class="form-control"
+                          aria-describedby="date_dueHelpBlock"
+                          required="required"
+                          readonly
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group col no-gutters">
+                    <label for="date_creation" class="col-12 col-form-label">Creation Date</label>
+                    <div class="col-12">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <div class="input-group-text">
+                            <i class="fa fa-calendar"></i>
+                          </div>
+                        </div>
+                        <input
+                          id="date_creation"
+                          name="date_creation"
+                          type="text"
+                          aria-describedby="date_creationHelpBlock"
+                          required="required"
+                          class="form-control"
+                          readonly
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Counts -->
+              <div class="row" style="margin-top: 13px !important">
+                <label class="col-1 col-form-label">Counts</label>
+                <div class="row col-11">
+                  <div class="form-group col no-gutters">
+                    <div class="col-12">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <div class="input-group-text">
+                            <i class="fa fa-bar-chart-o"></i>
+                          </div>
+                        </div>
+                        <input
+                          id="count_previous"
+                          name="count_previous"
+                          type="text"
+                          class="form-control"
+                          aria-describedby="count_previousHelpBlock"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row col-12 justify-content-center" style="padding-top: 10px">
+                <div class="col-10 form-group row col-12 margin-10" id="btn-update-container">
+                  <button name="update" type="submit" class="styled-btn btn-blue" onclick="alert('ciao')">
+                    Items Counted
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!--  -->
+      <!-- Header -->
+      <!--  -->
+      <div class="header weight-800">Warehouse homepage operator</div>
+
+      <button onClick="updateRequest('ciao', '2021-12-12', '2')">Click</button>
+      <!--  -->
+      <!-- Sub Header -->
+      <!--  -->
+      <div class="sub-header">
+        <div class="dropdown">
+          <button
+            class="styled-btn dropdown-toggle btn-blue"
+            type="button"
+            id="btn-filters"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Filters
+          </button>
+          <ul class="dropdown-menu btn-blue" aria-labelledby="btn-filters">
+            <li><a class="dropdown-item" href="#">Most Recent</a></li>
+            <li><a class="dropdown-item" href="#">Oldest</a></li>
+            <li><a class="dropdown-item" href="#">Upcoming due date</a></li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <a class="dropdown-item" href="#">
+                <label class="form-check-label" for="flexCheckChecked">
+                  <input class="" type="checkbox" value="showClosed" id="flexCheckChecked" />
+                  Show closed
+                </label>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="request-table" id="request-table-container"></div>
+    </main>
+  </body>
+</html>
