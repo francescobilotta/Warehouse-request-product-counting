@@ -1,18 +1,24 @@
 <?php
-
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
+if ($_GET['debug']) {
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+}
+/**
+ * @throws Exception bad_post
+ */
 function get_results($url, $fields_string) {
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
-
-    // return content instead of echoing it
-    curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
-    return curl_exec($ch);
+    $options = array(
+        'http' => array(
+            'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+            'method'  => 'POST',
+            'content' => $fields_string
+        )
+    );
+    $context  = stream_context_create($options);
+    $result = file_get_contents($url, false, $context);
+    if (!$result)  { throw new Exception("bad_post. Failed to send post request to $url with options: $options"); };
+    return $result;
 }
 
 /**
@@ -44,7 +50,7 @@ try {
     $url = "core/querier.php";
 
     $query_info = get_query_data("$query_file.q.json");
-    $database_info = get_db_data($query_info['database'].".db.json");
+    $database_info = get_db_data($query_info->{'database'}.".db.json");
 
     $fields_string = http_build_query(['data' => $query_data] +
                                             (array)$query_info +
