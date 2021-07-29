@@ -62,7 +62,7 @@ try {
 
     $query_info = get_query_data("$query_name.q.json");
     $database_info = get_db_data($query_info->{'database'}.".db.json");
-    $fields = ['data' => $query_data] + [$query_info] + [$database_info];
+    $fields = ['data' => $query_data] + (array)$query_info + (array)$database_info;
     if ($debug) {
         echo "<hr>DEBUG DATA<br>The following data will be sent to querrier:<br>"; var_export($fields);
         echo "<hr>The following has been received:<br>"; var_export($_GET); echo "<hr>";
