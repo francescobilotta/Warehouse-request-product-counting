@@ -24,7 +24,13 @@ class MYSQL {
         $query_string = mysqli_real_escape_string($db, $query);
         $result =  $db->query($query_string);
         if (is_bool($result)) {
-            return array("status"=>"no_data. Query execution success: $result");
+            if ($result) {
+                return array();
+            }
+            else {
+                echo json_encode(array("status"=>"Query execution by database has not succeeded. query: $query_string"));
+                die("Could not execute query");
+            }
         }
         else {
             return $result->fetch_all(MYSQLI_ASSOC);
