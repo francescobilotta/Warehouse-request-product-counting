@@ -8,9 +8,9 @@ use mysql\MYSQL;
 use oracleDB\OracleDB;
 
 if ($_GET['debug']) {
-//    ini_set('display_errors', 1);
-//    ini_set('display_startup_errors', 1);
-//    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
 }
 
 /**
@@ -47,17 +47,20 @@ $ROUTES = [
     },
 ];
 
-// Script beginning
-
-$query_name = $_GET['q_name'];
-$query_data = $_GET['q_data'];
 
 try {
-    if (!isset($query_name)) { throw new Exception("bad_name, query name is: $query_name"); }
+    if (isset($_GET['q_name'])) { $query_name = $_GET['q_name']; }
+    else {
+        { throw new Exception("Have not received a query name."); }
+    }
+    if (isset($_GET['q_data'])) { $query_data = $_GET['q_data']; }
+    else {
+        $query_data = [];
+    }
 
     $query_info = get_query_data("$query_name.q.json");
     $database_info = get_db_data($query_info->{'database'}.".db.json");
-    $fields = ['data' => $query_data] + (array)$query_info + (array)$database_info;
+    $fields = ['data' => $query_data] + [$query_info] + [$database_info];
     if ($_GET['debug']) {
         echo "<hr>DEBUG DATA<br>The following data will be sent to querrier:<br>"; var_export($fields);
         echo "<hr>The following has been received:<br>"; var_export($_GET); echo "<hr>";
