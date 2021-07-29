@@ -124,3 +124,22 @@ _Website style 2/2_<br/><br/>
 _Popup created and styled_<br/><br/>
 ![Popup created and styled](changelog_images/12.png)<br/>
 _Popup created and styled_<br/><br/>
+
+## 13. [Finished UI Warehouse + Office]
+
+####- Completely finished to style the popup
+
+![Office 1/3](changelog_images/13_1.png)<br/>
+_Office 1/3_<br/><br/>
+![Office 2/3](changelog_images/13_2.png)<br/>
+_Office 2/3_<br/><br/>
+![Office 3/3](changelog_images/13_3.png)<br/>
+_Office 3/3_<br/><br/>
+![Warehouse director 1/2](changelog_images/13_4.png)<br/>
+_Warehouse director 1/2_<br/><br/>
+![Warehouse director 2/2](changelog_images/13_5.png)<br/>
+_Warehouse director 2/2_<br/><br/>
+![Warehouse operator 1/2](changelog_images/13_6.png)<br/>
+_Warehouse operator 1/2_<br/><br/>
+![Warehouse operator 2/2](changelog_images/13_7.png)<br/>
+_Warehouse operator 2/2_<br/><br/>

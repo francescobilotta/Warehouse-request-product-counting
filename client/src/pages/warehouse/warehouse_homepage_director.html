@@ -37,7 +37,7 @@
           $("#btn-count").click((e) => {
             if ($.isNumeric($("#counted_items").val()) && $("#counted_items").val() > 0) {
               warehouseCount(element.attr("id"), $("#counted_items").val(), result.results[0].requestState);
-              //location.reload();
+              location.reload();
             } else {
               alert("No negatives numbers are accepted");
             }
@@ -299,16 +299,16 @@
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
 
-            <!-- Count -->
-            <div class="row" style="margin-top: 13px !important">
-              <label class="col-1 col-form-label">Counted Items</label>
-              <div class="row col-11">
                 <div class="form-group col no-gutters">
+                  <label class="col-12 col-form-label">Counted</label>
                   <div class="col-12">
                     <div class="input-group">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          <i class="fa fa-bar-chart-o"></i>
+                        </div>
+                      </div>
                       <input
                         id="counted_items"
                         name="counted_items"
