@@ -1,7 +1,29 @@
 <!DOCTYPE html>
 <html lang="it">
   <head>
+    <title>Warehouse count asker</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link rel="icon" href="../../assets/img/favicon.png" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/css/selectize.bootstrap4.min.css" />
+
+    <link href="../../assets/css/common.css?13323323" rel="stylesheet" />
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/js/standalone/selectize.min.js"></script>
+
+    <script src="../../assets/js/request.js?12232755543334"></script>
+    <script src="../../assets/js/generators.js?14575324253234"></script>
+    <script src="../../assets/js/record_edit.js?12553454374234"></script>
+    <script src="../../assets/js/append_img_request_state.js?71553254232534"></script>
+    <script src="../../assets/js/queries.js?13254575232534"></script>
+
     <script>
       $("head").load("../../components/head.html?12531234");
     </script>
@@ -233,7 +255,6 @@
                   <div class="input-group">
                     <textarea id="notes" name="notes" cols="20" rows="2" class="form-control" aria-describedby="notesHelpBlock" readonly></textarea>
                   </div>
-                  <span id="notesHelpBlock" class="form-text text-muted">Add notes to this request</span>
                 </div>
               </div>
 
@@ -260,7 +281,6 @@
                           readonly
                         />
                       </div>
-                      <span id="date_dueHelpBlock" class="form-text text-muted">Date before which the counting should be completed</span>
                     </div>
                   </div>
 
@@ -283,7 +303,6 @@
                           readonly
                         />
                       </div>
-                      <span id="date_creationHelpBlock" class="form-text text-muted">The creation date of the request</span>
                     </div>
                   </div>
                 </div>
@@ -311,7 +330,6 @@
                           readonly
                         />
                       </div>
-                      <span id="count_previousHelpBlock" class="form-text text-muted">Automatically generated previous count</span>
                     </div>
                   </div>
 
@@ -326,7 +344,6 @@
                         </div>
                         <input id="count_last" name="count_last" type="text" class="form-control" readonly />
                       </div>
-                      <span id="count_lastHelpBlock" class="form-text text-muted">Latest count created.</span>
                     </div>
                   </div>
                 </div>
