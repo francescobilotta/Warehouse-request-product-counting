@@ -1,4 +1,4 @@
 {
   "database": "portale",
-  "query": "UPDATE testing.Request SET notes = '{d.notes}', dueDate = '{d.dueDate}'  WHERE requestId = '{f.requestId}'"
+  "query": "UPDATE testing.Request SET notes = \"{d.notes}\", dueDate = \"{d.dueDate}\"  WHERE requestId = \"{f.requestId}\""
 }
