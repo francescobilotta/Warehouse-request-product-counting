@@ -24,11 +24,9 @@ class OracleDB {
     {
         try {
             $q_obj = oci_parse($db, $query);
-
             if (!$q_obj) {
                 throw new Exception("bad_query. Query: $query");
             }
-
             $q_status = oci_execute($q_obj);
             if (!$q_status) { throw new Exception("bad_query_exec. Query: $query");}
 
