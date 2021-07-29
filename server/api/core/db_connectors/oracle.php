@@ -4,13 +4,8 @@ use Exception;
 ///  Received post variables:
 ///  host, port, username, password, dialect, database, query, data
 class OracleDB {
-    static function init()
+    static function init($host, $port, $username, $password)
     {
-        $host = $_POST['host'];
-        $port = $_POST['port'];
-        $username = $_POST['username'];
-        $password = $_POST['password'];
-
         $db="(DESCRIPTION = 
                 (ADDRESS = (PROTOCOL = TCP)(HOST = $host)(PORT = $port))
                 (CONNECT_DATA = (SERVER = DEDICATED)(SERVICE_NAME = ferrari.ferrari.locale))

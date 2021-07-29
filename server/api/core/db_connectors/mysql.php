@@ -4,11 +4,7 @@ use mysqli;
 ///  Received post variables:
 ///  host, port, username, password, dialect, database, query, data
 class MYSQL {
-    static function init() {
-        $host = $_POST['host'];
-        $port = $_POST['port'];
-        $username = $_POST['username'];
-        $password = $_POST['password'];
+    static function init($host, $port, $username, $password) {
 
         $db = new mysqli($host, $username, $password, null, $port);
         if ($db->connect_error) {

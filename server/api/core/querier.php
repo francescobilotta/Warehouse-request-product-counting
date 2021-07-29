@@ -1,19 +1,7 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-use mysql\MYSQL;
-use oracleDB\OracleDB;
-
-require 'db_connectors/mysql.php';
-require 'db_connectors/oracle.php';
-
 
 function format($raw_data) {
-    $formatted_data = array("results" => $raw_data, "status" => "ok");
-    echo json_encode($formatted_data);
-    exit();
+    return array("results" => $raw_data, "status" => "ok");
 }
 
 function fill_query_data($query, $data) {
@@ -30,23 +18,3 @@ function fill_query_data($query, $data) {
         },
         $query);
 }
-
-$ROUTES = [
-    "mysql" => function ($query) {
-        $db_conn = MYSQL::init();
-        $data = MYSQL::query($db_conn, $query);
-        MYSQL::close($db_conn);
-        format($data);
-    },
-    "oracle" => function ($query) {
-        $db_conn = OracleDB::init();
-        $data = OracleDB::query($db_conn, $query);
-        OracleDB::close($db_conn);
-        format($data);
-    },
-];
-
-///  Received post variables:
-///  host, port, username, password, dialect, database, query, data
-
-$ROUTES[$_POST['dialect']](fill_query_data($_POST['query'], $_POST['data']));
