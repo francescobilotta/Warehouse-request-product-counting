@@ -1,7 +1,4 @@
 {
-  "name": "warehouse_requests",
   "database": "portale",
-  "schema": "testing",
-  "dialect": "mysql",
   "query": "SELECT requestId, requestState, productName, productFlavour, notes, requestDate, dueDate, isClosed, expectedCount, expectedGroundCount FROM testing.Request WHERE (isClosed = '0') AND (requestState = 'countRequest' OR requestState = 'recountRequest') ORDER BY dueDate"
 }

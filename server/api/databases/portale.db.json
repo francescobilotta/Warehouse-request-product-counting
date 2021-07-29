@@ -1,8 +1,7 @@
 {
-  "name": "portale",
   "host": "portale",
   "port": "3306",
   "username": "root",
   "password": "basilicagoiano",
-  "type": "mysql"
+  "dialect": "mysql"
 }

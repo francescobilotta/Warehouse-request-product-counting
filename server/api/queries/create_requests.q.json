@@ -1,7 +1,4 @@
 {
-  "name": "create_requests",
   "database": "portale",
-  "schema": "testing",
-  "dialect": "mysql",
   "query": "INSERT INTO testing.Request (requestDate, productCode, productName, productFlavour, dueDate, requestState, notes) VALUES ('{d.requestDate}', '{d.productCode}', '{d.productName}', '{d.productFlavour}', '{d.dueDate}', '{d.requestState}', '{d.notes}')"
 }

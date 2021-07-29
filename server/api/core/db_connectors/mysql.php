@@ -1,18 +1,18 @@
 <?php
 namespace mysql;
 use mysqli;
+///  Received post variables:
+///  host, port, username, password, dialect, database, query, data
 class MYSQL {
     static function init() {
-        $host = $_SESSION['host'];
-        $port = $_SESSION['port'];
-        $username = $_SESSION['username'];
-        $password = $_SESSION['password'];
-        $schema = $_SESSION['schema'];
+        $host = $_POST['host'];
+        $port = $_POST['port'];
+        $username = $_POST['username'];
+        $password = $_POST['password'];
 
-        $db = new mysqli($host, $username, $password, $schema, $port);
+        $db = new mysqli($host, $username, $password, null, $port);
         if ($db->connect_error) {
             echo json_encode(array("status"=>"bad_connection.db"));
-            session_destroy();
             die("Could not create database object$db->connect_error");
         }
         else {
@@ -21,7 +21,14 @@ class MYSQL {
     }
 
     static function query($db, $query) {
-        return $db->query($query)->fetch_all(MYSQLI_ASSOC);
+        $query_string = mysqli_real_escape_string($db, $query);
+        $result =  $db->query($query_string);
+        if (is_bool($result)) {
+            return array("status"=>"no_data. Query execution success: $result");
+        }
+        else {
+            return $result->fetch_all(MYSQLI_ASSOC);
+        }
     }
 
     static function close($db) {

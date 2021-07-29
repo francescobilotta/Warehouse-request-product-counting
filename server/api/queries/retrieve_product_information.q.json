@@ -1,7 +1,4 @@
 {
-  "name": "retrieve_product_information",
   "database": "portale",
-  "schema": "testing",
-  "dialect": "oracle",
   "query": "TO DO"
 }

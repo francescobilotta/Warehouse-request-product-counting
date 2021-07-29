@@ -1,5 +1,4 @@
 {
-  "name": "warehouse_requests_details",
   "database": "portale",
   "schema": "testing",
   "dialect": "mysql",
