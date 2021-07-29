@@ -6,7 +6,7 @@ function format($raw_data) {
 
 function fill_query_data($query, $data) {
     // using regex replaces all patterns like: {<d||f>.<name>} with the value passed to the api in q_data
-    $pattern = "/{((\w)\.(.+?))}/i";
+    $pattern = '/\{((\w)\.(.+?))\}/i';
 
     return preg_replace_callback($pattern,
         function($matches) use($data) {

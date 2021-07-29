@@ -17,7 +17,7 @@ class MYSQL {
     }
 
     static function query($db, $query) {
-        $query_string = mysqli_real_escape_string($db, $query);
+        $query_string = $query;
         $result =  $db->query($query_string);
         if (is_bool($result)) {
             if ($result) {
