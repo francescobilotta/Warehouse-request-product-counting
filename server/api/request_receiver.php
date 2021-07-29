@@ -50,18 +50,19 @@ $ROUTES = [
 
 try {
     if (isset($_GET['q_name'])) { $query_name = $_GET['q_name']; }
-    else {
-        { throw new Exception("Have not received a query name."); }
-    }
+    else { throw new Exception("Have not received a query name."); }
+
     if (isset($_GET['q_data'])) { $query_data = $_GET['q_data']; }
-    else {
-        $query_data = [];
-    }
+    else { $query_data = []; }
+
+    if (isset($_GET['debug'])) { $debug = $_GET['debug']; }
+    else { $debug = false; }
+
 
     $query_info = get_query_data("$query_name.q.json");
     $database_info = get_db_data($query_info->{'database'}.".db.json");
     $fields = ['data' => $query_data] + [$query_info] + [$database_info];
-    if ($_GET['debug']) {
+    if ($debug) {
         echo "<hr>DEBUG DATA<br>The following data will be sent to querrier:<br>"; var_export($fields);
         echo "<hr>The following has been received:<br>"; var_export($_GET); echo "<hr>";
     }
