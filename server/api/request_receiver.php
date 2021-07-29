@@ -64,6 +64,7 @@ try {
         echo"<hr>";
         echo "<br><br>The following has been received:<br>";
         var_export($_GET);
+        echo "<hr>";
     }
     echo $results;
 }
