@@ -3,7 +3,7 @@
   <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-      $("head").load("../../components/head.html?1231234");
+      $("head").load("../../components/head.html?12531234");
     </script>
     <script>
       function make_editable(element) {
@@ -11,16 +11,8 @@
         const popup = $("#popup-data");
         popup.attr("id", element.attr("id"));
 
-        //Get details data
-        const table_query_data = {
-          q_name: "warehouse_requests_details",
-          q_data: {
-            "f.requestId": element.attr("id"),
-          },
-        };
-
         //For popup
-        const table_data_requester = new Requester(table_query_data, function (result) {
+        const table_data_requester = new Requester(function (result) {
           //Get today data
           const now = new Date();
           const day = ("0" + now.getDate()).slice(-2);
@@ -37,60 +29,40 @@
             min: today,
           });
           $("#date_creation").val(result.results[0].requestDate);
-          $("#count_previous").val(result.results[0].previousCount);
-          $("#count_last").val(result.results[0].lastCount);
+          $("#expected_count").val(result.results[0].expectedCount);
+          $("#expected_ground_count").val(result.results[0].expectedGroundCount);
 
-          //Hide all buttons before selecting which to show
-          $("#btn-update-container").hide();
-          $("#btn-close-container").hide();
-          $("#btn-recount-container").hide();
+          //Hide all buttons before selecting which to show counted_items
+          $("#btn-count").hide();
+          $("#btn-count").click((e) => {
+            if ($.isNumeric($("#counted_items").val()) && $("#counted_items").val() > 0) {
+              warehouseCount(element.attr("id"), $("#counted_items").val(), result.results[0].requestState);
+              location.reload();
+            } else {
+              alert("No negatives numbers are accepted");
+            }
+          });
 
           //RequestState
           $("#req_id").val(element.attr("id"));
-          if (result.results[0].isClosed == 0) {
-            switch (result.results[0].requestState) {
-              case "countRequest":
-                append_img_request_state(
-                  "request_state",
-                  "../../assets/img/countRequest.png",
-                  image_size,
-                  "Asked for count"
-                );
-                $("#btn-update-container").show();
-                $("#btn-close-container").show();
-                break;
-              case "countDone":
-                append_img_request_state("request_state", "../../assets/img/countDone.png", image_size, "Count done");
-                $("#btn-update-container").show();
-                $("#btn-close-container").show();
-                $("#btn-recount-container").show();
-                break;
-              case "recountRequest":
-                append_img_request_state(
-                  "request_state",
-                  "../../assets/img/recountRequest.png",
-                  image_size,
-                  "Asked for recount"
-                );
-                $("#btn-close-container").show();
-                break;
-              case "recountDone":
-                append_img_request_state(
-                  "request_state",
-                  "../../assets/img/recountDone.png",
-                  image_size,
-                  "Recount done"
-                );
-                $("#btn-close-container").show();
-                $("#btn-recount-container").show();
-                break;
-              default:
-            }
-          } else {
-            append_img_request_state("request_state", "../../assets/img/closed.png", image_size, "Recount done");
+          switch (result.results[0].requestState) {
+            case "countRequest":
+              append_img_request_state("request_state", "../../assets/img/countRequest.png", image_size, "Asked for count");
+              $("#btn-count").show();
+              break;
+            case "recountRequest":
+              append_img_request_state("request_state", "../../assets/img/recountRequest.png", image_size, "Asked for recount");
+              $("#btn-count").show();
+              break;
+            default:
           }
         });
-        table_data_requester.query();
+        table_data_requester.query({
+          q_name: "warehouse_requests_details",
+          q_data: {
+            "f.requestId": element.attr("id"),
+          },
+        });
       }
 
       function register_clicks() {
@@ -125,15 +97,11 @@
           "EXPECTED IN TOTAL": "expectedCount",
           "READY TO BE SHIPPED": "expectedGroundCount",
         };
-        const table_query_data = {
-          q_name: "warehouse_requests",
-          q_data: {},
-        };
-        const table_data_requester = new Requester(table_query_data, function (result) {
+        const table_data_requester = new Requester((result) => {
           table_maker(result.results, "request-table-container", table_headers_strings);
           register_clicks();
         });
-        table_data_requester.query();
+        table_data_requester.query({ q_name: "warehouse_requests" });
       });
     </script>
   </head>
@@ -149,196 +117,217 @@
             <div class="exit-button">&times;</div>
           </div>
           <div id="popup-data" class="card-section form-holder">
-            <form id="edit-form" class="form" role="form">
-              <!-- Request info -->
-              <div class="form-group row">
-                <label for="req_id" class="col-1 col-form-label">Request Id</label>
-                <div class="row col-11">
-                  <div class="input-group">
-                    <div class="input-group-prepend" id="request_state"></div>
-                    <input
-                      id="req_id"
-                      name="req_id"
-                      type="text"
-                      class="form-control"
-                      aria-describedby="req_idHelpBlock"
-                      required="required"
-                      readonly
-                    />
+            <!-- Request info -->
+            <div class="form-group row">
+              <label for="req_id" class="col-1 col-form-label">Request Id</label>
+              <div class="row col-11">
+                <div class="input-group">
+                  <div class="input-group-prepend" id="request_state"></div>
+                  <input id="req_id" name="req_id" type="text" class="form-control" aria-describedby="req_idHelpBlock" required="required" readonly />
+                </div>
+                <span id="req_idHelpBlock" class="form-text text-muted">Assigned id to the current request</span>
+              </div>
+            </div>
+
+            <!-- Product info -->
+            <div class="row">
+              <label class="col-1 col-form-label">Product Info</label>
+
+              <div class="row col-11">
+                <div class="form-group col no-gutters">
+                  <label class="col-12 col-form-label" for="prod_code">Product Code</label>
+                  <div class="col-12">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text"><i class="fa fa-barcode"></i></div>
+                      </div>
+                      <input
+                        id="prod_code"
+                        name="prod_code"
+                        type="text"
+                        class="form-control"
+                        aria-describedby="prod_codeHelpBlock"
+                        required="required"
+                        readonly
+                      />
+                    </div>
+                    <span id="prod_codeHelpBlock" class="form-text text-muted">Code assigned to the product</span>
+                  </div>
+                </div>
+
+                <div class="form-group col no-gutters">
+                  <label class="col-12 col-form-label" for="prod_name">Product Name</label>
+                  <div class="col-12">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text"><i class="fa fa-tag"></i></div>
+                      </div>
+                      <input
+                        id="prod_name"
+                        name="prod_name"
+                        type="text"
+                        class="form-control"
+                        aria-describedby="prod_nameHelpBlock"
+                        required="required"
+                        readonly
+                      />
+                    </div>
+                    <span id="prod_nameHelpBlock" class="form-text text-muted">Descriptive product name</span>
+                  </div>
+                </div>
+
+                <div class="form-group col no-gutters">
+                  <label for="prod_variant" class="col-12 col-form-label">Product flavour</label>
+                  <div class="col-12">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          <i class="fa fa-archive"></i>
+                        </div>
+                      </div>
+                      <input
+                        id="prod_variant"
+                        name="prod_variant"
+                        type="text"
+                        class="form-control"
+                        aria-describedby="prod_variantHelpBlock"
+                        required="required"
+                        readonly
+                      />
+                    </div>
+                    <span id="prod_variantHelpBlock" class="form-text text-muted">The specific variant of this product</span>
                   </div>
                 </div>
               </div>
+            </div>
 
-              <!-- Product info -->
-              <div class="row">
-                <label class="col-1 col-form-label">Product Info</label>
+            <!-- Notes -->
+            <div class="form-group row" style="margin-top: 13px !important">
+              <label for="notes" class="col-1 col-form-label">Notes</label>
+              <div class="row col-11">
+                <div class="input-group">
+                  <textarea id="notes" name="notes" cols="20" rows="2" class="form-control" aria-describedby="notesHelpBlock" readonly></textarea>
+                </div>
+              </div>
+            </div>
 
-                <div class="row col-11">
-                  <div class="form-group col no-gutters">
-                    <label class="col-12 col-form-label" for="prod_code">Product Code</label>
-                    <div class="col-12">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <div class="input-group-text"><i class="fa fa-barcode"></i></div>
+            <!-- Dates -->
+            <div class="row">
+              <label class="col-1 col-form-label">Dates</label>
+              <div class="row col-11">
+                <div class="form-group col no-gutters">
+                  <label for="date_due" class="col-12 col-form-label">Due Date</label>
+                  <div class="col-12">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          <i class="fa fa-calendar"></i>
                         </div>
-                        <input
-                          id="prod_code"
-                          name="prod_code"
-                          type="text"
-                          class="form-control"
-                          aria-describedby="prod_codeHelpBlock"
-                          required="required"
-                          readonly
-                        />
                       </div>
-                    </div>
-                  </div>
-
-                  <div class="form-group col no-gutters">
-                    <label class="col-12 col-form-label" for="prod_name">Product Name</label>
-                    <div class="col-12">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <div class="input-group-text"><i class="fa fa-tag"></i></div>
-                        </div>
-                        <input
-                          id="prod_name"
-                          name="prod_name"
-                          type="text"
-                          class="form-control"
-                          aria-describedby="prod_nameHelpBlock"
-                          required="required"
-                          readonly
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="form-group col no-gutters">
-                    <label for="prod_variant" class="col-12 col-form-label">Product flavour</label>
-                    <div class="col-12">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <div class="input-group-text">
-                            <i class="fa fa-archive"></i>
-                          </div>
-                        </div>
-                        <input
-                          id="prod_variant"
-                          name="prod_variant"
-                          type="text"
-                          class="form-control"
-                          aria-describedby="prod_variantHelpBlock"
-                          required="required"
-                          readonly
-                        />
-                      </div>
+                      <input
+                        id="date_due"
+                        name="date_due"
+                        type="date"
+                        class="form-control"
+                        aria-describedby="date_dueHelpBlock"
+                        required="required"
+                        readonly
+                      />
                     </div>
                   </div>
                 </div>
-              </div>
 
-              <!-- Notes -->
-              <div class="form-group row" style="margin-top: 13px !important">
-                <label for="notes" class="col-1 col-form-label">Notes</label>
-                <div class="row col-11">
-                  <div class="input-group">
-                    <textarea
-                      id="notes"
-                      name="notes"
-                      cols="20"
-                      rows="2"
-                      class="form-control"
-                      aria-describedby="notesHelpBlock"
-                      readonly
-                    ></textarea>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Dates -->
-              <div class="row">
-                <label class="col-1 col-form-label">Dates</label>
-                <div class="row col-11">
-                  <div class="form-group col no-gutters">
-                    <label for="date_due" class="col-12 col-form-label">Due Date</label>
-                    <div class="col-12">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <div class="input-group-text">
-                            <i class="fa fa-calendar"></i>
-                          </div>
+                <div class="form-group col no-gutters">
+                  <label for="date_creation" class="col-12 col-form-label">Creation Date</label>
+                  <div class="col-12">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          <i class="fa fa-calendar"></i>
                         </div>
-                        <input
-                          id="date_due"
-                          name="date_due"
-                          type="date"
-                          class="form-control"
-                          aria-describedby="date_dueHelpBlock"
-                          required="required"
-                          readonly
-                        />
                       </div>
-                    </div>
-                  </div>
-
-                  <div class="form-group col no-gutters">
-                    <label for="date_creation" class="col-12 col-form-label">Creation Date</label>
-                    <div class="col-12">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <div class="input-group-text">
-                            <i class="fa fa-calendar"></i>
-                          </div>
-                        </div>
-                        <input
-                          id="date_creation"
-                          name="date_creation"
-                          type="text"
-                          aria-describedby="date_creationHelpBlock"
-                          required="required"
-                          class="form-control"
-                          readonly
-                        />
-                      </div>
+                      <input
+                        id="date_creation"
+                        name="date_creation"
+                        type="text"
+                        aria-describedby="date_creationHelpBlock"
+                        required="required"
+                        class="form-control"
+                        readonly
+                      />
                     </div>
                   </div>
                 </div>
               </div>
+            </div>
 
-              <!-- Counts -->
-              <div class="row" style="margin-top: 13px !important">
-                <label class="col-1 col-form-label">Counts</label>
-                <div class="row col-11">
-                  <div class="form-group col no-gutters">
-                    <div class="col-12">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <div class="input-group-text">
-                            <i class="fa fa-bar-chart-o"></i>
-                          </div>
+            <!-- Expected Counts -->
+            <div class="row">
+              <label class="col-1 col-form-label">Counts</label>
+              <div class="row col-11">
+                <div class="form-group col no-gutters">
+                  <label for="expected_count" class="col-12 col-form-label">Expected</label>
+                  <div class="col-12">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          <i class="fa fa-bar-chart-o"></i>
                         </div>
-                        <input
-                          id="count_previous"
-                          name="count_previous"
-                          type="text"
-                          class="form-control"
-                          aria-describedby="count_previousHelpBlock"
-                        />
                       </div>
+                      <input
+                        id="expected_count"
+                        name="expected_count"
+                        type="number"
+                        class="form-control"
+                        aria-describedby="expected_countHelpBlock"
+                        readonly
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group col no-gutters">
+                  <label for="expected_ground_count" class="col-12 col-form-label">Ready to be shipped</label>
+                  <div class="col-12">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          <i class="fa fa-refresh"></i>
+                        </div>
+                      </div>
+                      <input id="expected_ground_count" name="expected_ground_count" type="number" class="form-control" readonly />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group col no-gutters">
+                  <label class="col-12 col-form-label">Counted</label>
+                  <div class="col-12">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          <i class="fa fa-bar-chart-o"></i>
+                        </div>
+                      </div>
+                      <input
+                        id="counted_items"
+                        name="counted_items"
+                        type="number"
+                        class="form-control margin-5"
+                        aria-describedby="counted_itemsHelpBlock"
+                        required
+                      />
                     </div>
                   </div>
                 </div>
               </div>
+            </div>
 
-              <div class="row col-12 justify-content-center" style="padding-top: 10px">
-                <div class="col-10 form-group row col-12 margin-10" id="btn-update-container">
-                  <button name="update" type="submit" class="styled-btn btn-blue" onclick="alert('ciao')">
-                    Items Counted
-                  </button>
-                </div>
+            <div class="row col-12 justify-content-center" style="padding-top: 10px">
+              <div class="col-10 form-group row col-12 margin-10">
+                <button name="update" class="styled-btn btn-blue" id="btn-count">Items Counted</button>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       </div>
@@ -346,21 +335,14 @@
       <!--  -->
       <!-- Header -->
       <!--  -->
-      <div class="header weight-800">Warehouse homepage director</div>
+      <div class="header weight-800">Warehouse director</div>
 
-      <button onClick="updateRequest('ciao', '2021-12-12', '2')">Click</button>
       <!--  -->
       <!-- Sub Header -->
       <!--  -->
       <div class="sub-header">
         <div class="dropdown">
-          <button
-            class="styled-btn dropdown-toggle btn-blue"
-            type="button"
-            id="btn-filters"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
+          <button class="styled-btn dropdown-toggle btn-blue" type="button" id="btn-filters" data-bs-toggle="dropdown" aria-expanded="false">
             Filters
           </button>
           <ul class="dropdown-menu btn-blue" aria-labelledby="btn-filters">
@@ -368,14 +350,6 @@
             <li><a class="dropdown-item" href="#">Oldest</a></li>
             <li><a class="dropdown-item" href="#">Upcoming due date</a></li>
             <li><hr class="dropdown-divider" /></li>
-            <li>
-              <a class="dropdown-item" href="#">
-                <label class="form-check-label" for="flexCheckChecked">
-                  <input class="" type="checkbox" value="showClosed" id="flexCheckChecked" />
-                  Show closed
-                </label>
-              </a>
-            </li>
           </ul>
         </div>
       </div>

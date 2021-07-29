@@ -1,0 +1,4 @@
+{
+  "database": "portale",
+  "query": "UPDATE testing.Request SET requestState = 'countDone' WHERE requestId = \"{f.requestId}\""
+}

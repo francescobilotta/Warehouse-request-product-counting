@@ -11,16 +11,8 @@
         const popup = $("#popup-data");
         popup.attr("id", element.attr("id"));
 
-        //Get details data
-        const table_query_data = {
-          q_name: "office_requests_details",
-          q_data: {
-            "f.requestId": element.attr("id"),
-          },
-        };
-
         //For popup
-        const table_data_requester = new Requester(table_query_data, function (result) {
+        const table_data_requester = new Requester(function (result) {
           //Get today data
           const now = new Date();
           const day = ("0" + now.getDate()).slice(-2);
@@ -51,11 +43,12 @@
             switch (result.results[0].requestState) {
               case "countRequest":
                 append_img_request_state("request_state", "../../assets/img/countRequest.png", image_size, "Asked for count");
-                $("#btn-update-container").show();
                 $("#btn-close-container").show();
                 break;
               case "countDone":
                 append_img_request_state("request_state", "../../assets/img/countDone.png", image_size, "Count done");
+                $("#notes").attr("readonly", false);
+                $("#date_due").attr("readonly", false);
                 $("#btn-update-container").show();
                 $("#btn-close-container").show();
                 $("#btn-recount-container").show();
@@ -66,6 +59,9 @@
                 break;
               case "recountDone":
                 append_img_request_state("request_state", "../../assets/img/recountDone.png", image_size, "Recount done");
+                $("#notes").attr("readonly", false);
+                $("#date_due").attr("readonly", false);
+                $("#btn-update-container").show();
                 $("#btn-close-container").show();
                 $("#btn-recount-container").show();
                 break;
@@ -75,7 +71,12 @@
             append_img_request_state("request_state", "../../assets/img/closed.png", image_size, "Recount done");
           }
         });
-        table_data_requester.query();
+        table_data_requester.query({
+          q_name: "office_requests_details",
+          q_data: {
+            "f.requestId": element.attr("id"),
+          },
+        });
       }
 
       function register_clicks() {
@@ -230,7 +231,7 @@
                 <label for="notes" class="col-1 col-form-label">Notes</label>
                 <div class="row col-11">
                   <div class="input-group">
-                    <textarea id="notes" name="notes" cols="20" rows="2" class="form-control" aria-describedby="notesHelpBlock"></textarea>
+                    <textarea id="notes" name="notes" cols="20" rows="2" class="form-control" aria-describedby="notesHelpBlock" readonly></textarea>
                   </div>
                   <span id="notesHelpBlock" class="form-text text-muted">Add notes to this request</span>
                 </div>
@@ -256,6 +257,7 @@
                           class="form-control"
                           aria-describedby="date_dueHelpBlock"
                           required="required"
+                          readonly
                         />
                       </div>
                       <span id="date_dueHelpBlock" class="form-text text-muted">Date before which the counting should be completed</span>
@@ -354,7 +356,6 @@
       <!--  -->
       <div class="header weight-800">Office</div>
 
-      <button onClick="updateRequest('ciaOOOOO', '2021-12-12', '2')">Click</button>
       <!--  -->
       <!-- Sub Header -->
       <!--  -->

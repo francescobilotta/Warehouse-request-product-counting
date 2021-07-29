@@ -87,13 +87,33 @@
 
 ---
 
-### [ warehouse_update_requests.q ]
+### [ warehouse_update_count.q ]
 
 #### Used to update the last count of the request.
 
 ###### Variables needed:
 
 - {d.lastCount}
+- {f.requestId}
+
+---
+
+### [ warehouse_state_to_countDone.q ]
+
+#### Changes state to countDone.
+
+###### Variables needed:
+
+- {f.requestId}
+
+---
+
+### [ warehouse_state_to_recountDone.q ]
+
+#### Changes state to recountDone.
+
+###### Variables needed:
+
 - {f.requestId}
 
 ---
@@ -108,10 +128,20 @@
 
 ---
 
-### [ retrieve_product_information.q ]
+### [ get_products_names.q ]
 
-#### Used to close a request and save the terminationDate.
+#### Get all products codes and descriptions from Oracle database.
 
 ###### Variables needed:
 
-- TO DO
+- No variables needed
+
+---
+
+### [ get_product_flavours.q ]
+
+#### Get all flavours related to an ID.
+
+###### Variables needed:
+
+- {f.productCode}
