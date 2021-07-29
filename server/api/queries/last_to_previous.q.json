@@ -1,4 +1,4 @@
 {
   "database": "portale",
-  "query": "UPDATE testing.Request SET previousCount = lastCount WHERE requestId = '{f.requestId}'"
+  "query": "UPDATE testing.Request SET previousCount = lastCount WHERE requestId = \"{f.requestId}\""
 }
