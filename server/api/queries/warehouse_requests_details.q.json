@@ -1,4 +1,4 @@
 {
   "database": "portale",
-  "query": "SELECT requestId, requestState, productCode, productName, productFlavour, notes, requestDate, isClosed, dueDate, expectedCount, expectedGroundCount FROM testing.Request WHERE requestId = '{f.requestId}'"
+  "query": "SELECT requestId, requestState, productCode, productName, productFlavour, notes, requestDate, isClosed, dueDate, expectedCount, expectedGroundCount FROM testing.Request WHERE requestId = \"{f.requestId}\""
 }
