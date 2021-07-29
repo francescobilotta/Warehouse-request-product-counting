@@ -284,3 +284,12 @@ td {
 .no-text-decoration {
   text-decoration: none;
 }
+
+.code-name-divider {
+  margin: 0 .2rem;
+  display: inline-block;
+  width: .3rem;
+  height: .25rem;
+
+  font-weight: 500;
+}

@@ -8,5 +8,7 @@
     <orderEntry type="library" name="jquery" level="application" />
     <orderEntry type="library" name="bootstrap-autocomplete" level="application" />
     <orderEntry type="library" name="bootstrap-autocomplete" level="application" />
+    <orderEntry type="library" name="jquery-ui" level="application" />
+    <orderEntry type="library" name="selectize.js" level="application" />
   </component>
 </module>
