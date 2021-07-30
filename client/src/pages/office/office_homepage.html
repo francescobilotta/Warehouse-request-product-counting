@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/css/selectize.bootstrap4.min.css" />
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css" />
 
     <link href="../../assets/css/common.css?1332336253" rel="stylesheet" />
 
@@ -18,14 +17,22 @@
 
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/js/standalone/selectize.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
-
 
     <script src="../../assets/js/request.js?1223276555543334"></script>
     <script src="../../assets/js/generators.js?1457532654253234"></script>
     <script src="../../assets/js/record_edit.js?12553545463742346"></script>
     <script src="../../assets/js/append_img_request_state.js?7515653254232534"></script>
     <script src="../../assets/js/queries.js?1325457525632534"></script>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/jq-3.3.1/dt-1.10.25/datatables.min.css"/>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/jq-3.3.1/dt-1.10.25/datatables.min.js"></script>
+
+
     <script>
       function get_today() {
         //Get today data
@@ -161,10 +168,9 @@
         const table_data_requester = new Requester((result) => {
           table_maker(result.results, "request-table-container", table_headers_strings);
           register_clicks();
+          $('#records_table').DataTable();
         });
         table_data_requester.query({ q_name: "office_requests" });
-
-        $('#records_table').DataTable();
       });
     </script>
   </head>
