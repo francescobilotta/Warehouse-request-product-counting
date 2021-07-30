@@ -49,7 +49,24 @@
             min: today,
           });
           $("#date_creation").val(creationDate);
-          $("#expected_ground_count").val(result.results[0].expectedGroundCount);
+          //EXPECTED GROUND COUNT
+          const expected_ground_count_requester = new Requester(function (result) {
+            if (result.PRELEVATO) {
+              let ground_count = result.results.N_TOT.reduce((x, y) => x + y);
+              $("#expected_ground_count").val(ground_count);
+            } else {
+              $("#expected_ground_count").val(0);
+            }
+          });
+          expected_ground_count_requester.query({
+            q_name: "warehouse_expected_ground_count",
+            q_data: {
+              "d.lastYear": now.getFullYear() - 1,
+              "d.currentYear": now.getFullYear(),
+              "f.productCode": result.results[0].productCode,
+              "f.productFlavour": result.results[0].productFlavour,
+            },
+          });
 
           //Hide all buttons before selecting which to show counted_items
           $("#btn-count").hide();
