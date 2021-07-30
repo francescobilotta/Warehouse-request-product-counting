@@ -1,7 +1,5 @@
 function table_maker(table_data, destination_id, headers) {
-  let table = $("<table>")
-      .addClass("table table-striped table-hover")
-      .attr("id", "records_table");
+  let table = $("<table>").addClass("table table-striped table-hover").attr("id", "records_table");
   let thead_tr = $("<tr>");
   let tbody = $("<tbody>");
 
@@ -21,85 +19,64 @@ function table_maker(table_data, destination_id, headers) {
       //CHECK isClosed
       if (headers[key] === "isClosed" && row[headers[key]] === "1") {
         current_row.append(
-          $("<td>").append(
-            $("<img src='../../assets/img/countDone_icon.png' height='" + image_size + "' width='" + image_size + "' title='Request not closed'>")
-          )
+          $("<td>").append($("<img src='../../assets/img/countDone_icon.png' height='" + image_size + "' width='" + image_size + "' title='Request not closed'>"))
         );
       } else if (headers[key] === "isClosed" && row[headers[key]] === "0") {
         current_row.append(
-          $("<td>").append(
-            $("<img src='../../assets/img/closed_icon.png' height='" + image_size + "' width='" + image_size + "' title='Request open'>")
+          $("<td>").append($("<img src='../../assets/img/closed_icon.png' height='" + image_size + "' width='" + image_size + "' title='Request open'>"))
+        );
+      } else if (headers[key] == "requestDate" && row[headers[key]]) {
+        current_row.append(
+          $("<td>").text(
+            row[headers[key]].replace(" 00:00:00", "").split("-")[2] +
+              "-" +
+              row[headers[key]].replace(" 00:00:00", "").split("-")[1] +
+              "-" +
+              row[headers[key]].replace(" 00:00:00", "").split("-")[0]
           )
         );
-      } else if (headers[key] == "requestDate") {
-        console.log(row[headers[key]]);
-        if (row[headers[key]]) {
-          current_row.append(
-            $("<td>").text(
-              row[headers[key]].replace(" 00:00:00", "").split("-")[2] +
-                "-" +
-                row[headers[key]].replace(" 00:00:00", "").split("-")[1] +
-                "-" +
-                row[headers[key]].replace(" 00:00:00", "").split("-")[0]
-            )
-          );
-        }
-      } else if (headers[key] == "dueDate") {
-        if (row[headers[key]]) {
-          current_row.append(
-            $("<td>").text(
-              row[headers[key]].replace(" 00:00:00", "").split("-")[2] +
-                "-" +
-                row[headers[key]].replace(" 00:00:00", "").split("-")[1] +
-                "-" +
-                row[headers[key]].replace(" 00:00:00", "").split("-")[0]
-            )
-          );
-        }
-      } else if (headers[key] == "terminationDate") {
-        if (row[headers[key]]) {
-          current_row.append(
-            $("<td>").text(
-              row[headers[key]].replace(" 00:00:00", "").split("-")[2] +
-                "-" +
-                row[headers[key]].replace(" 00:00:00", "").split("-")[1] +
-                "-" +
-                row[headers[key]].replace(" 00:00:00", "").split("-")[0]
-            )
-          );
-        }
+      } else if (headers[key] == "dueDate" && row[headers[key]]) {
+        current_row.append(
+          $("<td>").text(
+            row[headers[key]].replace(" 00:00:00", "").split("-")[2] +
+              "-" +
+              row[headers[key]].replace(" 00:00:00", "").split("-")[1] +
+              "-" +
+              row[headers[key]].replace(" 00:00:00", "").split("-")[0]
+          )
+        );
+      } else if (headers[key] == "terminationDate" && row[headers[key]]) {
+        current_row.append(
+          $("<td>").text(
+            row[headers[key]].replace(" 00:00:00", "").split("-")[2] +
+              "-" +
+              row[headers[key]].replace(" 00:00:00", "").split("-")[1] +
+              "-" +
+              row[headers[key]].replace(" 00:00:00", "").split("-")[0]
+          )
+        );
       } else {
         //CHECK requestState
         if (headers[key]) {
           switch (row[headers[key]]) {
             case "countRequest":
               current_row.append(
-                $("<td>").append(
-                  $("<img src='../../assets/img/countRequest.png' height='" + image_size + "' width='" + image_size + "' title='Asked for count'>")
-                )
+                $("<td>").append($("<img src='../../assets/img/countRequest.png' height='" + image_size + "' width='" + image_size + "' title='Asked for count'>"))
               );
               break;
             case "countDone":
               current_row.append(
-                $("<td>").append(
-                  $("<img src='../../assets/img/countDone.png' height='" + image_size + "' width='" + image_size + "' title='Count done'>")
-                )
+                $("<td>").append($("<img src='../../assets/img/countDone.png' height='" + image_size + "' width='" + image_size + "' title='Count done'>"))
               );
               break;
             case "recountRequest":
               current_row.append(
-                $("<td>").append(
-                  $(
-                    "<img src='../../assets/img/recountRequest.png' height='" + image_size + "' width='" + image_size + "' title='Asked for recount'>"
-                  )
-                )
+                $("<td>").append($("<img src='../../assets/img/recountRequest.png' height='" + image_size + "' width='" + image_size + "' title='Asked for recount'>"))
               );
               break;
             case "recountDone":
               current_row.append(
-                $("<td>").append(
-                  $("<img src='../../assets/img/recountDone.png' height='" + image_size + "' width='" + image_size + "' title='Recount done'>")
-                )
+                $("<td>").append($("<img src='../../assets/img/recountDone.png' height='" + image_size + "' width='" + image_size + "' title='Recount done'>"))
               );
               break;
             default:
