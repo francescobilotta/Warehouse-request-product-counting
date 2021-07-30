@@ -51,16 +51,18 @@
                     }
                 },
             }).on("change", function (e) {
-                update_fields($(this).val());
+                const index = codes.indexOf($(this).val());
+                update_fields($(this).val(), descriptions[index]);
             });
 
         }
 
-        function update_fields(productId) {
+        function update_fields(productId, description) {
             document.product_flavour_requester.query({
                 q_name: "get_product_flavours",
                 q_data: {"f.productCode": productId}
             });
+            $('prod').val(description);
         }
 
         function set_date() {
