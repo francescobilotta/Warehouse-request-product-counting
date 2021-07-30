@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/css/selectize.bootstrap4.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css" />
 
     <link href="../../assets/css/common.css?1332336253" rel="stylesheet" />
 
@@ -17,6 +18,8 @@
 
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/js/standalone/selectize.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+
 
     <script src="../../assets/js/request.js?1223276555543334"></script>
     <script src="../../assets/js/generators.js?1457532654253234"></script>
@@ -24,17 +27,20 @@
     <script src="../../assets/js/append_img_request_state.js?7515653254232534"></script>
     <script src="../../assets/js/queries.js?1325457525632534"></script>
     <script>
+      function get_today() {
+        //Get today data
+        const now = new Date();
+        const day = ("0" + now.getDate()).slice(-2);
+        const month = ("0" + (now.getMonth() + 1)).slice(-2);
+        return day + "-" + month + "-" + now.getFullYear();
+      }
+
       function make_editable(element) {
         $("#edit-popup").show();
         $("#popup").removeClass();
         $("#popup").addClass(element.attr("id"));
         //For popup
         const table_data_requester = new Requester(function (result) {
-          //Get today data
-          const now = new Date();
-          const day = ("0" + now.getDate()).slice(-2);
-          const month = ("0" + (now.getMonth() + 1)).slice(-2);
-          const today = day + "-" + month + "-" + now.getFullYear();
           var image_size = "40px";
           //Format dates
           var creationDate = result.results[0].requestDate.replace(" 00:00:00", "");
@@ -45,7 +51,7 @@
           $("#prod_variant").val(result.results[0].productFlavour);
           $("#notes").val(result.results[0].notes);
           $("#date_due").val(result.results[0].dueDate.split(" ")[0]).attr({
-            min: today,
+            min: get_today(),
           });
           $("#date_creation").val(creationDate);
 
@@ -132,7 +138,7 @@
         });
         //Close button
         $("#btn-close").click((e) => {
-          officeClose($("#popup").attr("class"), today);
+          officeClose($("#popup").attr("class"), get_today());
           location.reload();
         });
         //Recount button
@@ -151,13 +157,14 @@
           "DUE DATE [dd/mm/yyyy]": "dueDate",
           "CLOSED DATE [dd/mm/yyyy]": "terminationDate",
           "LAST COUNT": "lastCount",
-          "PREVIOUS COUNT": "previousCount",
         };
         const table_data_requester = new Requester((result) => {
           table_maker(result.results, "request-table-container", table_headers_strings);
           register_clicks();
         });
         table_data_requester.query({ q_name: "office_requests" });
+
+        $('#records_table').DataTable();
       });
     </script>
   </head>
