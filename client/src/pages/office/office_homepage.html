@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="it">
-  <head>
+<head>
     <title>Warehouse count asker</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <link rel="icon" href="../../assets/img/favicon.png" />
@@ -26,625 +26,532 @@
     <script src="../../assets/js/append_img_request_state.js?7515632554232534"></script>
     <script src="../../assets/js/queries.js?132545753255632534"></script>
     <script>
-      function make_editable(element) {
-        $("#edit-popup").show();
-        $("#popup").removeClass();
-        $("#popup").addClass(element.attr("id"));
-        //For popup
-        const table_data_requester = new Requester(function (result) {
-          //Get today data
-          const now = new Date();
-          const day = ("0" + now.getDate()).slice(-2);
-          const month = ("0" + (now.getMonth() + 1)).slice(-2);
-          const today = day + "-" + month + "-" + now.getFullYear();
-          var image_size = "40px";
-          //Format dates
-          var creationDate = result.results[0].requestDate.replace(" 00:00:00", "");
-          creationDate = creationDate.split("-")[1] + "-" + creationDate.split("-")[2] + "-" + creationDate.split("-")[0];
-          //Product Info
-          $("#prod_code").val(result.results[0].productCode);
-          $("#prod_name").val(result.results[0].productName);
-          $("#prod_variant").val(result.results[0].productFlavour);
-          $("#notes").val(result.results[0].notes);
-          $("#date_due").val(result.results[0].dueDate.split(" ")[0]).attr({
-            min: today,
-          });
-          $("#date_creation").val(creationDate);
+        function make_editable(element) {
+            $("#edit-popup").show();
+            $("#popup").removeClass();
+            $("#popup").addClass(element.attr("id"));
+            //For popup
+            const table_data_requester = new Requester(function (result) {
+                //Get today data
+                const now = new Date();
+                const day = ("0" + now.getDate()).slice(-2);
+                const month = ("0" + (now.getMonth() + 1)).slice(-2);
+                const today = day + "-" + month + "-" + now.getFullYear();
+                var image_size = "40px";
+                //Format dates
+                var creationDate = result.results[0].requestDate.replace(" 00:00:00", "");
+                creationDate = creationDate.split("-")[1] + "-" + creationDate.split("-")[2] + "-" + creationDate.split("-")[0];
+                //Product Info
+                $("#prod_code").val(result.results[0].productCode);
+                $("#prod_name").val(result.results[0].productName);
+                $("#prod_variant").val(result.results[0].productFlavour);
+                $("#notes").val(result.results[0].notes);
+                $("#date_due").val(result.results[0].dueDate.split(" ")[0]).attr({
+                    min: today,
+                });
+                $("#date_creation").val(creationDate);
 
-          $("#count_previous").val(result.results[0].previousCount);
-          $("#count_last").val(result.results[0].lastCount);
+                $("#count_previous").val(result.results[0].previousCount);
+                $("#count_last").val(result.results[0].lastCount);
 
-          //Hide all buttons before selecting which to show
-          $("#btn-update").hide();
-          $("#btn-close").hide();
-          $("#btn-recount").hide();
+                //Hide all buttons before selecting which to show
+                $("#btn-update").hide();
+                $("#btn-close").hide();
+                $("#btn-recount").hide();
 
-          //RequestState
-          $("#req_id").val(element.attr("id"));
-          if (result.results[0].isClosed == 0) {
-            switch (result.results[0].requestState) {
-              case "countRequest":
-                append_img_request_state("request_state", "../../assets/img/countRequest.png", image_size, "Asked for count");
-                $("#notes").attr("readonly", true);
-                $("#date_due").attr("readonly", true);
-                $("#btn-close").show();
-                break;
-              case "countDone":
-                append_img_request_state("request_state", "../../assets/img/countDone.png", image_size, "Count done");
-                $("#notes").attr("readonly", false);
-                $("#date_due").attr("readonly", false);
-                $("#btn-update").show();
-                $("#btn-close").show();
-                $("#btn-recount").show();
-                break;
-              case "recountRequest":
-                append_img_request_state("request_state", "../../assets/img/recountRequest.png", image_size, "Asked for recount");
-                $("#notes").attr("readonly", true);
-                $("#date_due").attr("readonly", true);
-                $("#btn-close").show();
-                break;
-              case "recountDone":
-                append_img_request_state("request_state", "../../assets/img/recountDone.png", image_size, "Recount done");
-                $("#notes").attr("readonly", false);
-                $("#date_due").attr("readonly", false);
-                $("#btn-update").show();
-                $("#btn-close").show();
-                $("#btn-recount").show();
-                break;
-              default:
-            }
-          } else {
-            append_img_request_state("request_state", "../../assets/img/closed.png", image_size, "Recount done");
-          }
-        });
-        table_data_requester.query({
-          q_name: "office_requests_details",
-          q_data: {
-            "f.requestId": element.attr("id"),
-          },
-        });
-      }
+                //RequestState
+                $("#req_id").val(element.attr("id"));
+                if (result.results[0].isClosed == 0) {
+                    switch (result.results[0].requestState) {
+                        case "countRequest":
+                            append_img_request_state("request_state", "../../assets/img/countRequest.png", image_size, "Asked for count");
+                            $("#notes").attr("readonly", true);
+                            $("#date_due").attr("readonly", true);
+                            $("#btn-close").show();
+                            break;
+                        case "countDone":
+                            append_img_request_state("request_state", "../../assets/img/countDone.png", image_size, "Count done");
+                            $("#notes").attr("readonly", false);
+                            $("#date_due").attr("readonly", false);
+                            $("#btn-update").show();
+                            $("#btn-close").show();
+                            $("#btn-recount").show();
+                            break;
+                        case "recountRequest":
+                            append_img_request_state("request_state", "../../assets/img/recountRequest.png", image_size, "Asked for recount");
+                            $("#notes").attr("readonly", true);
+                            $("#date_due").attr("readonly", true);
+                            $("#btn-close").show();
+                            break;
+                        case "recountDone":
+                            append_img_request_state("request_state", "../../assets/img/recountDone.png", image_size, "Recount done");
+                            $("#notes").attr("readonly", false);
+                            $("#date_due").attr("readonly", false);
+                            $("#btn-update").show();
+                            $("#btn-close").show();
+                            $("#btn-recount").show();
+                            break;
+                        default:
+                    }
+                } else {
+                    append_img_request_state("request_state", "../../assets/img/closed.png", image_size, "Recount done");
+                }
+            });
+            table_data_requester.query({
+                q_name: "office_requests_details",
+                q_data: {
+                    "f.requestId": element.attr("id"),
+                },
+            });
+        }
 
-      function register_clicks() {
-        $(".table-row").dblclick(function (e) {
-          make_editable($(this));
-        });
+        function register_clicks() {
+            $(".table-row").dblclick(function (e) {
+                make_editable($(this));
+            });
 
-        $("#edit-popup").click(function (e) {
-          if (e.target === this) {
-            $(this).hide();
-          }
-        });
+            $("#edit-popup").click(function (e) {
+                if (e.target === this) {
+                    $(this).hide();
+                }
+            });
 
-        $(".exit-button").click(function (e) {
-          if (e.target === this) {
+            $(".exit-button").click(function (e) {
+                if (e.target === this) {
+                    $("#edit-popup").hide();
+                }
+            });
+        }
+
+        //Get table data
+        $(document).ready(function () {
             $("#edit-popup").hide();
-          }
-        });
-      }
 
-      //Get table data
-      $(document).ready(function () {
-        $("#edit-popup").hide();
+            //Update button
+            $("#btn-update").click((e) => {
+                officeUpdate($("#popup").attr("class"), $("#notes").val(), $("#date_due").val());
+                location.reload();
+            });
+            //Close button
+            $("#btn-close").click((e) => {
+                officeClose($("#popup").attr("class"), today);
+                location.reload();
+            });
+            //Recount button
+            $("#btn-recount").click((e) => {
+                officeRecount($("#popup").attr("class"));
+                location.reload();
+            });
 
-        //Update button
-        $("#btn-update").click((e) => {
-          officeUpdate($("#popup").attr("class"), $("#notes").val(), $("#date_due").val());
-          location.reload();
+            const table_headers_strings = {
+                "IS CLOSED": "isClosed",
+                STATUS: "requestState",
+                PRODUCT: "productName",
+                FLAVOUR: "productFlavour",
+                NOTES: "notes",
+                "REQUEST DATE [dd/mm/yyyy]": "requestDate",
+                "DUE DATE [dd/mm/yyyy]": "dueDate",
+                "CLOSED DATE [dd/mm/yyyy]": "terminationDate",
+                "LAST COUNT": "lastCount",
+            };
+            const table_data_requester = new Requester((result) => {
+                table_maker(result.results, "request-table-container", table_headers_strings);
+                register_clicks();
+            });
+            table_data_requester.query({ q_name: "office_requests" });
         });
-        //Close button
-        $("#btn-close").click((e) => {
-          officeClose($("#popup").attr("class"), today);
-          location.reload();
-        });
-        //Recount button
-        $("#btn-recount").click((e) => {
-          officeRecount($("#popup").attr("class"));
-          location.reload();
-        });
-
-        const table_headers_strings = {
-          "IS CLOSED": "isClosed",
-          STATUS: "requestState",
-          PRODUCT: "productName",
-          FLAVOUR: "productFlavour",
-          NOTES: "notes",
-          "REQUEST DATE [dd/mm/yyyy]": "requestDate",
-          "DUE DATE [dd/mm/yyyy]": "dueDate",
-          "CLOSED DATE [dd/mm/yyyy]": "terminationDate",
-          "LAST COUNT": "lastCount",
-        };
-        const table_data_requester = new Requester((result) => {
-          table_maker(result.results, "request-table-container", table_headers_strings);
-          register_clicks();
-        });
-        table_data_requester.query({ q_name: "office_requests" });
-      });
     </script>
-  </head>
-  <body>
-    <main role="main" class="container">
-      <!--  -->
-      <!-- Popup -->
-      <!--  -->
-      <div id="edit-popup" class="popup-container">
+</head>
+<body>
+<main role="main" class="container">
+    <!--  -->
+    <!-- Popup -->
+    <!--  -->
+    <div id="edit-popup" class="popup-container">
         <div id="popup">
-          <div class="card-section exit-button-wrapper">
-            <div class="card-header-title">Details</div>
-            <div class="exit-button">&times;</div>
-          </div>
-          <div id="popup-data" class="card-section form-holder">
-            <!-- Request info -->
-            <div class="form-group row">
-              <div class="row col-12">
-                <label for="req_id" class="col-1 col-form-label">Request Id</label>
-                <div class="input-group">
-                  <div class="input-group-prepend" id="request_state"></div>
-                  <input id="req_id" name="req_id" type="text" class="form-control" aria-describedby="req_idHelpBlock" required="required" readonly />
-                </div>
-                <span id="req_idHelpBlock" class="form-text text-muted">Assigned id to the current request</span>
-              </div>
+            <div class="card-section exit-button-wrapper">
+                <div class="card-header-title">Details</div>
+                <div class="exit-button">&times;</div>
             </div>
-
-            <!-- Product info -->
-            <div class="row">
-              <div class="row col-12">
-                <div class="form-group col no-gutters">
-                  <label class="col-12 col-form-label" for="prod_code">Product Code</label>
-                  <div class="col-12">
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <div class="input-group-text"><i class="fa fa-barcode"></i></div>
-                      </div>
-                      <input
-                        id="prod_code"
-                        name="prod_code"
-                        type="text"
-                        class="form-control"
-                        aria-describedby="prod_codeHelpBlock"
-                        required="required"
-                        readonly
-                      />
-                    </div>
-                    <span id="prod_codeHelpBlock" class="form-text text-muted">Code assigned to the product</span>
-                  </div>
-                </div>
-
-                <div class="form-group col no-gutters">
-                  <label class="col-12 col-form-label" for="prod_name">Product Name</label>
-                  <div class="col-12">
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <div class="input-group-text"><i class="fa fa-tag"></i></div>
-                      </div>
-                      <input
-                        id="prod_name"
-                        name="prod_name"
-                        type="text"
-                        class="form-control"
-                        aria-describedby="prod_nameHelpBlock"
-                        required="required"
-                        readonly
-                      />
-                    </div>
-                    <span id="prod_nameHelpBlock" class="form-text text-muted">Descriptive product name</span>
-                  </div>
-                </div>
-
-                <div class="form-group col no-gutters">
-                  <label for="prod_variant" class="col-12 col-form-label">Product flavour</label>
-                  <div class="col-12">
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <div class="input-group-text">
-                          <i class="fa fa-archive"></i>
+            <div id="popup-data" class="card-section form-holder">
+                <!-- Request info -->
+                <div class="form-group row">
+                    <div class="row col-12">
+                        <label for="req_id" class="col-1 col-form-label">Request Id</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend" id="request_state"></div>
+                            <input id="req_id" name="req_id" type="text" class="form-control" aria-describedby="req_idHelpBlock" required="required" readonly />
                         </div>
-                      </div>
-                      <input
-                        id="prod_variant"
-                        name="prod_variant"
-                        type="text"
-                        class="form-control"
-                        aria-describedby="prod_variantHelpBlock"
-                        required="required"
-                        readonly
-                      />
+                        <span id="req_idHelpBlock" class="form-text text-muted">Assigned id to the current request</span>
                     </div>
-                    <span id="prod_variantHelpBlock" class="form-text text-muted">The specific variant of this product</span>
-                  </div>
                 </div>
-              </div>
-            </div>
 
-            <!-- Notes -->
-            <div class="form-group row">
-              <div class="row col-12">
-                <label for="notes" class="col-1 col-form-label">Notes</label>
-                <div class="input-group">
-                  <textarea id="notes" name="notes" cols="20" rows="2" class="form-control" aria-describedby="notesHelpBlock" readonly></textarea>
-                </div>
-              </div>
-            </div>
-
-            <!-- Dates -->
-            <div class="row">
-              <div class="row col-12">
-                <div class="form-group col no-gutters">
-                  <label for="date_due" class="col-12 col-form-label">Due Date [mm/dd/yyyy]</label>
-                  <div class="col-12">
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <div class="input-group-text">
-                          <i class="fa fa-calendar"></i>
+                <!-- Product info -->
+                <div class="row">
+                    <div class="row col-12">
+                        <div class="form-group col no-gutters">
+                            <label class="col-12 col-form-label" for="prod_code">Product Code</label>
+                            <div class="col-12">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text"><i class="fa fa-barcode"></i></div>
+                                    </div>
+                                    <input
+                                            id="prod_code"
+                                            name="prod_code"
+                                            type="text"
+                                            class="form-control"
+                                            aria-describedby="prod_codeHelpBlock"
+                                            required="required"
+                                            readonly
+                                    />
+                                </div>
+                                <span id="prod_codeHelpBlock" class="form-text text-muted">Code assigned to the product</span>
+                            </div>
                         </div>
-                      </div>
-                      <input
-                        id="date_due"
-                        name="date_due"
-                        type="date"
-                        class="form-control"
-                        aria-describedby="date_dueHelpBlock"
-                        required="required"
-                        readonly
-                      />
-                    </div>
-                  </div>
-                </div>
 
-                <div class="form-group col no-gutters">
-                  <label for="date_creation" class="col-12 col-form-label">Creation Date [mm/dd/yyyy]</label>
-                  <div class="col-12">
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <div class="input-group-text">
-                          <i class="fa fa-calendar"></i>
+                        <div class="form-group col no-gutters">
+                            <label class="col-12 col-form-label" for="prod_name">Product Name</label>
+                            <div class="col-12">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text"><i class="fa fa-tag"></i></div>
+                                    </div>
+                                    <input
+                                            id="prod_name"
+                                            name="prod_name"
+                                            type="text"
+                                            class="form-control"
+                                            aria-describedby="prod_nameHelpBlock"
+                                            required="required"
+                                            readonly
+                                    />
+                                </div>
+                                <span id="prod_nameHelpBlock" class="form-text text-muted">Descriptive product name</span>
+                            </div>
                         </div>
-                      </div>
-                      <input
-                        id="date_creation"
-                        name="date_creation"
-                        type="text"
-                        aria-describedby="date_creationHelpBlock"
-                        required="required"
-                        class="form-control"
-                        readonly
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
 
-            <!-- Counts -->
-            <div class="row">
-              <div class="row col-12">
-                <div class="form-group col no-gutters">
-                  <label for="count_previous" class="col-12 col-form-label">Previous Count</label>
-                  <div class="col-12">
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <div class="input-group-text">
-                          <i class="fa fa-bar-chart-o"></i>
+                        <div class="form-group col no-gutters">
+                            <label for="prod_variant" class="col-12 col-form-label">Product flavour</label>
+                            <div class="col-12">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="fa fa-archive"></i>
+                                        </div>
+                                    </div>
+                                    <input
+                                            id="prod_variant"
+                                            name="prod_variant"
+                                            type="text"
+                                            class="form-control"
+                                            aria-describedby="prod_variantHelpBlock"
+                                            required="required"
+                                            readonly
+                                    />
+                                </div>
+                                <span id="prod_variantHelpBlock" class="form-text text-muted">The specific variant of this product</span>
+                            </div>
                         </div>
-                      </div>
-                      <input
-                        id="count_previous"
-                        name="count_previous"
-                        type="text"
-                        class="form-control"
-                        aria-describedby="count_previousHelpBlock"
-                        readonly
-                      />
                     </div>
-                  </div>
                 </div>
 
-                <div class="form-group col no-gutters">
-                  <label for="count_last" class="col-12 col-form-label">Last Count</label>
-                  <div class="col-12">
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <div class="input-group-text">
-                          <i class="fa fa-refresh"></i>
+                <!-- Notes -->
+                <div class="form-group row">
+                    <div class="row col-12">
+                        <label for="notes" class="col-1 col-form-label">Notes</label>
+                        <div class="input-group">
+                            <textarea id="notes" name="notes" cols="20" rows="2" class="form-control" aria-describedby="notesHelpBlock" readonly></textarea>
                         </div>
-                      </div>
-                      <input id="count_last" name="count_last" type="text" class="form-control" readonly />
                     </div>
-                  </div>
                 </div>
-              </div>
-            </div>
 
-            <div class="row col-12 justify-content-center" style="padding-top: 10px">
-              <div class="col-10 form-group row col-10 margin-10">
-                <button name="update" type="submit" class="styled-btn btn-blue" id="btn-update">Update</button>
-              </div>
-              <div class="row col-12 popup-buttons-wrapper justify-content-evenly margin-10">
-                <button name="close" type="submit" class="col-5 styled-btn btn-red" id="btn-close">
-                  <img src="../../assets/img/closed_icon.png" alt="Close" />
-                </button>
+                <!-- Dates -->
+                <div class="row">
+                    <div class="row col-12">
+                        <div class="form-group col no-gutters">
+                            <label for="date_due" class="col-12 col-form-label">Due Date [mm/dd/yyyy]</label>
+                            <div class="col-12">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                    </div>
+                                    <input
+                                            id="date_due"
+                                            name="date_due"
+                                            type="date"
+                                            class="form-control"
+                                            aria-describedby="date_dueHelpBlock"
+                                            required="required"
+                                            readonly
+                                    />
+                                </div>
+                            </div>
+                        </div>
 
-                <button name="recount" type="submit" class="col-5 styled-btn btn-yellow" id="btn-recount">
-                  <img src="../../assets/img/recountRequest_icon.png" alt="Recount" />
-                </button>
-              </div>
+                        <div class="form-group col no-gutters">
+                            <label for="date_creation" class="col-12 col-form-label">Creation Date [mm/dd/yyyy]</label>
+                            <div class="col-12">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                    </div>
+                                    <input
+                                            id="date_creation"
+                                            name="date_creation"
+                                            type="text"
+                                            aria-describedby="date_creationHelpBlock"
+                                            required="required"
+                                            class="form-control"
+                                            readonly
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Counts -->
+                <div class="row">
+                    <div class="row col-12">
+                        <div class="form-group col no-gutters">
+                            <label for="count_previous" class="col-12 col-form-label">Previous Count</label>
+                            <div class="col-12">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="fa fa-bar-chart-o"></i>
+                                        </div>
+                                    </div>
+                                    <input
+                                            id="count_previous"
+                                            name="count_previous"
+                                            type="text"
+                                            class="form-control"
+                                            aria-describedby="count_previousHelpBlock"
+                                            readonly
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col no-gutters">
+                            <label for="count_last" class="col-12 col-form-label">Last Count</label>
+                            <div class="col-12">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="fa fa-refresh"></i>
+                                        </div>
+                                    </div>
+                                    <input id="count_last" name="count_last" type="text" class="form-control" readonly />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row col-12 justify-content-center" style="padding-top: 10px">
+                    <div class="col-10 form-group row col-10 margin-10">
+                        <button name="update" type="submit" class="styled-btn btn-blue" id="btn-update">Update</button>
+                    </div>
+                    <div class="row col-12 popup-buttons-wrapper justify-content-evenly margin-10">
+                        <button name="close" type="submit" class="col-5 styled-btn btn-red" id="btn-close">
+                            <img src="../../assets/img/closed_icon.png" alt="Close" />
+                        </button>
+
+                        <button name="recount" type="submit" class="col-5 styled-btn btn-yellow" id="btn-recount">
+                            <img src="../../assets/img/recountRequest_icon.png" alt="Recount" />
+                        </button>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
+    </div>
 
-      <!--  -->
-      <!-- Header -->
-      <!--  -->
-      <div class="header weight-800" id="header">Office</div>
+    <!--  -->
+    <!-- Header -->
+    <!--  -->
+    <div class="header weight-800" id="header">Office</div>
 
-      <!--  -->
-      <!-- Sub Header -->
-      <!--  -->
-      <div class="sub-header">
+    <!--  -->
+    <!-- Sub Header -->
+    <!--  -->
+    <div class="sub-header">
         <div class="dropdown">
-          <button class="styled-btn dropdown-toggle btn-blue" type="button" id="btn-filters" data-bs-toggle="dropdown" aria-expanded="false">
-            Filters
-          </button>
-          <ul class="dropdown-menu btn-blue" aria-labelledby="btn-filters">
-            <li><a class="dropdown-item" href="#">Most Recent</a></li>
-            <li><a class="dropdown-item" href="#">Oldest</a></li>
-            <li><a class="dropdown-item" href="#">Upcoming due date</a></li>
-            <li><hr class="dropdown-divider" /></li>
-            <li>
-              <a class="dropdown-item" href="#">
-                <label class="form-check-label" for="flexCheckChecked">
-                  <input class="" type="checkbox" value="showClosed" id="flexCheckChecked" />
-                  Show closed
-                </label>
-              </a>
-            </li>
-          </ul>
+            <button class="styled-btn dropdown-toggle btn-blue" type="button" id="btn-filters" data-bs-toggle="dropdown" aria-expanded="false">
+                Filters
+            </button>
+            <ul class="dropdown-menu btn-blue" aria-labelledby="btn-filters">
+                <li><a class="dropdown-item" href="#">Most Recent</a></li>
+                <li><a class="dropdown-item" href="#">Oldest</a></li>
+                <li><a class="dropdown-item" href="#">Upcoming due date</a></li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                    <a class="dropdown-item" href="#">
+                        <label class="form-check-label" for="flexCheckChecked">
+                            <input class="" type="checkbox" value="showClosed" id="flexCheckChecked" />
+                            Show closed
+                        </label>
+                    </a>
+                </li>
+            </ul>
         </div>
 
         <a type="button" id="btn-add-request" class="styled-btn btn-blue text-align-center no-text-decoration" href="office_create.html"
-          >Add Request</a
+        >Add Request</a
         >
-      </div>
+    </div>
 
-      <link href="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.css" rel="stylesheet">
 
-      <script src="https://unpkg.com/tableexport.jquery.plugin/tableExport.min.js"></script>
-      <script src="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.js"></script>
-      <script src="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table-locale-all.min.js"></script>
-      <script src="https://unpkg.com/bootstrap-table@1.18.3/dist/extensions/export/bootstrap-table-export.min.js"></script>
+    <script src="https://unpkg.com/tableexport.jquery.plugin/tableExport.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table-locale-all.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.18.3/dist/extensions/export/bootstrap-table-export.min.js"></script>
 
-      <style>
-        .select,
-        #locale {
-          width: 100%;
-        }
-        .like {
-          margin-right: 10px;
-        }
-      </style>
+    <table
+            id="table"
+            data-toolbar="#toolbar"
+            data-search="true"
+            data-show-refresh="true"
+            data-show-toggle="true"
+            data-show-fullscreen="true"
+            data-show-columns="true"
+            data-show-columns-toggle-all="true"
+            data-detail-view="true"
+            data-show-export="true"
+            data-click-to-select="true"
+            data-detail-formatter="detailFormatter"
+            data-minimum-count-columns="2"
+            data-show-pagination-switch="true"
+            data-pagination="true"
+            data-id-field="id"
+            data-page-list="[10, 25, 50, 100, all]"
+            data-show-footer="true"
+            data-side-pagination="server"
+            data-url="https://examples.wenzhixin.net.cn/examples/bootstrap_table/data"
+            data-response-handler="responseHandler">
+    </table>
 
-      <div class="select">
-        <select class="form-control" id="locale">
-          <option value="af-ZA">af-ZA</option>
-          <option value="ar-SA">ar-SA</option>
-          <option value="ca-ES">ca-ES</option>
-          <option value="cs-CZ">cs-CZ</option>
-          <option value="da-DK">da-DK</option>
-          <option value="de-DE">de-DE</option>
-          <option value="el-GR">el-GR</option>
-          <option value="en-US" selected>en-US</option>
-          <option value="es-AR">es-AR</option>
-          <option value="es-CL">es-CL</option>
-          <option value="es-CR">es-CR</option>
-          <option value="es-ES">es-ES</option>
-          <option value="es-MX">es-MX</option>
-          <option value="es-NI">es-NI</option>
-          <option value="es-SP">es-SP</option>
-          <option value="et-EE">et-EE</option>
-          <option value="eu-EU">eu-EU</option>
-          <option value="fa-IR">fa-IR</option>
-          <option value="fi-FI">fi-FI</option>
-          <option value="fr-BE">fr-BE</option>
-          <option value="fr-FR">fr-FR</option>
-          <option value="he-IL">he-IL</option>
-          <option value="hr-HR">hr-HR</option>
-          <option value="hu-HU">hu-HU</option>
-          <option value="id-ID">id-ID</option>
-          <option value="it-IT">it-IT</option>
-          <option value="ja-JP">ja-JP</option>
-          <option value="ka-GE">ka-GE</option>
-          <option value="ko-KR">ko-KR</option>
-          <option value="ms-MY">ms-MY</option>
-          <option value="nb-NO">nb-NO</option>
-          <option value="nl-NL">nl-NL</option>
-          <option value="pl-PL">pl-PL</option>
-          <option value="pt-BR">pt-BR</option>
-          <option value="pt-PT">pt-PT</option>
-          <option value="ro-RO">ro-RO</option>
-          <option value="ru-RU">ru-RU</option>
-          <option value="sk-SK">sk-SK</option>
-          <option value="sv-SE">sv-SE</option>
-          <option value="th-TH">th-TH</option>
-          <option value="tr-TR">tr-TR</option>
-          <option value="uk-UA">uk-UA</option>
-          <option value="ur-PK">ur-PK</option>
-          <option value="uz-Latn-UZ">uz-Latn-UZ</option>
-          <option value="vi-VN">vi-VN</option>
-          <option value="zh-CN">zh-CN</option>
-          <option value="zh-TW">zh-TW</option>
-        </select>
-      </div>
-
-      <div id="toolbar">
-        <button id="remove" class="btn btn-danger" disabled>
-          <i class="fa fa-trash"></i> Delete
-        </button>
-      </div>
-      <table
-              id="table"
-              data-toolbar="#toolbar"
-              data-search="true"
-              data-show-refresh="true"
-              data-show-toggle="true"
-              data-show-fullscreen="true"
-              data-show-columns="true"
-              data-show-columns-toggle-all="true"
-              data-detail-view="true"
-              data-show-export="true"
-              data-click-to-select="true"
-              data-detail-formatter="detailFormatter"
-              data-minimum-count-columns="2"
-              data-show-pagination-switch="true"
-              data-pagination="true"
-              data-id-field="id"
-              data-page-list="[10, 25, 50, 100, all]"
-              data-show-footer="true"
-              data-side-pagination="server"
-              data-url="https://examples.wenzhixin.net.cn/examples/bootstrap_table/data"
-              data-response-handler="responseHandler">
-      </table>
-
-      <script>
+    <script>
         var $table = $('#table')
-        var $remove = $('#remove')
-        var selections = []
-
-        function getIdSelections() {
-          return $.map($table.bootstrapTable('getSelections'), function (row) {
-            return row.id
-          })
-        }
-
-        function responseHandler(res) {
-          $.each(res.rows, function (i, row) {
-            row.state = $.inArray(row.id, selections) !== -1
-          })
-          return res
-        }
 
         function detailFormatter(index, row) {
-          var html = []
-          $.each(row, function (key, value) {
-            html.push('<p><b>' + key + ':</b> ' + value + '</p>')
-          })
-          return html.join('')
+            var html = []
+            $.each(row, function (key, value) {
+                html.push('<p><b>' + key + ':</b> ' + value + '</p>')
+            })
+            return html.join('')
         }
 
         function operateFormatter(value, row, index) {
-          return [
-            '<a class="like" href="javascript:void(0)" title="Like">',
-            '<i class="fa fa-heart"></i>',
-            '</a>  ',
-            '<a class="remove" href="javascript:void(0)" title="Remove">',
-            '<i class="fa fa-trash"></i>',
-            '</a>'
-          ].join('')
+            return [
+                '<a class="like" href="javascript:void(0)" title="Like">',
+                '<i class="fa fa-heart"></i>',
+                '</a>  ',
+                '<a class="remove" href="javascript:void(0)" title="Remove">',
+                '<i class="fa fa-trash"></i>',
+                '</a>'
+            ].join('')
         }
 
         window.operateEvents = {
-          'click .like': function (e, value, row, index) {
-            alert('You click like action, row: ' + JSON.stringify(row))
-          },
-          'click .remove': function (e, value, row, index) {
-            $table.bootstrapTable('remove', {
-              field: 'id',
-              values: [row.id]
-            })
-          }
+            'click .like': function (e, value, row, index) {
+                alert('You click like action, row: ' + JSON.stringify(row))
+            },
+            'click .remove': function (e, value, row, index) {
+                $table.bootstrapTable('remove', {
+                    field: 'id',
+                    values: [row.id]
+                })
+            }
         }
 
         function totalTextFormatter(data) {
-          return 'Total'
+            return 'Total'
         }
 
         function totalNameFormatter(data) {
-          return data.length
+            return data.length
         }
 
         function totalPriceFormatter(data) {
-          var field = this.field
-          return '$' + data.map(function (row) {
-            return +row[field].substring(1)
-          }).reduce(function (sum, i) {
-            return sum + i
-          }, 0)
+            var field = this.field
+            return '$' + data.map(function (row) {
+                return +row[field].substring(1)
+            }).reduce(function (sum, i) {
+                return sum + i
+            }, 0)
         }
 
         function initTable() {
-          $table.bootstrapTable('destroy').bootstrapTable({
-            height: 550,
-            locale: $('#locale').val(),
-            columns: [
-              [{
-                field: 'state',
-                checkbox: true,
-                rowspan: 2,
-                align: 'center',
-                valign: 'middle'
-              }, {
-                title: 'Item ID',
-                field: 'id',
-                rowspan: 2,
-                align: 'center',
-                valign: 'middle',
-                sortable: true,
-                footerFormatter: totalTextFormatter
-              }, {
-                title: 'Item Detail',
-                colspan: 3,
-                align: 'center'
-              }],
-              [{
-                field: 'name',
-                title: 'Item Name',
-                sortable: true,
-                footerFormatter: totalNameFormatter,
-                align: 'center'
-              }, {
-                field: 'price',
-                title: 'Item Price',
-                sortable: true,
-                align: 'center',
-                footerFormatter: totalPriceFormatter
-              }, {
-                field: 'operate',
-                title: 'Item Operate',
-                align: 'center',
-                clickToSelect: false,
-                events: window.operateEvents,
-                formatter: operateFormatter
-              }]
-            ]
-          })
-          $table.on('check.bs.table uncheck.bs.table ' +
-                  'check-all.bs.table uncheck-all.bs.table',
-                  function () {
-                    $remove.prop('disabled', !$table.bootstrapTable('getSelections').length)
+            $table.bootstrapTable('destroy').bootstrapTable({
+                height: 550,
+                locale: "IT",
+                columns: [
+                        {
+                            field: 'IS CLOSED',
+                            rowspan: 2,
+                            align: 'center',
+                            valign: 'middle'
+                        },
+                        {
+                            title: 'STATUS',
+                            field: 'STATUS',
+                            rowspan: 2,
+                            align: 'center',
+                            valign: 'middle',
+                            sortable: true,
+                        },
+                        {
+                            title: 'PRODUCT',
+                            colspan: 3,
+                            align: 'center'
+                        }
+                        {
+                            field: 'FLAVOUR',
+                            title: 'FLAVOUR',
+                            align: 'center'
+                        },
+                        {
+                            field: 'NOTES',
+                            title: 'NOTES',
+                            align: 'center',
+                        },
+                        {
+                            field: 'REQUEST DATE [dd/mm/yyyy]',
+                            title: 'REQUEST DATE [dd/mm/yyyy]',
+                            align: 'center',
 
-                    // save your data, here just save the current page
-                    selections = getIdSelections()
-                    // push or splice the selections if you want to save all data selections
-                  })
-          $table.on('all.bs.table', function (e, name, args) {
-            console.log(name, args)
-          })
-          $remove.click(function () {
-            var ids = getIdSelections()
-            $table.bootstrapTable('remove', {
-              field: 'id',
-              values: ids
+                        },
+                        {
+                            field: 'DUE DATE [dd/mm/yyyy]',
+                            title: 'DUE DATE [dd/mm/yyyy]',
+                            align: 'center',
+                        },
+                        {
+                            field: 'CLOSED DATE [dd/mm/yyyy]',
+                            title: 'CLOSED DATE [dd/mm/yyyy]',
+                            align: 'center',
+                        },
+                        {
+                            field: 'LAST COUNT',
+                            title: 'LAST COUNT',
+                            align: 'center',
+                        }
+                    ]
             })
-            $remove.prop('disabled', true)
-          })
         }
-
         $(function() {
-          initTable()
-
-          $('#locale').change(initTable)
+            initTable()
+            $('#locale').change(initTable)
         })
-      </script>
-    </main>
-  </body>
+    </script>
+</main>
+</body>
 </html>
