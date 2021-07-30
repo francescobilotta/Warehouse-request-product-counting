@@ -22,7 +22,7 @@
     <script src="../../assets/js/generators.js?1432334"></script>
     <script src="../../assets/js/record_edit.js?1253634"></script>
     <script src="../../assets/js/append_img_request_state.js?734232534"></script>
-    <script src="../../assets/js/queries.js?13332534"></script>
+    <script src="../../assets/js/queries.js?1332534"></script>
     <script>
       function make_editable(element) {
         $("#edit-popup").show();
@@ -37,7 +37,9 @@
           const month = ("0" + (now.getMonth() + 1)).slice(-2);
           const today = now.getFullYear() + "-" + month + "-" + day;
           var image_size = "40px";
-
+          //Format dates
+          var creationDate = result.results[0].requestDate.replace(" 00:00:00", "");
+          creationDate = creationDate.split("-")[1] + "-" + creationDate.split("-")[2] + "-" + creationDate.split("-")[0];
           //Product Info
           $("#prod_code").val(result.results[0].productCode);
           $("#prod_name").val(result.results[0].productName);
@@ -46,8 +48,22 @@
           $("#date_due").val(result.results[0].dueDate.split(" ")[0]).attr({
             min: today,
           });
-          $("#date_creation").val(result.results[0].requestDate);
-          $("#expected_count").val(result.results[0].expectedCount);
+          $("#date_creation").val(creationDate);
+
+          //EXPECTED COUNT
+          const expected_count_requester = new Requester(function (result) {
+            console.log(result);
+            //$("#expected_count").val(result.results[0].expectedCount);
+          });
+          expected_count_requester.query({
+            q_name: "warehouse_expected_count",
+            q_data: {
+              "f.productCode": result.results[0].productCode,
+              "f.productFlavour": result.results[0].productFlavour,
+              "f.currentYear": now.getFullYear(),
+            },
+          });
+
           $("#expected_ground_count").val(result.results[0].expectedGroundCount);
 
           //Hide all buttons before selecting which to show counted_items
@@ -111,8 +127,8 @@
           PRODUCT: "productName",
           FLAVOUR: "productFlavour",
           NOTES: "notes",
-          "REQUEST DATE [dd/mm/yyyy]": "requestDate",
-          "DUE DATE [dd/mm/yyyy]": "dueDate",
+          "REQUEST DATE": "requestDate",
+          "DUE DATE": "dueDate",
           "EXPECTED IN TOTAL": "expectedCount",
           "READY TO BE SHIPPED": "expectedGroundCount",
         };
