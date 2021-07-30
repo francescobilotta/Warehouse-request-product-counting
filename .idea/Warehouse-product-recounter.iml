@@ -12,7 +12,9 @@
     <orderEntry type="library" name="selectize.js" level="application" />
     <orderEntry type="library" name="mdb-ui-kit" level="application" />
     <orderEntry type="library" name="bootstrap-table" level="application" />
-    <orderEntry type="library" name="tableexport.jquery.plugin" level="application" />
-    <orderEntry type="library" name="bootstrap-table" level="application" />
+    <orderEntry type="library" name="jquery.dataTables" level="application" />
+    <orderEntry type="library" name="dataTables.jqueryui" level="application" />
+    <orderEntry type="library" name="twitter-bootstrap" level="application" />
+    <orderEntry type="library" name="datatables" level="application" />
   </component>
 </module>
