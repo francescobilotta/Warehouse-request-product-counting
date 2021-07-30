@@ -41,14 +41,6 @@ function officeRecount(requestId, notes, dueDate) {
   });
 }
 
-function closeRequest() {
-  //TODO
-}
-
-function askRecount() {
-  //TODO
-}
-
 /*
 For warehouse
 */
