@@ -27,15 +27,13 @@ function officeClose(requestId, terminationDate) {
     },
   });
 }
-function officeRecount(requestId, notes, dueDate) {
+function officeRecount(requestId) {
   const table_data_requester = new Requester(function (result) {
-    console.log(`Request ${requestId} updated`);
+    console.log(`Asked for recount of request ${requestId}`);
   });
   table_data_requester.query({
-    q_name: "office_update_requests",
+    q_name: "ask_for_recount",
     q_data: {
-      "d.notes": notes,
-      "d.dueDate": dueDate,
       "f.requestId": requestId,
     },
   });

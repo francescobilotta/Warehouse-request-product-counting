@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/css/selectize.bootstrap4.min.css" />
 
-    <link href="../../assets/css/common.css?13323323" rel="stylesheet" />
+    <link href="../../assets/css/common.css?631353323323" rel="stylesheet" />
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -18,11 +18,11 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/js/standalone/selectize.min.js"></script>
 
-    <script src="../../assets/js/request.js?12232755543334"></script>
-    <script src="../../assets/js/generators.js?14575324253234"></script>
-    <script src="../../assets/js/record_edit.js?12553454374234"></script>
-    <script src="../../assets/js/append_img_request_state.js?71553254232534"></script>
-    <script src="../../assets/js/queries.js?13254575232534"></script>
+    <script src="../../assets/js/request.js?1223273565655436334"></script>
+    <script src="../../assets/js/generators.js?1457653632452653234"></script>
+    <script src="../../assets/js/record_edit.js?125653645436754234"></script>
+    <script src="../../assets/js/append_img_request_state.js?7156566533254232534"></script>
+    <script src="../../assets/js/queries.js?1325453765526326534"></script>
     <script>
       function make_editable(element) {
         $("#edit-popup").show();
@@ -109,8 +109,8 @@
           PRODUCT: "productName",
           FLAVOUR: "productFlavour",
           NOTES: "notes",
-          "REQUEST DATE": "requestDate",
-          "DUE DATE": "dueDate",
+          "REQUEST DATE [dd/mm/yyyy]": "requestDate",
+          "DUE DATE [dd/mm/yyyy]": "dueDate",
           "READY TO BE SHIPPED": "expectedGroundCount",
         };
         const table_data_requester = new Requester((result) => {
@@ -232,7 +232,7 @@
               <label class="col-1 col-form-label">Dates</label>
               <div class="row col-11">
                 <div class="form-group col no-gutters">
-                  <label for="date_due" class="col-12 col-form-label">Due Date</label>
+                  <label for="date_due" class="col-12 col-form-label">Due Date [mm/dd/yyyy]</label>
                   <div class="col-12">
                     <div class="input-group">
                       <div class="input-group-prepend">
@@ -254,7 +254,7 @@
                 </div>
 
                 <div class="form-group col no-gutters">
-                  <label for="date_creation" class="col-12 col-form-label">Creation Date</label>
+                  <label for="date_creation" class="col-12 col-form-label">Creation Date [mm/dd/yyyy]</label>
                   <div class="col-12">
                     <div class="input-group">
                       <div class="input-group-prepend">
@@ -336,7 +336,7 @@
       <!--  -->
       <!-- Header -->
       <!--  -->
-      <div class="header weight-800">Warehouse director</div>
+      <div class="header weight-800">Warehouse operator</div>
 
       <!--  -->
       <!-- Sub Header -->
