@@ -26,17 +26,19 @@
     <script>
       function make_editable(element) {
         $("#edit-popup").show();
-        const popup = $("#popup-data");
-        popup.attr("id", element.attr("id"));
-
+        $("#popup").removeClass();
+        $("#popup").addClass(element.attr("id"));
         //For popup
         const table_data_requester = new Requester(function (result) {
           //Get today data
           const now = new Date();
           const day = ("0" + now.getDate()).slice(-2);
           const month = ("0" + (now.getMonth() + 1)).slice(-2);
-          const today = now.getFullYear() + "-" + month + "-" + day;
+          const today = day + "-" + month + "-" + now.getFullYear();
           var image_size = "40px";
+          //Format dates
+          var creationDate = result.results[0].requestDate.replace(" 00:00:00", "");
+          creationDate = creationDate.split("-")[1] + "-" + creationDate.split("-")[2] + "-" + creationDate.split("-")[0];
           //Product Info
           $("#prod_code").val(result.results[0].productCode);
           $("#prod_name").val(result.results[0].productName);
@@ -45,7 +47,8 @@
           $("#date_due").val(result.results[0].dueDate.split(" ")[0]).attr({
             min: today,
           });
-          $("#date_creation").val(result.results[0].requestDate);
+          $("#date_creation").val(creationDate);
+
           $("#count_previous").val(result.results[0].previousCount);
           $("#count_last").val(result.results[0].lastCount);
 
@@ -53,21 +56,6 @@
           $("#btn-update").hide();
           $("#btn-close").hide();
           $("#btn-recount").hide();
-          //Update button
-          $("#btn-update").click((e) => {
-            officeUpdate(element.attr("id"), $("#notes").val(), $("#date_due").val());
-            location.reload();
-          });
-          //Close button
-          $("#btn-close").click((e) => {
-            officeClose(element.attr("id"), today);
-            location.reload();
-          });
-          //Recount button
-          $("#btn-recount").click((e) => {
-            officeRecount(element.attr("id"), $("#counted_items").val(), result.results[0].requestState);
-            location.reload();
-          });
 
           //RequestState
           $("#req_id").val(element.attr("id"));
@@ -137,15 +125,31 @@
       $(document).ready(function () {
         $("#edit-popup").hide();
 
+        //Update button
+        $("#btn-update").click((e) => {
+          officeUpdate($("#popup").attr("class"), $("#notes").val(), $("#date_due").val());
+          location.reload();
+        });
+        //Close button
+        $("#btn-close").click((e) => {
+          officeClose($("#popup").attr("class"), today);
+          location.reload();
+        });
+        //Recount button
+        $("#btn-recount").click((e) => {
+          officeRecount($("#popup").attr("class"));
+          location.reload();
+        });
+
         const table_headers_strings = {
           "IS CLOSED": "isClosed",
           STATUS: "requestState",
           PRODUCT: "productName",
           FLAVOUR: "productFlavour",
           NOTES: "notes",
-          "REQUEST DATE": "requestDate",
-          "DUE DATE": "dueDate",
-          "CLOSED DATE": "terminationDate",
+          "REQUEST DATE [dd/mm/yyyy]": "requestDate",
+          "DUE DATE [dd/mm/yyyy]": "dueDate",
+          "CLOSED DATE [dd/mm/yyyy]": "terminationDate",
           "LAST COUNT": "lastCount",
           "PREVIOUS COUNT": "previousCount",
         };
@@ -163,7 +167,7 @@
       <!-- Popup -->
       <!--  -->
       <div id="edit-popup" class="popup-container">
-        <div class="popup">
+        <div id="popup">
           <div class="card-section exit-button-wrapper">
             <div class="card-header-title">Details</div>
             <div class="exit-button">&times;</div>
@@ -268,7 +272,7 @@
               <label class="col-1 col-form-label">Dates</label>
               <div class="row col-11">
                 <div class="form-group col no-gutters">
-                  <label for="date_due" class="col-12 col-form-label">Due Date</label>
+                  <label for="date_due" class="col-12 col-form-label">Due Date [mm/dd/yyyy]</label>
                   <div class="col-12">
                     <div class="input-group">
                       <div class="input-group-prepend">
@@ -290,7 +294,7 @@
                 </div>
 
                 <div class="form-group col no-gutters">
-                  <label for="date_creation" class="col-12 col-form-label">Creation Date</label>
+                  <label for="date_creation" class="col-12 col-form-label">Creation Date [mm/dd/yyyy]</label>
                   <div class="col-12">
                     <div class="input-group">
                       <div class="input-group-prepend">
@@ -355,8 +359,8 @@
             </div>
 
             <div class="row col-12 justify-content-center" style="padding-top: 10px">
-              <div class="col-10 form-group row col-10 margin-10" id="btn-update">
-                <button name="update" type="submit" class="styled-btn btn-blue">Update</button>
+              <div class="col-10 form-group row col-10 margin-10">
+                <button name="update" type="submit" class="styled-btn btn-blue" id="btn-update">Update</button>
               </div>
               <div class="row col-12 popup-buttons-wrapper justify-content-evenly margin-10">
                 <button name="close" type="submit" class="col-5 styled-btn btn-red" id="btn-close">
@@ -375,7 +379,7 @@
       <!--  -->
       <!-- Header -->
       <!--  -->
-      <div class="header weight-800">Office</div>
+      <div class="header weight-800" id="header">Office</div>
 
       <!--  -->
       <!-- Sub Header -->

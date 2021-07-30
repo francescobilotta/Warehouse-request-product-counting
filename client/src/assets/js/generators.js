@@ -29,6 +29,36 @@ function table_maker(table_data, destination_id, headers) {
             $("<img src='../../assets/img/closed_icon.png' height='" + image_size + "' width='" + image_size + "' title='Request open'>")
           )
         );
+      } else if (headers[key] == "requestDate") {
+        current_row.append(
+          $("<td>").text(
+            row[headers[key]].replace(" 00:00:00", "").split("-")[2] +
+              "-" +
+              row[headers[key]].replace(" 00:00:00", "").split("-")[1] +
+              "-" +
+              row[headers[key]].replace(" 00:00:00", "").split("-")[0]
+          )
+        );
+      } else if (headers[key] == "dueDate") {
+        current_row.append(
+          $("<td>").text(
+            row[headers[key]].replace(" 00:00:00", "").split("-")[2] +
+              "-" +
+              row[headers[key]].replace(" 00:00:00", "").split("-")[1] +
+              "-" +
+              row[headers[key]].replace(" 00:00:00", "").split("-")[0]
+          )
+        );
+      } else if (headers[key] == "terminationDate") {
+        current_row.append(
+          $("<td>").text(
+            row[headers[key]].replace(" 00:00:00", "").split("-")[2] +
+              "-" +
+              row[headers[key]].replace(" 00:00:00", "").split("-")[1] +
+              "-" +
+              row[headers[key]].replace(" 00:00:00", "").split("-")[0]
+          )
+        );
       } else {
         //CHECK requestState
         if (headers[key]) {
