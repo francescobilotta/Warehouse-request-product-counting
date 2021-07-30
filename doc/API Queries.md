@@ -145,3 +145,39 @@
 ###### Variables needed:
 
 - {f.productCode}
+
+---
+
+### [ warehouse_get_product_location.q ]
+
+#### Get standard location of a product .
+
+###### Variables needed:
+
+- {f.productCode}
+- {f.productFlavour}
+
+---
+
+### [ warehouse_expected_count.q ]
+
+#### Get total amount of products on oracle database.
+
+###### Variables needed:
+
+- {f.productCode}
+- {f.productFlavour}
+- {f.currentYear}
+
+---
+
+### [ warehouse_expected_ground_count.q ]
+
+#### Get amount of products on ground or ready to shipped, by productId.
+
+###### Variables needed:
+
+- {d.lastYear}
+- {d.currentYear}
+- {f.productCode}
+- {f.productFlavour}

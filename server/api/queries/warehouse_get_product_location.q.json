@@ -1,0 +1,4 @@
+{
+  "database": "gestionale",
+  "query": "select l.cod_articolo, l.cod_variante, l.loc_default, l.zona, l.corridoio, l.traversa, l.altezza from layou050 l where l.cod_azienda = 'FG' and l.cod_deposito = 'FG' and l.disabilitato = 0 and l.loc_default = 1 and l.cod_articolo = \"{f.productCode}\" and l.cod_variante = \"{f.productFlavour}\""
+}
