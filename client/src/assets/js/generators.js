@@ -30,35 +30,42 @@ function table_maker(table_data, destination_id, headers) {
           )
         );
       } else if (headers[key] == "requestDate") {
-        current_row.append(
-          $("<td>").text(
-            row[headers[key]].replace(" 00:00:00", "").split("-")[2] +
-              "-" +
-              row[headers[key]].replace(" 00:00:00", "").split("-")[1] +
-              "-" +
-              row[headers[key]].replace(" 00:00:00", "").split("-")[0]
-          )
-        );
+        console.log(row[headers[key]]);
+        if (row[headers[key]]) {
+          current_row.append(
+            $("<td>").text(
+              row[headers[key]].replace(" 00:00:00", "").split("-")[2] +
+                "-" +
+                row[headers[key]].replace(" 00:00:00", "").split("-")[1] +
+                "-" +
+                row[headers[key]].replace(" 00:00:00", "").split("-")[0]
+            )
+          );
+        }
       } else if (headers[key] == "dueDate") {
-        current_row.append(
-          $("<td>").text(
-            row[headers[key]].replace(" 00:00:00", "").split("-")[2] +
-              "-" +
-              row[headers[key]].replace(" 00:00:00", "").split("-")[1] +
-              "-" +
-              row[headers[key]].replace(" 00:00:00", "").split("-")[0]
-          )
-        );
+        if (row[headers[key]]) {
+          current_row.append(
+            $("<td>").text(
+              row[headers[key]].replace(" 00:00:00", "").split("-")[2] +
+                "-" +
+                row[headers[key]].replace(" 00:00:00", "").split("-")[1] +
+                "-" +
+                row[headers[key]].replace(" 00:00:00", "").split("-")[0]
+            )
+          );
+        }
       } else if (headers[key] == "terminationDate") {
-        current_row.append(
-          $("<td>").text(
-            row[headers[key]].replace(" 00:00:00", "").split("-")[2] +
-              "-" +
-              row[headers[key]].replace(" 00:00:00", "").split("-")[1] +
-              "-" +
-              row[headers[key]].replace(" 00:00:00", "").split("-")[0]
-          )
-        );
+        if (row[headers[key]]) {
+          current_row.append(
+            $("<td>").text(
+              row[headers[key]].replace(" 00:00:00", "").split("-")[2] +
+                "-" +
+                row[headers[key]].replace(" 00:00:00", "").split("-")[1] +
+                "-" +
+                row[headers[key]].replace(" 00:00:00", "").split("-")[0]
+            )
+          );
+        }
       } else {
         //CHECK requestState
         if (headers[key]) {
@@ -128,9 +135,7 @@ function flavour_builder(flavours, container_id) {
   const container = $("#" + container_id);
   container.empty();
   console.log("emptied container");
-  const flavour_group = $("<div>")
-    .addClass("form-group col no-gutters")
-    .appendTo(container);
+  const flavour_group = $("<div>").addClass("form-group col no-gutters").appendTo(container);
   const label = $("<label>").addClass("col-2").text("Flavour").appendTo(flavour_group);
   const helper = $("<div>").addClass("col-12").appendTo(flavour_group);
 
