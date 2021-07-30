@@ -11,7 +11,7 @@
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/css/selectize.bootstrap4.min.css"/>
 
-    <link href="../../assets/css/common.css?13323323" rel="stylesheet"/>
+    <link href="../../assets/css/common.css?1334423323" rel="stylesheet"/>
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -20,11 +20,11 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/js/standalone/selectize.min.js"></script>
 
-    <script src="../../assets/js/request.js?12232755543334"></script>
-    <script src="../../assets/js/generators.js?14575324253234"></script>
-    <script src="../../assets/js/record_edit.js?12553454374234"></script>
-    <script src="../../assets/js/append_img_request_state.js?71553254232534"></script>
-    <script src="../../assets/js/queries.js?13254575232534"></script>
+    <script src="../../assets/js/request.js?122327565543334"></script>
+    <script src="../../assets/js/generators.js?145753246253234"></script>
+    <script src="../../assets/js/record_edit.js?1255345643374234"></script>
+    <script src="../../assets/js/append_img_request_state.js?715563254232534"></script>
+    <script src="../../assets/js/queries.js?132545752632534"></script>
     <script>
         function autocomplete_init(codes, descriptions) {
             const data = codes.map((code, index) => Object.fromEntries([["code", code], ["name", descriptions[index]]]))
@@ -63,15 +63,18 @@
                 q_name: "get_product_flavours",
                 q_data: {"f.productCode": productId}
             });
-            console.log(description);
             $('#prod_name').val(description);
         }
 
-        function set_date() {
+        function get_today() {
             const now = new Date();
             const day = ("0" + now.getDate()).slice(-2);
             const month = ("0" + (now.getMonth() + 1)).slice(-2);
-            const today = now.getFullYear() + "-" + month + "-" + day;
+            return now.getFullYear() + "-" + month + "-" + day;
+        }
+
+        function set_date() {
+            const today = get_today();
 
             $("#date_due").val(today).attr({
                 min: today,
@@ -101,25 +104,24 @@
             });
 
             document.request_create_sender = new Requester(function (result) {
-                //todo hide popup and refresh data
+                window.location.replace("office_homepage.html");
             });
 
             $('#create-form').submit((e) => {
                 e.preventDefault(); // avoid to execute the actual submit of the form.
                 const obj = {
-                    q_name: "get_products_names",
+                    q_name: "office_create_requests",
                     q_data: {
-                        "d.requestDate": $('#date_creation').val(),
+                        "d.requestDate": get_today(),
                         "d.productCode": $('#prod_code').val(),
                         "d.productName": $('#prod_name').val(),
-                        "d.productFlavour": $('#flavour').val(),
+                        "d.productFlavour": $("input[name='flavour']:checked").val(),
                         "d.dueDate": $('#date_due').val(),
                         "d.requestState": "countRequest",
                         "d.notes": $('#notes').val()
                     }
                 };
-                console.log(obj);
-                // document.request_create_sender.query();
+                document.request_create_sender.query(obj);
             });
         });
     </script>
@@ -136,10 +138,10 @@
                         <div class="form-group col no-gutters">
                             <label class="col-12 col-form-label" for="prod_code">Product Code</label>
                             <div class="col-12">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text"><i class="fa fa-tag"></i></div>
-                                    </div>
+                                <div style="margin-left: 0;" class="input-group">
+<!--                                    <div class="input-group-prepend">-->
+<!--                                        <div class="input-group-text"><i class="fa fa-tag"></i></div>-->
+<!--                                    </div>-->
                                     <select id="prod_code" name="prod_code" class="form-control"
                                             aria-describedby="prod_codeHelpBlock" required="required"></select>
                                 </div>
@@ -171,8 +173,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row" id="flavours-container">
-                    </div>
+                    <div class="row" id="flavours-container"></div>
                 </div>
             </div>
 
@@ -217,19 +218,12 @@
                     <span id="date_dueHelpBlock" class="form-text text-muted">Date before which the counting should be completed</span>
                 </div>
             </div>
-    </div>
 
-    <div class="form-group row col-12 justify-content-evenly">
-        <button name="submit" type="submit" class="col-5 styled-btn btn-blue">Create</button>
-        <a
-                name="submit"
-                type="submit"
-                class="col-5 styled-btn btn-red-dark text-align-center no-text-decoration"
-                href="office_homepage.html"
-        >Back</a
-        >
-    </div>
-    </form>
+            <div class="form-group row col-12 justify-content-evenly">
+                <button name="submit" type="submit" class="col-5 styled-btn btn-blue">Create</button>
+                    <a name="submit" type="submit" class="col-5 styled-btn btn-red-dark text-align-center no-text-decoration" href="office_homepage.html">Back</a>
+            </div>
+        </form>
     </div>
 </main>
 </body>

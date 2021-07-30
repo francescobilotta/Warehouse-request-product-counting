@@ -84,6 +84,7 @@ function create_flavour(flavour) {
     .attr("type", "radio")
     .attr("aria-describedby", "flavourHelpBlock")
     .attr("required", "required")
+    .attr("value", flavour)
     .addClass("custom-control-input")
     .text(flavour)
     .appendTo(radio_element);
@@ -94,9 +95,12 @@ function create_flavour(flavour) {
 }
 
 function flavour_builder(flavours, container_id) {
+  const container = $("#" + container_id);
+  container.empty();
+  console.log("emptied container");
   const flavour_group = $("<div>")
     .addClass("form-group col no-gutters")
-    .appendTo($("#" + container_id));
+    .appendTo(container);
   const label = $("<label>").addClass("col-2").text("Flavour").appendTo(flavour_group);
   const helper = $("<div>").addClass("col-12").appendTo(flavour_group);
 
