@@ -17,13 +17,13 @@ function table_maker(table_data, destination_id, headers) {
 
     Object.keys(headers).forEach(function (key) {
       //CHECK isClosed
-      if (headers[key] == "isClosed" && row[headers[key]] == "1") {
+      if (headers[key] === "isClosed" && row[headers[key]] === "1") {
         current_row.append(
           $("<td>").append(
             $("<img src='../../assets/img/countDone_icon.png' height='" + image_size + "' width='" + image_size + "' title='Request not closed'>")
           )
         );
-      } else if (headers[key] == "isClosed" && row[headers[key]] == "0") {
+      } else if (headers[key] === "isClosed" && row[headers[key]] === "0") {
         current_row.append(
           $("<td>").append(
             $("<img src='../../assets/img/closed_icon.png' height='" + image_size + "' width='" + image_size + "' title='Request open'>")
