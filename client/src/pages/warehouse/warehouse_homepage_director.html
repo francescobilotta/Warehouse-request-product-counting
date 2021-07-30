@@ -80,6 +80,17 @@
               "f.productFlavour": result.results[0].productFlavour,
             },
           });
+          //EXPECTED LOCATION
+          const expected_location = new Requester(function (result) {
+            console.log(result);
+          });
+          expected_location.query({
+            q_name: "warehouse_get_product_location",
+            q_data: {
+              "f.productCode": result.results[0].productCode,
+              "f.productFlavour": result.results[0].productFlavour,
+            },
+          });
 
           //Hide all buttons before selecting which to show counted_items
           $("#btn-count").hide();
@@ -191,15 +202,7 @@
                       <div class="input-group-prepend">
                         <div class="input-group-text"><i class="fa fa-barcode"></i></div>
                       </div>
-                      <input
-                        id="prod_code"
-                        name="prod_code"
-                        type="text"
-                        class="form-control"
-                        aria-describedby="prod_codeHelpBlock"
-                        required="required"
-                        readonly
-                      />
+                      <input id="prod_code" name="prod_code" type="text" class="form-control" aria-describedby="prod_codeHelpBlock" required="required" readonly />
                     </div>
                     <span id="prod_codeHelpBlock" class="form-text text-muted">Code assigned to the product</span>
                   </div>
@@ -212,15 +215,7 @@
                       <div class="input-group-prepend">
                         <div class="input-group-text"><i class="fa fa-tag"></i></div>
                       </div>
-                      <input
-                        id="prod_name"
-                        name="prod_name"
-                        type="text"
-                        class="form-control"
-                        aria-describedby="prod_nameHelpBlock"
-                        required="required"
-                        readonly
-                      />
+                      <input id="prod_name" name="prod_name" type="text" class="form-control" aria-describedby="prod_nameHelpBlock" required="required" readonly />
                     </div>
                     <span id="prod_nameHelpBlock" class="form-text text-muted">Descriptive product name</span>
                   </div>
@@ -274,15 +269,7 @@
                           <i class="fa fa-calendar"></i>
                         </div>
                       </div>
-                      <input
-                        id="date_due"
-                        name="date_due"
-                        type="date"
-                        class="form-control"
-                        aria-describedby="date_dueHelpBlock"
-                        required="required"
-                        readonly
-                      />
+                      <input id="date_due" name="date_due" type="date" class="form-control" aria-describedby="date_dueHelpBlock" required="required" readonly />
                     </div>
                   </div>
                 </div>
@@ -324,14 +311,7 @@
                           <i class="fa fa-bar-chart-o"></i>
                         </div>
                       </div>
-                      <input
-                        id="expected_count"
-                        name="expected_count"
-                        type="number"
-                        class="form-control"
-                        aria-describedby="expected_countHelpBlock"
-                        readonly
-                      />
+                      <input id="expected_count" name="expected_count" type="number" class="form-control" aria-describedby="expected_countHelpBlock" readonly />
                     </div>
                   </div>
                 </div>
@@ -359,14 +339,7 @@
                           <i class="fa fa-bar-chart-o"></i>
                         </div>
                       </div>
-                      <input
-                        id="counted_items"
-                        name="counted_items"
-                        type="number"
-                        class="form-control margin-5"
-                        aria-describedby="counted_itemsHelpBlock"
-                        required
-                      />
+                      <input id="counted_items" name="counted_items" type="number" class="form-control margin-5" aria-describedby="counted_itemsHelpBlock" required />
                     </div>
                   </div>
                 </div>
@@ -392,9 +365,7 @@
       <!--  -->
       <div class="sub-header">
         <div class="dropdown">
-          <button class="styled-btn dropdown-toggle btn-blue" type="button" id="btn-filters" data-bs-toggle="dropdown" aria-expanded="false">
-            Filters
-          </button>
+          <button class="styled-btn dropdown-toggle btn-blue" type="button" id="btn-filters" data-bs-toggle="dropdown" aria-expanded="false">Filters</button>
           <ul class="dropdown-menu btn-blue" aria-labelledby="btn-filters">
             <li><a class="dropdown-item" href="#">Most Recent</a></li>
             <li><a class="dropdown-item" href="#">Oldest</a></li>
