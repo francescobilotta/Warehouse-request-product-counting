@@ -106,9 +106,8 @@ function table_maker(table_data, destination_id, headers) {
 }
 
 function create_flavour(flavour) {
-  const radio_element = $("<div>").addClass("custom-control custom-radio custom-control-inline");
-
-  $("<input>")
+  const radio_container = $("<div>").addClass("custom-control custom-radio custom-control-inline");
+  const radio_element = $("<input>")
     .attr("name", "flavour")
     .attr("id", flavour)
     .attr("type", "radio")
@@ -117,20 +116,22 @@ function create_flavour(flavour) {
     .attr("value", flavour)
     .addClass("custom-control-input")
     .text(flavour)
-    .appendTo(radio_element);
+    .appendTo(radio_container);
+  if (flavour === ".") {
+    radio_element.prop('checked', true);
+  }
+  $("<label>").attr("for", flavour).addClass("custom-control-label").text(flavour).appendTo(radio_container);
 
-  $("<label>").attr("for", flavour).addClass("custom-control-label").text(flavour).appendTo(radio_element);
-
-  return radio_element;
+  return radio_container;
 }
 
 function flavour_builder(flavours, container_id) {
   const container = $("#" + container_id);
   container.empty();
-  console.log("emptied container");
   const flavour_group = $("<div>")
     .addClass("form-group col no-gutters")
-    .appendTo(container);
+    .appendTo(container)
+  flavours[0] === "." ? container.hide() : container.show();
   const label = $("<label>").addClass("col-2").text("Flavour").appendTo(flavour_group);
   const helper = $("<div>").addClass("col-12").appendTo(flavour_group);
 
