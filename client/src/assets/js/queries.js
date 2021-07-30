@@ -106,3 +106,5 @@ function warehouseCount(requestId, lastCount, requestState) {
     }
   }
 }
+
+function warehouseExpectedCount(productCode, productFlavour, currentYear) {}
