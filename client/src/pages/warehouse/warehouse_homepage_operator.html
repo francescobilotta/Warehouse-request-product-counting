@@ -37,7 +37,9 @@
           const month = ("0" + (now.getMonth() + 1)).slice(-2);
           const today = now.getFullYear() + "-" + month + "-" + day;
           var image_size = "40px";
-
+          //Format dates
+          var creationDate = result.results[0].requestDate.replace(" 00:00:00", "");
+          creationDate = creationDate.split("-")[1] + "-" + creationDate.split("-")[2] + "-" + creationDate.split("-")[0];
           //Product Info
           $("#prod_code").val(result.results[0].productCode);
           $("#prod_name").val(result.results[0].productName);
@@ -46,7 +48,7 @@
           $("#date_due").val(result.results[0].dueDate.split(" ")[0]).attr({
             min: today,
           });
-          $("#date_creation").val(result.results[0].requestDate);
+          $("#date_creation").val(creationDate);
           $("#expected_ground_count").val(result.results[0].expectedGroundCount);
 
           //Hide all buttons before selecting which to show counted_items
