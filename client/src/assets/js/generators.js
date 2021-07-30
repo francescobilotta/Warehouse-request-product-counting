@@ -1,5 +1,7 @@
 function table_maker(table_data, destination_id, headers) {
-  let table = $("<table>").addClass("table table-hover");
+  let table = $("<table>")
+      .addClass("table table-striped table-hover")
+      .attr("id", "records_table");
   let thead_tr = $("<tr>");
   let tbody = $("<tbody>");
 
