@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/css/selectize.bootstrap4.min.css" />
 
-    <link href="../../assets/css/common.css?133336523323" rel="stylesheet" />
+    <link href="../../assets/css/common.css?1323" rel="stylesheet" />
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -18,16 +18,16 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/js/standalone/selectize.min.js"></script>
 
-    <script src="../../assets/js/request.js?1223275563564563334"></script>
-    <script src="../../assets/js/generators.js?1457536246362553234"></script>
-    <script src="../../assets/js/record_edit.js?1255345664335742634"></script>
-    <script src="../../assets/js/append_img_request_state.js?7163555663254232534"></script>
-    <script src="../../assets/js/queries.js?1325465367526532534"></script>
+    <script src="../../assets/js/request.js?12233334"></script>
+    <script src="../../assets/js/generators.js?143234"></script>
+    <script src="../../assets/js/record_edit.js?125634"></script>
+    <script src="../../assets/js/append_img_request_state.js?74232534"></script>
+    <script src="../../assets/js/queries.js?1332534"></script>
     <script>
       function make_editable(element) {
         $("#edit-popup").show();
-        const popup = $("#popup-data");
-        popup.attr("id", element.attr("id"));
+        $("#popup").removeClass();
+        $("#popup").addClass(element.attr("id"));
 
         //For popup
         const table_data_requester = new Requester(function (result) {
@@ -52,14 +52,6 @@
 
           //Hide all buttons before selecting which to show counted_items
           $("#btn-count").hide();
-          $("#btn-count").click((e) => {
-            if ($.isNumeric($("#counted_items").val()) && $("#counted_items").val() > 0) {
-              warehouseCount(element.attr("id"), $("#counted_items").val(), result.results[0].requestState);
-              location.reload();
-            } else {
-              alert("No empty fields or negatives numbers are accepted");
-            }
-          });
 
           //RequestState
           $("#req_id").val(element.attr("id"));
@@ -105,6 +97,15 @@
       $(document).ready(function () {
         $("#edit-popup").hide();
 
+        $("#btn-count").click((e) => {
+          if ($.isNumeric($("#counted_items").val()) && $("#counted_items").val() > 0) {
+            warehouseCount($("#popup").attr("class"), $("#counted_items").val(), result.results[0].requestState);
+            location.reload();
+          } else {
+            alert("No empty fields or negatives numbers are accepted");
+          }
+        });
+
         const table_headers_strings = {
           STATUS: "requestState",
           PRODUCT: "productName",
@@ -129,7 +130,7 @@
       <!-- Popup -->
       <!--  -->
       <div id="edit-popup" class="popup-container">
-        <div class="popup">
+        <div id="popup">
           <div class="card-section exit-button-wrapper">
             <div class="card-header-title">Details</div>
             <div class="exit-button">&times;</div>

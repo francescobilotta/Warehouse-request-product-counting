@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/css/selectize.bootstrap4.min.css" />
 
-    <link href="../../assets/css/common.css?133332633323" rel="stylesheet" />
+    <link href="../../assets/css/common.css?1333" rel="stylesheet" />
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -18,17 +18,16 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/js/standalone/selectize.min.js"></script>
 
-    <script src="../../assets/js/request.js?12232755655635436334"></script>
-    <script src="../../assets/js/generators.js?145765532534662653234"></script>
-    <script src="../../assets/js/record_edit.js?12555345436656374234"></script>
-    <script src="../../assets/js/append_img_request_state.js?71556565632354232534"></script>
-    <script src="../../assets/js/queries.js?132554573656655232534"></script>
+    <script src="../../assets/js/request.js?122366334"></script>
+    <script src="../../assets/js/generators.js?1453234"></script>
+    <script src="../../assets/js/record_edit.js?124234"></script>
+    <script src="../../assets/js/append_img_request_state.js?715232534"></script>
+    <script src="../../assets/js/queries.js?132552534"></script>
     <script>
       function make_editable(element) {
         $("#edit-popup").show();
-        const popup = $("#popup-data");
-        popup.attr("id", element.attr("id"));
-
+        $("#popup").removeClass();
+        $("#popup").addClass(element.attr("id"));
         //For popup
         const table_data_requester = new Requester(function (result) {
           //Get today data
@@ -57,21 +56,6 @@
           $("#btn-update").hide();
           $("#btn-close").hide();
           $("#btn-recount").hide();
-          //Update button
-          $("#btn-update").click((e) => {
-            officeUpdate(element.attr("id"), $("#notes").val(), $("#date_due").val());
-            location.reload();
-          });
-          //Close button
-          $("#btn-close").click((e) => {
-            officeClose(element.attr("id"), today);
-            location.reload();
-          });
-          //Recount button
-          $("#btn-recount").click((e) => {
-            officeRecount(element.attr("id"));
-            location.reload();
-          });
 
           //RequestState
           $("#req_id").val(element.attr("id"));
@@ -141,6 +125,22 @@
       $(document).ready(function () {
         $("#edit-popup").hide();
 
+        //Update button
+        $("#btn-update").click((e) => {
+          officeUpdate($("#popup").attr("class"), $("#notes").val(), $("#date_due").val());
+          location.reload();
+        });
+        //Close button
+        $("#btn-close").click((e) => {
+          officeClose($("#popup").attr("class"), today);
+          location.reload();
+        });
+        //Recount button
+        $("#btn-recount").click((e) => {
+          officeRecount($("#popup").attr("class"));
+          location.reload();
+        });
+
         const table_headers_strings = {
           "IS CLOSED": "isClosed",
           STATUS: "requestState",
@@ -167,7 +167,7 @@
       <!-- Popup -->
       <!--  -->
       <div id="edit-popup" class="popup-container">
-        <div class="popup">
+        <div id="popup">
           <div class="card-section exit-button-wrapper">
             <div class="card-header-title">Details</div>
             <div class="exit-button">&times;</div>
@@ -359,8 +359,8 @@
             </div>
 
             <div class="row col-12 justify-content-center" style="padding-top: 10px">
-              <div class="col-10 form-group row col-10 margin-10" id="btn-update">
-                <button name="update" type="submit" class="styled-btn btn-blue">Update</button>
+              <div class="col-10 form-group row col-10 margin-10">
+                <button name="update" type="submit" class="styled-btn btn-blue" id="btn-update">Update</button>
               </div>
               <div class="row col-12 popup-buttons-wrapper justify-content-evenly margin-10">
                 <button name="close" type="submit" class="col-5 styled-btn btn-red" id="btn-close">
@@ -379,7 +379,7 @@
       <!--  -->
       <!-- Header -->
       <!--  -->
-      <div class="header weight-800">Office</div>
+      <div class="header weight-800" id="header">Office</div>
 
       <!--  -->
       <!-- Sub Header -->
