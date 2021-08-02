@@ -88,7 +88,7 @@
             if (!(result.results.ALTEZZA[0] || result.results.CORRIDOIO[0] || result.results.TRAVERSA[0] || result.results.ZONA[0])) {
               $("#productLocation").text("No location found!");
             } else {
-              $("#productLocation").text(`${result.results.ALTEZZA[0]} ${result.results.CORRIDOIO[0]} ${result.results.TRAVERSA[0]} ${result.results.ZONA[0]}`);
+              $("#productLocation").text(`${result.results.ZONA[0]} ${result.results.CORRIDOIO[0]} ${result.results.TRAVERSA[0]} ${result.results.ALTEZZA[0]}`);
             }
           });
           expected_location.query({
