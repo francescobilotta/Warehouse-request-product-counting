@@ -19,11 +19,14 @@ function table_maker(table_data, destination_id, headers) {
       //CHECK isClosed
       if (headers[key] === "isClosed" && row[headers[key]] === "1") {
         current_row.append(
-          $("<td>").append($("<img src='../../assets/img/countDone_icon.png' height='" + image_size + "' width='" + image_size + "' title='Request not closed'>"))
+          $("<td>").append(
+            $("<img src='../../assets/img/countDone_icon.png' height='" + image_size + "' width='" + image_size + "' title='Request closed'>"),
+            $("<p>Request closed</p>")
+          )
         );
       } else if (headers[key] === "isClosed" && row[headers[key]] === "0") {
         current_row.append(
-          $("<td>").append($("<img src='../../assets/img/closed_icon.png' height='" + image_size + "' width='" + image_size + "' title='Request open'>"))
+          $("<td>").append($("<img src='../../assets/img/closed_icon.png' height='" + image_size + "' width='" + image_size + "' title='Request open'>"), $("<p>Request open</p>"))
         );
       } else if (headers[key] == "requestDate" && row[headers[key]]) {
         current_row.append(
@@ -65,9 +68,7 @@ function table_maker(table_data, destination_id, headers) {
               );
               break;
             case "countDone":
-              current_row.append(
-                $("<td>").append($("<img src='../../assets/img/countDone.png' height='" + image_size + "' width='" + image_size + "' title='Count done'>"))
-              );
+              current_row.append($("<td>").append($("<img src='../../assets/img/countDone.png' height='" + image_size + "' width='" + image_size + "' title='Count done'>")));
               break;
             case "recountRequest":
               current_row.append(
@@ -75,9 +76,7 @@ function table_maker(table_data, destination_id, headers) {
               );
               break;
             case "recountDone":
-              current_row.append(
-                $("<td>").append($("<img src='../../assets/img/recountDone.png' height='" + image_size + "' width='" + image_size + "' title='Recount done'>"))
-              );
+              current_row.append($("<td>").append($("<img src='../../assets/img/recountDone.png' height='" + image_size + "' width='" + image_size + "' title='Recount done'>")));
               break;
             default:
               current_row.append($("<td>").text(row[headers[key]]));

@@ -145,6 +145,17 @@
           location.reload();
         });
 
+        //Table filter
+        $("#btn-show-closed").on("change", function () {
+          table.destroy();
+          table.empty();
+          if ($("#btn-show-closed").is(":checked")) {
+            table_data_requester.query({q_name: "office_requests"});
+          } else {
+            table_data_requester.query({q_name: "office_requests_open"});
+          }
+        });
+
         const table_headers_strings = {
           "IS CLOSED": "isClosed",
           STATUS: "requestState",
@@ -156,12 +167,13 @@
           "CLOSED DATE [dd/mm/yyyy]": "terminationDate",
           "LAST COUNT": "lastCount",
         };
+
         const table_data_requester = new Requester((result) => {
           table_maker(result.results, "request-table-container", table_headers_strings);
           register_clicks();
-          $("#records_table").DataTable();
+          var table = $("#records_table").DataTable();
         });
-        table_data_requester.query({q_name: "office_requests"});
+        table_data_requester.query({q_name: "office_requests_open"});
       });
     </script>
   </head>
@@ -339,8 +351,10 @@
       <!--  -->
 
       <div class="sub-header">
-        <button class="styled-btn btn-blue text-align-center no-text-decoration" type="button" id="btn-filters">Filter for closed</button>
-
+        <div class="styled-btn btn-blue text-align-center">
+          <input type="checkbox" id="btn-show-closed" />
+          <label for="btn-show-closed">Show closed</label>
+        </div>
         <a type="button" id="btn-add-request" class="styled-btn btn-blue text-align-center no-text-decoration" href="office_create.html">Add Request</a>
       </div>
 
