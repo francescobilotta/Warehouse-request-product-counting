@@ -54,6 +54,7 @@
 
           //EXPECTED COUNT
           const expected_count_requester = new Requester(function (result) {
+            console.log(result.results);
             $("#expected_count").val(result.results.N_TOT[0]);
           });
           expected_count_requester.query({
@@ -66,6 +67,7 @@
           });
           //EXPECTED GROUND COUNT
           const expected_ground_count_requester = new Requester(function (result) {
+            console.log(result.results);
             if (result.PRELEVATO) {
               let ground_count = result.results.N_TOT.reduce((x, y) => x + y);
               $("#expected_ground_count").val(ground_count);
@@ -87,7 +89,7 @@
             if (!(result.results.ALTEZZA[0] || result.results.CORRIDOIO[0] || result.results.TRAVERSA[0] || result.results.ZONA[0])) {
               $("#productLocation").text("No location found!");
             } else {
-              $("#productLocation").text(`${result.results.ZONA[0]} ${result.results.CORRIDOIO[0]} ${result.results.TRAVERSA[0]} ${result.results.ALTEZZA[0]}`);
+              $("#productLocation").text(`${result.results.ALTEZZA[0]} ${result.results.CORRIDOIO[0]} ${result.results.TRAVERSA[0]} ${result.results.ZONA[0]}`);
             }
           });
           expected_location.query({
