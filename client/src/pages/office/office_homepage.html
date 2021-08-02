@@ -39,11 +39,9 @@
         const month = ("0" + (now.getMonth() + 1)).slice(-2);
         return day + "-" + month + "-" + now.getFullYear();
       }
-
       function make_editable(element) {
         $("#edit-popup").show();
-        $("#popup").removeClass();
-        $("#popup").addClass(element.attr("id"));
+        $("#popup").removeClass().addClass(element.attr("id"));
         //For popup
         const table_data_requester = new Requester(function (result) {
           var image_size = "40px";
@@ -149,7 +147,7 @@
         //Recount button
         $("#btn-recount").click((e) => {
           officeRecount($("#popup").attr("class"));
-          //location.reload();
+          location.reload();
         });
 
         const table_headers_strings = {

@@ -42,9 +42,31 @@ function officeRecount(requestId) {
 /*
 For warehouse
 */
-function lastToPrevious(requestId) {
+function lastToPrevious(requestId, lastCount, requestState) {
   const table_data_requester = new Requester(function (result) {
     console.log(`Moved lastCount of request ${requestId} from lastCount to previousCount`);
+    const savedEvent = new Event('savedCount');
+
+    document.addEventListener('savedCount', () => {
+      console.log("Check if requestState is countRequest or recountRequest");
+      if (requestState === "countRequest") {
+        console.log("It's countRequest");
+        console.log("Going to change requestState to countDone");
+        warehouseStateToCountDone(requestId);
+        console.log("Changed state to countDone");
+        warehouseUpdateRequests(requestId, lastCount);
+      } else if (requestState === "recountRequest") {
+        console.log("It's recountRequest");
+        console.log("Going to change requestState to recountDone");
+        warehouseStateToRecountDone(requestId);
+        console.log("Changed state to recountDone");
+        console.log("Going to change the lastCount value");
+        warehouseUpdateRequests(requestId, lastCount);
+        console.log(`Changed the lastCount value to ${lastCount}`);
+      }
+    })
+
+    document.dispatchEvent(savedEvent);
   });
   table_data_requester.query({
     q_name: "last_to_previous",
@@ -52,7 +74,6 @@ function lastToPrevious(requestId) {
       "f.requestId": requestId,
     },
   });
-  return true;
 }
 function warehouseStateToCountDone(requestId) {
   const table_data_requester = new Requester(function (result) {
@@ -92,25 +113,12 @@ function warehouseUpdateRequests(requestId, lastCount) {
   });
 }
 
+
+
 function warehouseCount(requestId, lastCount, requestState) {
   $("#edit-popup").hide();
   console.log("Going to move from last to previous");
-  lastToPrevious(requestId);
+  lastToPrevious(requestId, lastCount, requestState);
   console.log("Moved from last to previous");
-  console.log("Check if requestState is countRequest or recountRequest");
-  if (requestState == "countRequest") {
-    console.log("It's countRequest");
-    console.log("Going to change requestState to countDone");
-    warehouseStateToCountDone(requestId);
-    console.log("Changed state to countDone");
-    warehouseUpdateRequests(requestId, lastCount);
-  } else if (requestState == "recountRequest") {
-    console.log("It's recountRequest");
-    console.log("Going to change requestState to recountDone");
-    warehouseStateToRecountDone(requestId);
-    console.log("Changed state to recountDone");
-    console.log("Going to change the lastCount value");
-    warehouseUpdateRequests(requestId, lastCount);
-    console.log(`Changed the lastCount value to ${lastCount}`);
-  }
+
 }

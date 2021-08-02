@@ -82,7 +82,13 @@
           });
           //EXPECTED LOCATION
           const expected_location = new Requester(function (result) {
-            $("#productLocation").text(`${result.results.ALTEZZA[0]} ${result.results.CORRIDOIO[0]} ${result.results.TRAVERSA[0]} ${result.results.ZONA[0]}`);
+            console.log(result.results);
+            if (!(result.results.ALTEZZA[0] || result.results.CORRIDOIO[0] || result.results.TRAVERSA[0] || result.results.ZONA[0])) {
+              $("#productLocation").text("No location found!");
+            }
+            else {
+              $("#productLocation").text(`${result.results.ALTEZZA[0]} ${result.results.CORRIDOIO[0]} ${result.results.TRAVERSA[0]} ${result.results.ZONA[0]}`);
+            }
           });
           expected_location.query({
             q_name: "warehouse_get_product_location",
@@ -143,10 +149,10 @@
           if ($.isNumeric($("#counted_items").val()) && $("#counted_items").val() > 0) {
             if ($("#img_request_state").children("img").attr("title") == "Asked for count") {
               warehouseCount($("#popup").attr("class"), $("#counted_items").val(), "countRequest");
-              //location.reload();
+              location.reload();
             } else if ($("#img_request_state").children("img").attr("title") == "Asked for recount") {
               warehouseCount($("#popup").attr("class"), $("#counted_items").val(), "recountRequest");
-              //location.reload();
+              location.reload();
             }
           } else {
             alert("No empty fields or negatives numbers are accepted");
