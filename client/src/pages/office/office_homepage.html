@@ -166,7 +166,7 @@
         table_data_requester.query({q_name: "office_requests_open"});
 
         //Table filter
-        $("#btn-show-closed:parent").on("change", function () {
+        $("#btn-show-closed").parent().click(() => {
           $("#records_table").remove();
           if ($("#btn-show-closed").is(":checked")) {
             $("#btn-show-closed").prop("checked", false);
