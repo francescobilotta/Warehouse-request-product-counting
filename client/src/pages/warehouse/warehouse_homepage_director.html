@@ -68,7 +68,8 @@
           //EXPECTED GROUND COUNT
           const expected_ground_count_requester = new Requester(function (result) {
             console.log(result.results);
-            if (result.PRELEVATO) {
+            if (result.results.PRELEVATO) {
+              //TODO risolvi @francescobilotta
               let ground_count = result.results.N_TOT.reduce((x, y) => x + y);
               $("#expected_ground_count").val(ground_count);
             } else {
