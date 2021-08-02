@@ -82,7 +82,7 @@
           });
           //EXPECTED LOCATION
           const expected_location = new Requester(function (result) {
-            console.log(result);
+            $("#productLocation").text(`${result.results.ALTEZZA[0]} ${result.results.CORRIDOIO[0]} ${result.results.TRAVERSA[0]} ${result.results.ZONA[0]}`);
           });
           expected_location.query({
             q_name: "warehouse_get_product_location",
@@ -141,8 +141,13 @@
 
         $("#btn-count").click((e) => {
           if ($.isNumeric($("#counted_items").val()) && $("#counted_items").val() > 0) {
-            warehouseCount($("#popup").attr("class"), $("#counted_items").val(), result.results[0].requestState);
-            location.reload();
+            if ($("#img_request_state").children("img").attr("title") == "Asked for count") {
+              warehouseCount($("#popup").attr("class"), $("#counted_items").val(), "countRequest");
+              location.reload();
+            } else if ($("#img_request_state").children("img").attr("title") == "Asked for recount") {
+              warehouseCount($("#popup").attr("class"), $("#counted_items").val(), "recountRequest");
+              location.reload();
+            }
           } else {
             alert("No empty fields or negatives numbers are accepted");
           }
@@ -162,7 +167,7 @@
           table_maker(result.results, "request-table-container", table_headers_strings);
           register_clicks();
         });
-        table_data_requester.query({ q_name: "warehouse_requests" });
+        table_data_requester.query({q_name: "warehouse_requests"});
       });
     </script>
   </head>
@@ -230,15 +235,7 @@
                           <i class="fa fa-archive"></i>
                         </div>
                       </div>
-                      <input
-                        id="prod_variant"
-                        name="prod_variant"
-                        type="text"
-                        class="form-control"
-                        aria-describedby="prod_variantHelpBlock"
-                        required="required"
-                        readonly
-                      />
+                      <input id="prod_variant" name="prod_variant" type="text" class="form-control" aria-describedby="prod_variantHelpBlock" required="required" readonly />
                     </div>
                     <span id="prod_variantHelpBlock" class="form-text text-muted">The specific variant of this product</span>
                   </div>
@@ -283,15 +280,7 @@
                           <i class="fa fa-calendar"></i>
                         </div>
                       </div>
-                      <input
-                        id="date_creation"
-                        name="date_creation"
-                        type="text"
-                        aria-describedby="date_creationHelpBlock"
-                        required="required"
-                        class="form-control"
-                        readonly
-                      />
+                      <input id="date_creation" name="date_creation" type="text" aria-describedby="date_creationHelpBlock" required="required" class="form-control" readonly />
                     </div>
                   </div>
                 </div>
@@ -346,10 +335,10 @@
               </div>
             </div>
 
-            <div class="row col-12 justify-content-center" style="padding-top: 10px; background-color: red">
+            <div class="row col-12 justify-content-center" style="padding-top: 10px">
               <span style="text-align: center; font-weight: 800; font-size: 1.5rem"
-                >Location standard: <span style="font-weight: 600; font-size: 1.8rem">THE LOCATION</span></span
-              >
+                >Location standard: <span id="productLocation" style="font-weight: 600; font-size: 1.8rem"></span
+              ></span>
             </div>
             <div class="row col-12 justify-content-center" style="padding-top: 10px">
               <div class="col-10 form-group row col-12 margin-10">
