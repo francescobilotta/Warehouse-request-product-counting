@@ -94,15 +94,23 @@ function warehouseUpdateRequests(requestId, lastCount) {
 
 function warehouseCount(requestId, lastCount, requestState) {
   $("#edit-popup").hide();
-  if (lastToPrevious(requestId)) {
-    if (requestState == "countRequest") {
-      if (warehouseStateToCountDone(requestId)) {
-        warehouseUpdateRequests(requestId, lastCount);
-      }
-    } else if (requestState == "recountRequest") {
-      if (warehouseStateToRecountDone(requestId)) {
-        warehouseUpdateRequests(requestId, lastCount);
-      }
-    }
+  console.log("Going to move from last to previous");
+  lastToPrevious(requestId);
+  console.log("Moved from last to previous");
+  console.log("Check if requestState is countRequest or recountRequest");
+  if (requestState == "countRequest") {
+    console.log("It's countRequest");
+    console.log("Going to change requestState to countDone");
+    warehouseStateToCountDone(requestId);
+    console.log("Changed state to countDone");
+    warehouseUpdateRequests(requestId, lastCount);
+  } else if (requestState == "recountRequest") {
+    console.log("It's recountRequest");
+    console.log("Going to change requestState to recountDone");
+    warehouseStateToRecountDone(requestId);
+    console.log("Changed state to recountDone");
+    console.log("Going to change the lastCount value");
+    warehouseUpdateRequests(requestId, lastCount);
+    console.log(`Changed the lastCount value to ${lastCount}`);
   }
 }

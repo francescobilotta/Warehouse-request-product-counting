@@ -18,20 +18,18 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/js/standalone/selectize.min.js"></script>
 
-    <script src="../../assets/js/request.js?1223276555543334"></script>
-    <script src="../../assets/js/generators.js?1457532654253234"></script>
-    <script src="../../assets/js/record_edit.js?12553545463742346"></script>
-    <script src="../../assets/js/append_img_request_state.js?7515653254232534"></script>
-    <script src="../../assets/js/queries.js?1325457525632534"></script>
-
+    <script src="../../assets/js/request.js?1223276555553334"></script>
+    <script src="../../assets/js/generators.js?14575326554253234"></script>
+    <script src="../../assets/js/record_edit.js?125535454635742346"></script>
+    <script src="../../assets/js/append_img_request_state.js?75515653254232534"></script>
+    <script src="../../assets/js/queries.js?13254575255632534"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css"/>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/jq-3.3.1/dt-1.10.25/datatables.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/jq-3.3.1/dt-1.10.25/datatables.min.css" />
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/jq-3.3.1/dt-1.10.25/datatables.min.js"></script>
-
 
     <script>
       function get_today() {
@@ -151,7 +149,7 @@
         //Recount button
         $("#btn-recount").click((e) => {
           officeRecount($("#popup").attr("class"));
-          location.reload();
+          //location.reload();
         });
 
         const table_headers_strings = {
@@ -168,9 +166,9 @@
         const table_data_requester = new Requester((result) => {
           table_maker(result.results, "request-table-container", table_headers_strings);
           register_clicks();
-          $('#records_table').DataTable();
+          $("#records_table").DataTable();
         });
-        table_data_requester.query({ q_name: "office_requests" });
+        table_data_requester.query({q_name: "office_requests"});
       });
     </script>
   </head>
@@ -208,15 +206,7 @@
                       <div class="input-group-prepend">
                         <div class="input-group-text"><i class="fa fa-barcode"></i></div>
                       </div>
-                      <input
-                        id="prod_code"
-                        name="prod_code"
-                        type="text"
-                        class="form-control"
-                        aria-describedby="prod_codeHelpBlock"
-                        required="required"
-                        readonly
-                      />
+                      <input id="prod_code" name="prod_code" type="text" class="form-control" aria-describedby="prod_codeHelpBlock" required="required" readonly />
                     </div>
                     <span id="prod_codeHelpBlock" class="form-text text-muted">Code assigned to the product</span>
                   </div>
@@ -229,15 +219,7 @@
                       <div class="input-group-prepend">
                         <div class="input-group-text"><i class="fa fa-tag"></i></div>
                       </div>
-                      <input
-                        id="prod_name"
-                        name="prod_name"
-                        type="text"
-                        class="form-control"
-                        aria-describedby="prod_nameHelpBlock"
-                        required="required"
-                        readonly
-                      />
+                      <input id="prod_name" name="prod_name" type="text" class="form-control" aria-describedby="prod_nameHelpBlock" required="required" readonly />
                     </div>
                     <span id="prod_nameHelpBlock" class="form-text text-muted">Descriptive product name</span>
                   </div>
@@ -252,15 +234,7 @@
                           <i class="fa fa-archive"></i>
                         </div>
                       </div>
-                      <input
-                        id="prod_variant"
-                        name="prod_variant"
-                        type="text"
-                        class="form-control"
-                        aria-describedby="prod_variantHelpBlock"
-                        required="required"
-                        readonly
-                      />
+                      <input id="prod_variant" name="prod_variant" type="text" class="form-control" aria-describedby="prod_variantHelpBlock" required="required" readonly />
                     </div>
                     <span id="prod_variantHelpBlock" class="form-text text-muted">The specific variant of this product</span>
                   </div>
@@ -290,15 +264,7 @@
                           <i class="fa fa-calendar"></i>
                         </div>
                       </div>
-                      <input
-                        id="date_due"
-                        name="date_due"
-                        type="date"
-                        class="form-control"
-                        aria-describedby="date_dueHelpBlock"
-                        required="required"
-                        readonly
-                      />
+                      <input id="date_due" name="date_due" type="date" class="form-control" aria-describedby="date_dueHelpBlock" required="required" readonly />
                     </div>
                   </div>
                 </div>
@@ -312,15 +278,7 @@
                           <i class="fa fa-calendar"></i>
                         </div>
                       </div>
-                      <input
-                        id="date_creation"
-                        name="date_creation"
-                        type="text"
-                        aria-describedby="date_creationHelpBlock"
-                        required="required"
-                        class="form-control"
-                        readonly
-                      />
+                      <input id="date_creation" name="date_creation" type="text" aria-describedby="date_creationHelpBlock" required="required" class="form-control" readonly />
                     </div>
                   </div>
                 </div>
@@ -339,14 +297,7 @@
                           <i class="fa fa-bar-chart-o"></i>
                         </div>
                       </div>
-                      <input
-                        id="count_previous"
-                        name="count_previous"
-                        type="text"
-                        class="form-control"
-                        aria-describedby="count_previousHelpBlock"
-                        readonly
-                      />
+                      <input id="count_previous" name="count_previous" type="text" class="form-control" aria-describedby="count_previousHelpBlock" readonly />
                     </div>
                   </div>
                 </div>
@@ -395,9 +346,7 @@
       <!--  -->
       <div class="sub-header">
         <div class="dropdown">
-          <button class="styled-btn dropdown-toggle btn-blue" type="button" id="btn-filters" data-bs-toggle="dropdown" aria-expanded="false">
-            Filters
-          </button>
+          <button class="styled-btn dropdown-toggle btn-blue" type="button" id="btn-filters" data-bs-toggle="dropdown" aria-expanded="false">Filters</button>
           <ul class="dropdown-menu btn-blue" aria-labelledby="btn-filters">
             <li><a class="dropdown-item" href="#">Most Recent</a></li>
             <li><a class="dropdown-item" href="#">Oldest</a></li>
@@ -414,9 +363,7 @@
           </ul>
         </div>
 
-        <a type="button" id="btn-add-request" class="styled-btn btn-blue text-align-center no-text-decoration" href="office_create.html"
-          >Add Request</a
-        >
+        <a type="button" id="btn-add-request" class="styled-btn btn-blue text-align-center no-text-decoration" href="office_create.html">Add Request</a>
       </div>
 
       <div class="request-table" id="request-table-container"></div>
