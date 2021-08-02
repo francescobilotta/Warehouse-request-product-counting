@@ -145,17 +145,6 @@
           location.reload();
         });
 
-        //Table filter
-        $("#btn-show-closed").on("change", function () {
-          table.destroy();
-          table.empty();
-          if ($("#btn-show-closed").is(":checked")) {
-            table_data_requester.query({q_name: "office_requests"});
-          } else {
-            table_data_requester.query({q_name: "office_requests_open"});
-          }
-        });
-
         const table_headers_strings = {
           "IS CLOSED": "isClosed",
           STATUS: "requestState",
@@ -173,7 +162,20 @@
           register_clicks();
           var table = $("#records_table").DataTable();
         });
+
         table_data_requester.query({q_name: "office_requests_open"});
+
+        //Table filter
+        $("#btn-show-closed:parent").on("change", function () {
+          $("#records_table").remove();
+          if ($("#btn-show-closed").is(":checked")) {
+            $("#btn-show-closed").prop("checked", false);
+            table_data_requester.query({q_name: "office_requests"});
+          } else {
+            $("#btn-show-closed").prop("checked", true);
+            table_data_requester.query({q_name: "office_requests_open"});
+          }
+        });
       });
     </script>
   </head>
