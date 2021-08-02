@@ -85,7 +85,6 @@
             set_date();
 
             document.product_flavour_requester = new Requester(function (result) {
-                console.log(result.results.VARIANTE);
                 if (!result.results.VARIANTE || !result.results.VARIANTE[0]) {
                     flavour_builder(['.'], "flavours-container");
                 }

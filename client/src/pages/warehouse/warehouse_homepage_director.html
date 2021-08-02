@@ -84,7 +84,6 @@
           });
           //EXPECTED LOCATION
           const expected_location = new Requester(function (result) {
-            console.log(result.results);
             if (!(result.results.ALTEZZA[0] || result.results.CORRIDOIO[0] || result.results.TRAVERSA[0] || result.results.ZONA[0])) {
               $("#productLocation").text("No location found!");
             } else {
