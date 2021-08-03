@@ -68,10 +68,10 @@
                 });
                 //EXPECTED GROUND COUNT
                 const expected_ground_count_requester = new Requester(function (expectedGroundCount) {
-                    console.log(expectedGroundCount);
+
                     const arrayOfGroundCount = expectedGroundCount.results.PRELEVATO;
                     let sumOfGroundCount = arrayOfGroundCount ? arrayOfGroundCount.reduce((a, b) => Number(a) + Number(b), 0) : 0;
-                    console.log(sumOfGroundCount);
+
 
                     if (arrayOfGroundCount) {
                         $("#expected_ground_count").val(sumOfGroundCount);

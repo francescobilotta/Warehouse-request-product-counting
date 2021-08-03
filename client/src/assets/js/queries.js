@@ -4,7 +4,7 @@ For office
 
 function officeUpdate(requestId, notes, dueDate) {
     const table_data_requester = new Requester(function (result) {
-        console.log(`Request ${requestId} updated`);
+
     });
     table_data_requester.query({
         q_name: "office_update_requests",
@@ -22,7 +22,7 @@ function officeClose(requestId, terminationDate) {
     let day = terminationDate.split("-")[0];
     terminationDate = year + "-" + month + "-" + day + " 00:00:00";
     const table_data_requester = new Requester(function (result) {
-        console.log(`Request ${requestId} closed at ${terminationDate}`);
+
     });
     table_data_requester.query({
         q_name: "close_requests",
@@ -35,7 +35,7 @@ function officeClose(requestId, terminationDate) {
 
 function officeRecount(requestId) {
     const table_data_requester = new Requester(function (result) {
-        console.log(`Asked for recount of request ${requestId}`);
+
     });
     table_data_requester.query({
         q_name: "ask_for_recount",
@@ -50,25 +50,25 @@ For warehouse
 */
 function lastToPrevious(requestId, lastCount, requestState) {
     const table_data_requester = new Requester(function (result) {
-        console.log(`Moved lastCount of request ${requestId} from lastCount to previousCount`);
+
         const savedEvent = new Event("savedCount");
 
         document.addEventListener("savedCount", () => {
-            console.log("Check if requestState is countRequest or recountRequest");
+
             if (requestState === "countRequest") {
-                console.log("It's countRequest");
-                console.log("Going to change requestState to countDone");
+
+
                 warehouseStateToCountDone(requestId);
-                console.log("Changed state to countDone");
+
                 warehouseUpdateRequests(requestId, lastCount);
             } else if (requestState === "recountRequest") {
-                console.log("It's recountRequest");
-                console.log("Going to change requestState to recountDone");
+
+
                 warehouseStateToRecountDone(requestId);
-                console.log("Changed state to recountDone");
-                console.log("Going to change the lastCount value");
+
+
                 warehouseUpdateRequests(requestId, lastCount);
-                console.log(`Changed the lastCount value to ${lastCount}`);
+
             }
         });
 
@@ -84,7 +84,7 @@ function lastToPrevious(requestId, lastCount, requestState) {
 
 function warehouseStateToCountDone(requestId) {
     const table_data_requester = new Requester(function (result) {
-        console.log(`Request ${requestId} state changed to countDone`);
+
     });
     table_data_requester.query({
         q_name: "warehouse_state_to_countDone",
@@ -97,7 +97,7 @@ function warehouseStateToCountDone(requestId) {
 
 function warehouseStateToRecountDone(requestId) {
     const table_data_requester = new Requester(function (result) {
-        console.log(`Request ${requestId} state changed to recountDone`);
+
     });
     table_data_requester.query({
         q_name: "warehouse_state_to_recountDone",
@@ -110,7 +110,7 @@ function warehouseStateToRecountDone(requestId) {
 
 function warehouseUpdateRequests(requestId, lastCount) {
     const table_data_requester = new Requester(function (result) {
-        console.log(`Request ${requestId} updated`);
+
     });
     table_data_requester.query({
         q_name: "warehouse_update_count",
@@ -123,7 +123,7 @@ function warehouseUpdateRequests(requestId, lastCount) {
 
 function warehouseCount(requestId, lastCount, requestState) {
     $("#edit-popup").hide();
-    console.log("Going to move from last to previous");
+
     lastToPrevious(requestId, lastCount, requestState);
-    console.log("Moved from last to previous");
+
 }
