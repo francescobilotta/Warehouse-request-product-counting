@@ -4,10 +4,10 @@
         <title>Gestione Conteggi</title>
         <meta charset="utf-8" content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport" />
 
-        <link href="../../assets/img/favicon.png" rel="icon" />
+        <link href="../../assets/images/favicon.png" rel="icon" />
         <link href="../../assets/css/bootstrap.min.css" rel="stylesheet" />
         <link href="../../assets/css/bootstrap-theme.min.css" rel="stylesheet" />
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
         <link href="../../assets/css/selectize.bootstrap4.min.css" rel="stylesheet" />
         <link href="../../assets/css/datatables.min.css" rel="stylesheet" />
 
@@ -25,111 +25,77 @@
         <script src="../../assets/js/record_edit.js"></script>
         <script src="../../assets/js/append_img_request_state.js"></script>
         <script src="../../assets/js/queries.js"></script>
+
         <script>
+            function get_today() {
+                //Get today data
+                const now = new Date();
+                const day = ("0" + now.getDate()).slice(-2);
+                const month = ("0" + (now.getMonth() + 1)).slice(-2);
+                return day + "-" + month + "-" + now.getFullYear();
+            }
+
             function make_editable(element) {
                 $("#edit-popup").show();
-                $("#popup").removeClass();
-                $("#popup").addClass(element.attr("id"));
-
+                $("#popup").removeClass().addClass(element.attr("id"));
                 //For popup
-                const table_data_requester = new Requester(function (warehouseRequestsDetails) {
-                    //Get today data
-                    const now = new Date();
-                    const day = ("0" + now.getDate()).slice(-2);
-                    const month = ("0" + (now.getMonth() + 1)).slice(-2);
-                    const today = now.getFullYear() + "-" + month + "-" + day;
-                    const image_size = "40px";
+                const table_data_requester = new Requester(function (result) {
+                    var image_size = "40px";
                     //Format dates
-                    let creationDate = warehouseRequestsDetails.results[0].requestDate.replace(" 00:00:00", "");
+                    var creationDate = result.results[0].requestDate.replace(" 00:00:00", "");
                     creationDate = creationDate.split("-")[1] + "-" + creationDate.split("-")[2] + "-" + creationDate.split("-")[0];
                     //Product Info
-                    var requestState = warehouseRequestsDetails.results[0].requestState;
-                    $("#prod_code").val(warehouseRequestsDetails.results[0].productCode);
-                    $("#prod_name").val(warehouseRequestsDetails.results[0].productName);
-                    $("#prod_variant").val(warehouseRequestsDetails.results[0].productFlavour);
-                    $("#notes").val(warehouseRequestsDetails.results[0].notes);
-                    $("#date_due").val(warehouseRequestsDetails.results[0].dueDate.split(" ")[0]).attr({
-                        min: today,
+                    $("#prod_code").val(result.results[0].productCode);
+                    $("#prod_name").val(result.results[0].productName);
+                    $("#prod_variant").val(result.results[0].productFlavour);
+                    $("#notes").val(result.results[0].notes);
+                    $("#date_due").val(result.results[0].dueDate.split(" ")[0]).attr({
+                        min: get_today(),
                     });
                     $("#date_creation").val(creationDate);
-                    //EXPECTED GROUND COUNT
-                    const expected_ground_count_requester = new Requester(function (expectedGroundCount) {
-                        const arrayOfGroundCount = expectedGroundCount.results.PRELEVATO;
-                        let sumOfGroundCount = arrayOfGroundCount ? arrayOfGroundCount.reduce((a, b) => Number(a) + Number(b), 0) : 0;
-                        if (arrayOfGroundCount) {
-                            $("#expected_ground_count").val(sumOfGroundCount);
-                        } else {
-                            $("#expected_ground_count").val(0);
-                        }
-                    });
-                    expected_ground_count_requester.query({
-                        q_name: "warehouse_expected_ground_count",
-                        q_data: {
-                            "d.lastYear": now.getFullYear() - 1,
-                            "d.currentYear": now.getFullYear(),
-                            "f.productCode": warehouseRequestsDetails.results[0].productCode,
-                            "f.productFlavour": warehouseRequestsDetails.results[0].productFlavour,
-                        },
-                    });
-                    //EXPECTED LOCATION
-                    const expected_location = new Requester(function (warehouseGetProductLocation) {
-                        if (
-                            !(
-                                warehouseGetProductLocation.results.ALTEZZA[0] ||
-                                warehouseGetProductLocation.results.CORRIDOIO[0] ||
-                                warehouseGetProductLocation.results.TRAVERSA[0] ||
-                                warehouseGetProductLocation.results.ZONA[0]
-                            )
-                        ) {
-                            $("#productLocation").text("No location found!");
-                        } else {
-                            $("#productLocation").text(
-                                `${warehouseGetProductLocation.results.ZONA[0]} ${warehouseGetProductLocation.results.CORRIDOIO[0]} ${warehouseGetProductLocation.results.TRAVERSA[0]} ${warehouseGetProductLocation.results.ALTEZZA[0]}`
-                            );
-                        }
-                    });
-                    expected_location.query({
-                        q_name: "warehouse_get_product_location",
-                        q_data: {
-                            "f.productCode": warehouseRequestsDetails.results[0].productCode,
-                            "f.productFlavour": warehouseRequestsDetails.results[0].productFlavour,
-                        },
-                    });
 
-                    //Hide all buttons before selecting which to show counted_items
-                    $("#btn-count").hide();
+                    $("#count_previous").val(result.results[0].previousCount);
+                    $("#count_last").val(result.results[0].lastCount);
+
+                    //Hide all buttons before selecting which to show
+                    $("#btn-update").hide();
+                    $("#btn-close").hide();
+                    $("#btn-recount").hide();
 
                     //RequestState
                     $("#req_id").val(element.attr("id"));
-                    switch (warehouseRequestsDetails.results[0].requestState) {
-                        case "countRequest":
-                            append_img_request_state("request_state", "../../assets/img/countRequest.png", image_size, "Richiesto Conteggio");
-                            $("#btn-count").show();
-                            break;
-                        case "recountRequest":
-                            append_img_request_state("request_state", "../../assets/img/recountRequest.png", image_size, "Richiesta Riconta");
-                            $("#btn-count").show();
-                            break;
-                        default:
-                    }
-
-                    //Adding button event
-                    $("#btn-count").click((e) => {
-                        if ($.isNumeric($("#counted_items").val()) && $("#counted_items").val() > 0) {
-                            if (requestState == "countRequest") {
-                                warehouseCount($("#popup").attr("class"), $("#counted_items").val(), "countRequest");
-                                location.reload();
-                            } else if (requestState == "recountRequest") {
-                                warehouseCount($("#popup").attr("class"), $("#counted_items").val(), "recountRequest");
-                                location.reload();
-                            }
-                        } else {
-                            alert("No empty fields or negatives numbers are accepted");
+                    if (result.results[0].isClosed == 0) {
+                        switch (result.results[0].requestState) {
+                            case "countRequest":
+                                append_img_request_state("request_state", "../../assets/img/countRequest.png", image_size, "Richiesto Conteggio");
+                                $("#btn-update").show();
+                                $("#btn-close").show();
+                                break;
+                            case "countDone":
+                                append_img_request_state("request_state", "../../assets/img/countDone.png", image_size, "Conteggio Effettuato");
+                                $("#btn-update").show();
+                                $("#btn-close").show();
+                                $("#btn-recount").show();
+                                break;
+                            case "recountRequest":
+                                append_img_request_state("request_state", "../../assets/img/recountRequest.png", image_size, "Richiesta Riconta");
+                                $("#btn-update").show();
+                                $("#btn-close").show();
+                                break;
+                            case "recountDone":
+                                append_img_request_state("request_state", "../../assets/img/recountDone.png", image_size, "Riconta Effettuata");
+                                $("#btn-update").show();
+                                $("#btn-close").show();
+                                $("#btn-recount").show();
+                                break;
+                            default:
                         }
-                    });
+                    } else {
+                        append_img_request_state("request_state", "../../assets/img/closed.png", image_size, "Riconta Effettuata");
+                    }
                 });
                 table_data_requester.query({
-                    q_name: "warehouse_requests_details",
+                    q_name: "office_requests_details",
                     q_data: {
                         "f.requestId": element.attr("id"),
                     },
@@ -137,7 +103,7 @@
             }
 
             function register_clicks() {
-                $(".table-row").click(function (e) {
+                $(".table-row").dblclick(function (e) {
                     make_editable($(this));
                 });
 
@@ -158,19 +124,54 @@
             $(document).ready(function () {
                 $("#edit-popup").hide();
 
+                //Update button
+                $("#btn-update").click((e) => {
+                    officeUpdate($("#popup").attr("class"), $("#notes").val(), $("#date_due").val());
+                    location.reload();
+                });
+                //Close button
+                $("#btn-close").click((e) => {
+                    officeClose($("#popup").attr("class"), get_today());
+                    location.reload();
+                });
+                //Recount button
+                $("#btn-recount").click((e) => {
+                    officeRecount($("#popup").attr("class"));
+                    location.reload();
+                });
+
                 const table_headers_strings = {
+                    CHIUSA: "isClosed",
                     STATO: "requestState",
                     PRODOTTO: "productName",
                     VARIANTE: "productFlavour",
                     NOTE: "notes",
-                    "DATA RICHIESTA": "requestDate",
-                    "DATA SCADENZA": "dueDate",
+                    "DATA RICHIESTA [dd/mm/yyyy]": "requestDate",
+                    "DATA SCADENZA [dd/mm/yyyy]": "dueDate",
+                    "DATA CHIUSURA [dd/mm/yyyy]": "terminationDate",
+                    "ULTIMO CONTEGGIO": "lastCount",
                 };
-                const table_data_requester = new Requester((warehouseRequests) => {
-                    table_maker(warehouseRequests.results, "request-table-container", table_headers_strings);
+
+                const table_data_requester = new Requester((result) => {
+                    table_maker(result.results, "request-table-container", table_headers_strings);
                     register_clicks();
                 });
-                table_data_requester.query({q_name: "warehouse_requests"});
+
+                table_data_requester.query({q_name: "office_requests_open"});
+
+                //Table filter
+                $("#btn-show-closed")
+                    .parent()
+                    .click(() => {
+                        $("#records_table").remove();
+                        if ($("#btn-show-closed").is(":checked")) {
+                            $("#btn-show-closed").prop("checked", false);
+                            table_data_requester.query({q_name: "office_requests"});
+                        } else {
+                            $("#btn-show-closed").prop("checked", true);
+                            table_data_requester.query({q_name: "office_requests_open"});
+                        }
+                    });
             });
         </script>
     </head>
@@ -186,11 +187,21 @@
                         <div class="exit-button">&times;</div>
                     </div>
                     <div class="card-section form-holder" id="popup-data">
+                        <!-- Request info -->
+                        <div class="form-group row">
+                            <div class="row col-12">
+                                <label class="col-1 col-form-label" for="req_id">Id Richesta</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend" id="request_state"></div>
+                                    <input aria-describedby="req_idHelpBlock" class="form-control" id="req_id" name="req_id" readonly required="required" type="text" />
+                                </div>
+                                <span class="form-text text-muted" id="req_idHelpBlock">Identificativo della richesta</span>
+                            </div>
+                        </div>
+
                         <!-- Product info -->
                         <div class="row">
-                            <label class="col-1 col-form-label">Informazioni Prodotto</label>
-
-                            <div class="row col-11">
+                            <div class="row col-12">
                                 <div class="form-group col-2 no-gutters">
                                     <label class="col-12 col-form-label" for="prod_code">Codice Prodotto</label>
                                     <div class="col-12">
@@ -211,6 +222,7 @@
                                         <span class="form-text text-muted" id="prod_codeHelpBlock">Codice assegnato al prodotto</span>
                                     </div>
                                 </div>
+
                                 <div class="form-group col-2 no-gutters">
                                     <label class="col-12 col-form-label" for="prod_variant">Variante Prodotto</label>
                                     <div class="col-12">
@@ -230,9 +242,10 @@
                                                 type="text"
                                             />
                                         </div>
-                                        <span class="form-text text-muted" id="prod_variantHelpBlock">Variante specifica dell'articolo selezionato</span>
+                                        <span class="form-text text-muted" id="prod_variantHelpBlock">Variante specifica del prodotto selezionato</span>
                                     </div>
                                 </div>
+
                                 <div class="form-group col-8 no-gutters">
                                     <label class="col-12 col-form-label" for="prod_name">Descrizione Prodotto</label>
                                     <div class="col-12">
@@ -257,19 +270,18 @@
                         </div>
 
                         <!-- Notes -->
-                        <div class="form-group row" style="margin-top: 13px !important">
-                            <label class="col-1 col-form-label" for="notes">Note</label>
-                            <div class="row col-11">
+                        <div class="form-group row">
+                            <div class="row col-12">
+                                <label class="col-1 col-form-label" for="notes">Note</label>
                                 <div class="input-group">
-                                    <textarea aria-describedby="notesHelpBlock" class="form-control" cols="20" id="notes" name="notes" readonly rows="2"></textarea>
+                                    <textarea aria-describedby="notesHelpBlock" class="form-control" cols="20" id="notes" name="notes" rows="2"></textarea>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Dates -->
                         <div class="row">
-                            <label class="col-1 col-form-label">Date</label>
-                            <div class="row col-11">
+                            <div class="row col-12">
                                 <div class="form-group col no-gutters">
                                     <label class="col-12 col-form-label" for="date_due">Data Scadenza [mm/dd/yyyy]</label>
                                     <div class="col-12">
@@ -279,15 +291,7 @@
                                                     <i class="fa fa-calendar"></i>
                                                 </div>
                                             </div>
-                                            <input
-                                                aria-describedby="date_dueHelpBlock"
-                                                class="form-control"
-                                                id="date_due"
-                                                name="date_due"
-                                                readonly
-                                                required="required"
-                                                type="date"
-                                            />
+                                            <input aria-describedby="date_dueHelpBlock" class="form-control" id="date_due" name="date_due" required="required" type="date" />
                                         </div>
                                     </div>
                                 </div>
@@ -316,12 +320,25 @@
                             </div>
                         </div>
 
-                        <!-- Expected Counts -->
+                        <!-- Counts -->
                         <div class="row">
-                            <label class="col-1 col-form-label">Conte</label>
-                            <div class="row col-11">
+                            <div class="row col-12">
                                 <div class="form-group col no-gutters">
-                                    <label class="col-12 col-form-label" for="expected_ground_count">A Terra</label>
+                                    <label class="col-12 col-form-label" for="count_previous">Conta Precedente</label>
+                                    <div class="col-12">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    <i class="fa fa-bar-chart-o"></i>
+                                                </div>
+                                            </div>
+                                            <input aria-describedby="count_previousHelpBlock" class="form-control" id="count_previous" name="count_previous" readonly type="text" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col no-gutters">
+                                    <label class="col-12 col-form-label" for="count_last">Ultima Conta</label>
                                     <div class="col-12">
                                         <div class="input-group">
                                             <div class="input-group-prepend">
@@ -329,31 +346,7 @@
                                                     <i class="fa fa-refresh"></i>
                                                 </div>
                                             </div>
-                                            <input class="form-control" id="expected_ground_count" name="expected_ground_count" readonly type="number" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group col no-gutters">
-                                    <label class="col-11 col-form-label">Conferma</label>
-                                    <div class="row col-11">
-                                        <div class="form-group col no-gutters">
-                                            <div class="col-12">
-                                                <div class="input-group">
-                                                    <div class="input-group-prepend">
-                                                        <div class="input-group-text">
-                                                            <i class="fa fa-bar-chart-o"></i>
-                                                        </div>
-                                                    </div>
-                                                    <input
-                                                        aria-describedby="counted_itemsHelpBlock"
-                                                        class="form-control margin-5"
-                                                        id="counted_items"
-                                                        name="counted_items"
-                                                        required
-                                                        type="number"
-                                                    />
-                                                </div>
-                                            </div>
+                                            <input class="form-control" id="count_last" name="count_last" readonly type="text" />
                                         </div>
                                     </div>
                                 </div>
@@ -361,14 +354,17 @@
                         </div>
 
                         <div class="row col-12 justify-content-center" style="padding-top: 10px">
-                            <span style="text-align: center; font-weight: 800; font-size: 1.5rem"
-                                >Location standard: <span id="productLocation" style="font-weight: 600; font-size: 1.8rem"></span
-                            ></span>
-                        </div>
+                            <div class="col-10 form-group row col-10 margin-10">
+                                <button class="styled-btn btn-blue" id="btn-update" name="update" type="submit">Modifica</button>
+                            </div>
+                            <div class="row col-12 popup-buttons-wrapper justify-content-evenly margin-10">
+                                <button class="col-5 styled-btn btn-red" id="btn-close" name="close" type="submit">
+                                    <img alt="Close" src="../../assets/images/closed_icon.png" />
+                                </button>
 
-                        <div class="row col-12 justify-content-center" style="padding-top: 10px">
-                            <div class="col-10 form-group row col-12 margin-10">
-                                <button class="styled-btn btn-blue" id="btn-count" name="update">Articoli Contati</button>
+                                <button class="col-5 styled-btn btn-yellow" id="btn-recount" name="recount" type="submit">
+                                    <img alt="Recount" src="../../assets/images/recountRequest_icon.png" />
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -378,7 +374,19 @@
             <!--  -->
             <!-- Header -->
             <!--  -->
-            <div class="header weight-800">Gestione Conteggi Operatore</div>
+            <div class="header weight-800" id="header">Gestione Conteggi Ufficio</div>
+
+            <!--  -->
+            <!-- Sub Header -->
+            <!--  -->
+
+            <div class="sub-header">
+                <div class="styled-btn btn-blue text-align-center">
+                    <input id="btn-show-closed" type="checkbox" />
+                    <label for="btn-show-closed">Mostra Chiuse</label>
+                </div>
+                <a class="styled-btn btn-blue text-align-center no-text-decoration" href="office_create.html" id="btn-add-request" type="button">Aggiungi Richesta</a>
+            </div>
 
             <div class="request-table" id="request-table-container"></div>
         </main>
