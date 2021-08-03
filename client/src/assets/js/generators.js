@@ -64,19 +64,21 @@ function table_maker(table_data, destination_id, headers) {
           switch (row[headers[key]]) {
             case "countRequest":
               current_row.append(
-                $("<td>").append($("<img src='../../assets/img/countRequest.png' height='" + image_size + "' width='" + image_size + "' title='Asked for count'>"))
+                $("<td>").append($("<img src='../../assets/img/countRequest.png' height='" + image_size + "' width='" + image_size + "' title='Conta richiesta'>"))
               );
               break;
             case "countDone":
-              current_row.append($("<td>").append($("<img src='../../assets/img/countDone.png' height='" + image_size + "' width='" + image_size + "' title='Count done'>")));
+              current_row.append($("<td>").append($("<img src='../../assets/img/countDone.png' height='" + image_size + "' width='" + image_size + "' title='Conta effettuata'>")));
               break;
             case "recountRequest":
               current_row.append(
-                $("<td>").append($("<img src='../../assets/img/recountRequest.png' height='" + image_size + "' width='" + image_size + "' title='Asked for recount'>"))
+                $("<td>").append($("<img src='../../assets/img/recountRequest.png' height='" + image_size + "' width='" + image_size + "' title='Riconta richiesta'>"))
               );
               break;
             case "recountDone":
-              current_row.append($("<td>").append($("<img src='../../assets/img/recountDone.png' height='" + image_size + "' width='" + image_size + "' title='Recount done'>")));
+              current_row.append(
+                $("<td>").append($("<img src='../../assets/img/recountDone.png' height='" + image_size + "' width='" + image_size + "' title='Riconta effettuata'>"))
+              );
               break;
             default:
               current_row.append($("<td>").text(row[headers[key]]));
