@@ -2,8 +2,6 @@ Operation,Priority,Asignee
 Update sempre disponibile in modifica,7,Francesco
 Integra con rubrica. Titolo: "Gestione Conteggi",1,Team
 Togliere tutti i log di debug,2,Ben
-Sposta inizializzazione datatable in generators.js,3,Ben
 documenta API,2,Ben
-metti risorse cdn in locale,7,Ben
 Aggiungi altre ubicazioni in warehouse,9,Team
 Risolvi stati dipendenti dalle immagini,8,Francesco

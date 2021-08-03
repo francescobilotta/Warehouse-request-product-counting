@@ -168,7 +168,6 @@
             const table_data_requester = new Requester((warehouseRequests) => {
                 table_maker(warehouseRequests.results, "request-table-container", table_headers_strings);
                 register_clicks();
-                $("#records_table").DataTable();
             });
             table_data_requester.query({q_name: "warehouse_requests"});
         });
