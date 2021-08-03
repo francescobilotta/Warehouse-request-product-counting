@@ -4,13 +4,21 @@ namespace mysql;
 
 use mysqli;
 
-///  Received post variables:
-///  host, port, username, password, dialect, database, query, data
+/**
+ *
+ */
 class MYSQL
 {
+    /**
+     * Initializes the connection to the database
+     * @param string $host
+     * @param string $port
+     * @param string $username
+     * @param string $password
+     * @return mysqli mysql connection object
+     */
     static function init($host, $port, $username, $password)
     {
-
         $db = new mysqli($host, $username, $password, null, $port);
         if ($db->connect_error) {
             echo json_encode(array("status" => "bad_connection.db"));
@@ -20,6 +28,12 @@ class MYSQL
         }
     }
 
+    /**
+     * Executes the query and returns the results
+     * @param mixed $db Mysql database object
+     * @param string $query Query to be executed
+     * @return array|mixed|void Returns all data if present, otherwise returns an empty array
+     */
     static function query($db, $query)
     {
         $query_string = $query;
@@ -36,6 +50,10 @@ class MYSQL
         }
     }
 
+    /**
+     * Closes the connection
+     * @param mixed $db Mysql database object
+     */
     static function close($db)
     {
         mysqli_close($db);

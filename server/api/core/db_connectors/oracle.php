@@ -1,12 +1,19 @@
 <?php
+
 namespace oracleDB;
 
 use Exception;
 
-///  Received post variables:
-///  host, port, username, password, dialect, database, query, data
 class OracleDB
 {
+    /**
+     * Initializes the connection to the database
+     * @param $host
+     * @param $port
+     * @param $username
+     * @param $password
+     * @return false|resource Returns the oracle connection if it has been successful otherwise false
+     */
     static function init($host, $port, $username, $password)
     {
         $db = "(DESCRIPTION = 
@@ -23,6 +30,12 @@ class OracleDB
         return $conn;
     }
 
+    /**
+     * Executes the query and returns the results or echoes an error if the query is unsuccessful
+     * @param mixed $db Mysql database object
+     * @param string $query Query to be executed
+     * @return array|void Returns all data if present, otherwise returns an empty array
+     */
     static function query($db, $query)
     {
         try {
@@ -46,6 +59,10 @@ class OracleDB
 
     }
 
+    /**
+     * Closes the connection
+     * @param mixed $db Oracle database object
+     */
     static function close($db)
     {
         oci_close($db);
