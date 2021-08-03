@@ -142,11 +142,11 @@
                     $("#req_id").val(element.attr("id"));
                     switch (warehouseRequestsDetails.results[0].requestState) {
                         case "countRequest":
-                            append_img_request_state("request_state", "../../assets/img/countRequest.png", image_size, "Richiesto Conteggio");
+                            append_img_request_state("request_state", "../../assets/images/countRequest.png", image_size, "Richiesto Conteggio");
                             $("#btn-count").show();
                             break;
                         case "recountRequest":
-                            append_img_request_state("request_state", "../../assets/img/recountRequest.png", image_size, "Richiesta Riconta");
+                            append_img_request_state("request_state", "../../assets/images/recountRequest.png", image_size, "Richiesta Riconta");
                             $("#btn-count").show();
                             break;
                         default:

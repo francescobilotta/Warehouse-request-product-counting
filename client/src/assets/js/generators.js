@@ -3,7 +3,6 @@ function table_maker(table_data, destination_id, headers) {
     let table = $("<table>").addClass("table table-striped table-hover").attr("id", table_id);
     let thead_tr = $("<tr>");
     let tbody = $("<tbody>");
-
     table.append($("<thead>").append(thead_tr));
     table.append(tbody);
 
@@ -21,13 +20,13 @@ function table_maker(table_data, destination_id, headers) {
             if (headers[key] === "isClosed" && row[headers[key]] === "1") {
                 current_row.append(
                     $("<td>").append(
-                        $("<images src='../images/countDone_icon.png' height='" + image_size + "' width='" + image_size + "' title='Request closed'>"),
+                        $("<img src='../../assets/images/countDone_icon.png' height='" + image_size + "' width='" + image_size + "' title='Request closed'>"),
                         $("<p>Request closed</p>")
                     )
                 );
             } else if (headers[key] === "isClosed" && row[headers[key]] === "0") {
                 current_row.append(
-                    $("<td>").append($("<images src='../images/closed_icon.png' height='" + image_size + "' width='" + image_size + "' title='Request open'>"), $("<p>Request open</p>"))
+                    $("<td>").append($("<img src='../../assets/images/closed_icon.png' height='" + image_size + "' width='" + image_size + "' title='Request open'>"), $("<p>Request open</p>"))
                 );
             } else if (headers[key] == "requestDate" && row[headers[key]]) {
                 current_row.append(
@@ -65,20 +64,20 @@ function table_maker(table_data, destination_id, headers) {
                     switch (row[headers[key]]) {
                         case "countRequest":
                             current_row.append(
-                                $("<td>").append($("<images src='../images/countRequest.png' height='" + image_size + "' width='" + image_size + "' title='Conta richiesta'>"))
+                                $("<td>").append($("<img src='../../assets/images/countRequest.png' height='" + image_size + "' width='" + image_size + "' title='Conta richiesta'>"))
                             );
                             break;
                         case "countDone":
-                            current_row.append($("<td>").append($("<images src='../images/countDone.png' height='" + image_size + "' width='" + image_size + "' title='Conta effettuata'>")));
+                            current_row.append($("<td>").append($("<img src='../../assets/images/countDone.png' height='" + image_size + "' width='" + image_size + "' title='Conta effettuata'>")));
                             break;
                         case "recountRequest":
                             current_row.append(
-                                $("<td>").append($("<images src='../images/recountRequest.png' height='" + image_size + "' width='" + image_size + "' title='Riconta richiesta'>"))
+                                $("<td>").append($("<img src='../../assets/images/recountRequest.png' height='" + image_size + "' width='" + image_size + "' title='Riconta richiesta'>"))
                             );
                             break;
                         case "recountDone":
                             current_row.append(
-                                $("<td>").append($("<images src='../images/recountDone.png' height='" + image_size + "' width='" + image_size + "' title='Riconta effettuata'>"))
+                                $("<td>").append($("<img src='../../assets/images/recountDone.png' height='" + image_size + "' width='" + image_size + "' title='Riconta effettuata'>"))
                             );
                             break;
                         default:

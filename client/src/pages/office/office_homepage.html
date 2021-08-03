@@ -67,23 +67,23 @@
                     if (result.results[0].isClosed == 0) {
                         switch (result.results[0].requestState) {
                             case "countRequest":
-                                append_img_request_state("request_state", "../../assets/img/countRequest.png", image_size, "Richiesto Conteggio");
+                                append_img_request_state("request_state", "../../assets/images/countRequest.png", image_size, "Richiesto Conteggio");
                                 $("#btn-update").show();
                                 $("#btn-close").show();
                                 break;
                             case "countDone":
-                                append_img_request_state("request_state", "../../assets/img/countDone.png", image_size, "Conteggio Effettuato");
+                                append_img_request_state("request_state", "../../assets/images/countDone.png", image_size, "Conteggio Effettuato");
                                 $("#btn-update").show();
                                 $("#btn-close").show();
                                 $("#btn-recount").show();
                                 break;
                             case "recountRequest":
-                                append_img_request_state("request_state", "../../assets/img/recountRequest.png", image_size, "Richiesta Riconta");
+                                append_img_request_state("request_state", "../../assets/images/recountRequest.png", image_size, "Richiesta Riconta");
                                 $("#btn-update").show();
                                 $("#btn-close").show();
                                 break;
                             case "recountDone":
-                                append_img_request_state("request_state", "../../assets/img/recountDone.png", image_size, "Riconta Effettuata");
+                                append_img_request_state("request_state", "../../assets/images/recountDone.png", image_size, "Riconta Effettuata");
                                 $("#btn-update").show();
                                 $("#btn-close").show();
                                 $("#btn-recount").show();
@@ -91,7 +91,7 @@
                             default:
                         }
                     } else {
-                        append_img_request_state("request_state", "../../assets/img/closed.png", image_size, "Riconta Effettuata");
+                        append_img_request_state("request_state", "../../assets/images/closed.png", image_size, "Riconta Effettuata");
                     }
                 });
                 table_data_requester.query({
