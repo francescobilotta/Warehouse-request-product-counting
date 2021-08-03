@@ -4,8 +4,8 @@
 
 ###### Variables needed:
 
-- {d.terminationDate}
-- {f.requestId}
+-   {d.terminationDate}
+-   {f.requestId}
 
 ---
 
@@ -15,13 +15,13 @@
 
 ###### Variables needed:
 
-- {d.requestDate}
-- {d.productCode}
-- {d.productName}
-- {d.productFlavour}
-- {d.dueDate}
-- {d.requestState}
-- {d.notes}
+-   {d.requestDate}
+-   {d.productCode}
+-   {d.productName}
+-   {d.productFlavour}
+-   {d.dueDate}
+-   {d.requestState}
+-   {d.notes}
 
 ---
 
@@ -31,7 +31,7 @@
 
 ###### Variables needed:
 
-- {f.requestId}
+-   {f.requestId}
 
 ---
 
@@ -41,7 +41,7 @@
 
 ###### Variables needed:
 
-- {f.requestId}
+-   {f.requestId}
 
 ---
 
@@ -51,7 +51,7 @@
 
 ###### Variables needed:
 
-- No variables needed
+-   No variables needed
 
 ---
 
@@ -63,9 +63,9 @@
 
 ###### Variables needed:
 
-- {d.notes}
-- {d.dueDate}
-- {f.requestId}
+-   {d.notes}
+-   {d.dueDate}
+-   {f.requestId}
 
 ---
 
@@ -75,7 +75,7 @@
 
 ###### Variables needed:
 
-- {f.requestId}
+-   {f.requestId}
 
 ### [ warehouse_requests.q ]
 
@@ -83,7 +83,7 @@
 
 ###### Variables needed:
 
-- No variables needed
+-   No variables needed
 
 ---
 
@@ -93,8 +93,8 @@
 
 ###### Variables needed:
 
-- {d.lastCount}
-- {f.requestId}
+-   {d.lastCount}
+-   {f.requestId}
 
 ---
 
@@ -104,7 +104,7 @@
 
 ###### Variables needed:
 
-- {f.requestId}
+-   {f.requestId}
 
 ---
 
@@ -114,7 +114,7 @@
 
 ###### Variables needed:
 
-- {f.requestId}
+-   {f.requestId}
 
 ---
 
@@ -124,7 +124,7 @@
 
 ###### Variables needed:
 
-- {f.requestId}
+-   {f.requestId}
 
 ---
 
@@ -134,7 +134,7 @@
 
 ###### Variables needed:
 
-- No variables needed
+-   No variables needed
 
 ---
 
@@ -144,7 +144,7 @@
 
 ###### Variables needed:
 
-- {f.productCode}
+-   {f.productCode}
 
 ---
 
@@ -154,8 +154,8 @@
 
 ###### Variables needed:
 
-- {f.productCode}
-- {f.productFlavour}
+-   {f.productCode}
+-   {f.productFlavour}
 
 ---
 
@@ -165,9 +165,9 @@
 
 ###### Variables needed:
 
-- {f.productCode}
-- {f.productFlavour}
-- {f.currentYear}
+-   {f.productCode}
+-   {f.productFlavour}
+-   {f.currentYear}
 
 ---
 
@@ -177,7 +177,16 @@
 
 ###### Variables needed:
 
-- {d.lastYear}
-- {d.currentYear}
-- {f.productCode}
-- {f.productFlavour}
+-   {d.lastYear}
+-   {d.currentYear}
+-   {f.productCode}
+-   {f.productFlavour}
+-
+
+### [ warehouse_get_dynamic_locations.q ]
+
+#### Get the table with the location of a specific product with a specific flavour.
+
+###### Variables needed:
+
+-   {f.productCodeAndFlavour}

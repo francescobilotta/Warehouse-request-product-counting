@@ -81,7 +81,7 @@
                                 warehouseGetProductLocation.results.ZONA[0]
                             )
                         ) {
-                            $("#productLocation").text("No location found!");
+                            $("#productLocation").text("Nessuna ubicazione standard");
                         } else {
                             $("#productLocation").text(
                                 `${warehouseGetProductLocation.results.ZONA[0]} ${warehouseGetProductLocation.results.CORRIDOIO[0]} ${warehouseGetProductLocation.results.TRAVERSA[0]} ${warehouseGetProductLocation.results.ALTEZZA[0]}`
@@ -93,6 +93,31 @@
                         q_data: {
                             "f.productCode": warehouseRequestsDetails.results[0].productCode,
                             "f.productFlavour": warehouseRequestsDetails.results[0].productFlavour,
+                        },
+                    });
+
+                    //EXPECTED DYNAMIC LOCATIONS
+                    const expected_dynamic_location = new Requester(function (warehouseGetDynamicLocations) {
+                        const dynamic_locations_headers_strings = {
+                            MATERIAL: "mat",
+                            UBICAZIONE: "ubic",
+                            QUANTITÀ: "qta",
+                            LOTTO: "lotto",
+                            "TIPO UDM": "tipoudm",
+                        };
+                        console.log(warehouseGetDynamicLocations);
+                        $("#dynamic-locations-table-container").empty();
+                        $("#notFoundLocations").empty();
+                        if (warehouseGetDynamicLocations.results.length !== 0) {
+                            table_maker(warehouseGetDynamicLocations.results, "dynamic-locations-table-container", dynamic_locations_headers_strings);
+                        } else {
+                            $("#notFoundLocations").append("Nessuna posizione trovata");
+                        }
+                    });
+                    expected_dynamic_location.query({
+                        q_name: "warehouse_get_dynamic_locations",
+                        q_data: {
+                            "f.productCodeAndFlavour": warehouseRequestsDetails.results[0].productCode + " " + warehouseRequestsDetails.results[0].productFlavour,
                         },
                     });
 
@@ -364,6 +389,12 @@
                             <span style="text-align: center; font-weight: 800; font-size: 1.5rem"
                                 >Location standard: <span id="productLocation" style="font-weight: 600; font-size: 1.8rem"></span
                             ></span>
+                        </div>
+
+                        <div class="row col-12 justify-content-center" style="padding-top: 10px">
+                            <span style="text-align: center; font-weight: 800; font-size: 1.5rem">Posizioni:  <span id="notFoundLocations" style="font-weight: 600; font-size: 1.8rem"></span
+                            ></span></span>
+                            <div class="request-table" id="dynamic-locations-table-container"></div>
                         </div>
 
                         <div class="row col-12 justify-content-center" style="padding-top: 10px">

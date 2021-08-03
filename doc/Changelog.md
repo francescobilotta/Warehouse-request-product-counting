@@ -163,3 +163,18 @@ _Warehouse director 2/2_<br/><br/>
 _Warehouse operator 1/2_<br/><br/>
 ![Warehouse operator 2/2](changelog_images/13_7.png)<br/>
 _Warehouse operator 2/2_<br/><br/>
+
+## 14. [CHECKPOINT: Fixed Bugs + Added Many Features]
+
+#### - Fixed a lot of bugs
+
+#### - Fixed API bugs
+
+#### - Fixed styling
+
+#### - Added functionalities like product locations and product search + table filters
+
+![Added search input](changelog_images/14_1.png)<br/>
+_Added search input_<br/><br/>
+![CHECKPOINT: Fixed Bugs + Added Product Locations](changelog_images/14_2.png)<br/>
+_CHECKPOINT: Fixed Bugs + Added Product Locations_<br/><br/>

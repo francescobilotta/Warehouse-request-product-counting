@@ -1,0 +1,4 @@
+{
+    "database": "portale",
+    "query": "SELECT * FROM mag.giacenza WHERE mat = \"{f.productCodeAndFlavour}\""
+}
