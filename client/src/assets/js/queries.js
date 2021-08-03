@@ -17,6 +17,10 @@ function officeUpdate(requestId, notes, dueDate) {
 }
 
 function officeClose(requestId, terminationDate) {
+    let year = terminationDate.split("-")[2];
+    let month = terminationDate.split("-")[1];
+    let day = terminationDate.split("-")[0];
+    terminationDate = year + "-" + month + "-" + day + " 00:00:00";
     const table_data_requester = new Requester(function (result) {
         console.log(`Request ${requestId} closed at ${terminationDate}`);
     });
@@ -47,9 +51,9 @@ For warehouse
 function lastToPrevious(requestId, lastCount, requestState) {
     const table_data_requester = new Requester(function (result) {
         console.log(`Moved lastCount of request ${requestId} from lastCount to previousCount`);
-        const savedEvent = new Event('savedCount');
+        const savedEvent = new Event("savedCount");
 
-        document.addEventListener('savedCount', () => {
+        document.addEventListener("savedCount", () => {
             console.log("Check if requestState is countRequest or recountRequest");
             if (requestState === "countRequest") {
                 console.log("It's countRequest");
@@ -66,7 +70,7 @@ function lastToPrevious(requestId, lastCount, requestState) {
                 warehouseUpdateRequests(requestId, lastCount);
                 console.log(`Changed the lastCount value to ${lastCount}`);
             }
-        })
+        });
 
         document.dispatchEvent(savedEvent);
     });
@@ -117,11 +121,9 @@ function warehouseUpdateRequests(requestId, lastCount) {
     });
 }
 
-
 function warehouseCount(requestId, lastCount, requestState) {
     $("#edit-popup").hide();
     console.log("Going to move from last to previous");
     lastToPrevious(requestId, lastCount, requestState);
     console.log("Moved from last to previous");
-
 }
