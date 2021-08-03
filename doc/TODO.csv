@@ -3,10 +3,9 @@ Update sempre disponibile in modifica,7
 Integra con rubrica. Titolo: "Gestione Conteggi",1
 Togliere tutti i log di debug,2
 Aggiornare i titoli delle pagine,5
-Ridimensionamenti in warehouse,8
 Sposta inizializzazione datatable in generators.js,3
 documenta API,2
 metti risorse cdn in locale,7
 Aggiungi altre ubicazioni in warehouse,9
 Risolvi stati dipendenti dalle immagini,8
-Fix closedDate, 9
+Fix closedDate,9

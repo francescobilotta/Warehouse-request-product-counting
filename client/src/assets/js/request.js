@@ -1,7 +1,7 @@
 class Requester {
     constructor(
         results_callback,
-        query_data= undefined,
+        query_data = undefined,
         req_type = "GET",
         req_url = "../../../../server/api/request_receiver.php",
         req_ret_type = "json"
@@ -13,7 +13,7 @@ class Requester {
         this.req_ret_type = req_ret_type;
     }
 
-    query(ajax_data=this.query_data) {
+    query(ajax_data = this.query_data) {
         if (!ajax_data) {
             alert("The ajax request has no data");
         }

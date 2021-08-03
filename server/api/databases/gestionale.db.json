@@ -2,6 +2,6 @@
   "host": "192.9.200.19",
   "port": "1521",
   "username": "acme1",
-  "password":"bbeep",
+  "password": "bbeep",
   "dialect": "oracle"
 }

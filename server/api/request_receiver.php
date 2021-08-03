@@ -10,18 +10,24 @@ use oracleDB\OracleDB;
 /**
  * @throws Exception bad_json.q
  */
-function get_query_data($query_file) {
+function get_query_data($query_file)
+{
     $q_details = file_get_contents("./queries/$query_file");
-    if (!$q_details) { throw new Exception("bad_json.q. File name = $query_file"); };
+    if (!$q_details) {
+        throw new Exception("bad_json.q. File name = $query_file");
+    };
     return json_decode($q_details);
 }
 
 /**
  * @throws Exception bad_json.db
  */
-function get_db_data($db_file) {
+function get_db_data($db_file)
+{
     $db_data = file_get_contents("./databases/$db_file");
-    if (!$db_data){ throw new Exception("bad_json.db"); }
+    if (!$db_data) {
+        throw new Exception("bad_json.db");
+    }
     return json_decode($db_data);
 }
 
@@ -41,8 +47,11 @@ $ROUTES = [
     },
 ];
 
-if (isset($_GET['debug'])) { $debug = $_GET['debug']; }
-else { $debug = false; }
+if (isset($_GET['debug'])) {
+    $debug = $_GET['debug'];
+} else {
+    $debug = false;
+}
 
 if ($debug) {
     ini_set('display_errors', 1);
@@ -51,34 +60,38 @@ if ($debug) {
 }
 
 try {
-    if (isset($_GET['q_name'])) { $query_name = $_GET['q_name']; }
-    else { throw new Exception("Have not received a query name."); }
+    if (isset($_GET['q_name'])) {
+        $query_name = $_GET['q_name'];
+    } else {
+        throw new Exception("Have not received a query name.");
+    }
 
-    if (isset($_GET['q_data'])) { $query_data = $_GET['q_data']; }
-    else { $query_data = []; }
-
-
+    if (isset($_GET['q_data'])) {
+        $query_data = $_GET['q_data'];
+    } else {
+        $query_data = [];
+    }
 
 
     $query_info = get_query_data("$query_name.q.json");
-    $database_info = get_db_data($query_info->{'database'}.".db.json");
+    $database_info = get_db_data($query_info->{'database'} . ".db.json");
     $fields = ['data' => $query_data] + (array)$query_info + (array)$database_info;
     if ($debug) {
-        echo "<hr>DEBUG DATA<br>The following data will be sent to querrier:<br>"; var_export($fields);
-        echo "<hr>The following has been received:<br>"; var_export($_GET); echo "<hr>";
+        echo "<hr>DEBUG DATA<br>The following data will be sent to querrier:<br>";
+        var_export($fields);
+        echo "<hr>The following has been received:<br>";
+        var_export($_GET);
+        echo "<hr>";
     }
 
-    if (!in_array($fields['dialect'], array_keys($ROUTES), false))
-    {
-        throw new Exception("Database dialect '".$fields['dialect']."' not supported" );
+    if (!in_array($fields['dialect'], array_keys($ROUTES), false)) {
+        throw new Exception("Database dialect '" . $fields['dialect'] . "' not supported");
     }
 
     echo json_encode($ROUTES[$fields['dialect']](fill_query_data($fields['query'], $fields['data']), $fields));
 
-}
-catch (Exception $e) {
-    echo json_encode(array("status"=>$e->getMessage()));
-}
-finally {
+} catch (Exception $e) {
+    echo json_encode(array("status" => $e->getMessage()));
+} finally {
     exit();
 }
