@@ -175,23 +175,21 @@
                 }
             });
 
-            const table_headers_strings = {
-                STATO: "requestState",
-                PRODOTTO: "productName",
-                VARIANTE: "productFlavour",
-                NOTE: "notes",
-                "DATA RICHIESTA [dd/mm/yyyy]": "requestDate",
-                "DATA SCADENZA [dd/mm/yyyy]": "dueDate",
-                "PREVISTI TOTALI": "expectedCount",
-                "A TERRA": "expectedGroundCount",
-            };
-            const table_data_requester = new Requester((warehouseRequests) => {
-                table_maker(warehouseRequests.results, "request-table-container", table_headers_strings);
-                register_clicks();
-                $("#records_table").DataTable();
-            });
-            table_data_requester.query({q_name: "warehouse_requests"});
+        const table_headers_strings = {
+          STATO: "requestState",
+          PRODOTTO: "productName",
+          VARIANTE: "productFlavour",
+          NOTE: "notes",
+          "DATA RICHIESTA [dd/mm/yyyy]": "requestDate",
+          "DATA SCADENZA [dd/mm/yyyy]": "dueDate",
+        };
+        const table_data_requester = new Requester((warehouseRequests) => {
+          table_maker(warehouseRequests.results, "request-table-container", table_headers_strings);
+          register_clicks();
+          $("#records_table").DataTable();
         });
+        table_data_requester.query({q_name: "warehouse_requests"});
+      });
     </script>
 </head>
 <body>

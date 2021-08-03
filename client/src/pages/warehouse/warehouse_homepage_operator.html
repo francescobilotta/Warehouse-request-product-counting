@@ -25,10 +25,10 @@
     <script src="../../assets/js/append_img_request_state.js"></script>
     <script src="../../assets/js/queries.js"></script>
     <script>
-            function make_editable(element) {
-              $("#edit-popup").show();
-              $("#popup").removeClass();
-              $("#popup").addClass(element.attr("id"));
+      function make_editable(element) {
+        $("#edit-popup").show();
+        $("#popup").removeClass();
+        $("#popup").addClass(element.attr("id"));
 
               //For popup
               const table_data_requester = new Requester(function (warehouseRequestsDetails) {
@@ -155,22 +155,21 @@
                 }
               });
 
-              const table_headers_strings = {
-                STATO: "requestState",
-                PRODOTTO: "productName",
-                VARIANTE: "productFlavour",
-                NOTE: "notes",
-                "DATA RICHIESTA": "requestDate",
-                "DATA SCADENZA": "dueDate",
-                "A TERRA": "expectedGroundCount",
-              };
-              const table_data_requester = new Requester((warehouseRequests) => {
-                table_maker(warehouseRequests.results, "request-table-container", table_headers_strings);
-                register_clicks();
-                $("#records_table").DataTable();
-              });
-              table_data_requester.query({q_name: "warehouse_requests"});
-            });
+        const table_headers_strings = {
+          STATO: "requestState",
+          PRODOTTO: "productName",
+          VARIANTE: "productFlavour",
+          NOTE: "notes",
+          "DATA RICHIESTA": "requestDate",
+          "DATA SCADENZA": "dueDate",
+        };
+        const table_data_requester = new Requester((warehouseRequests) => {
+          table_maker(warehouseRequests.results, "request-table-container", table_headers_strings);
+          register_clicks();
+          $("#records_table").DataTable();
+        });
+        table_data_requester.query({q_name: "warehouse_requests"});
+      });
     </script>
   </head>
   <body>
