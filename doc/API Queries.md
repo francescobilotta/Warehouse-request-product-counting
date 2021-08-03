@@ -159,6 +159,17 @@
 
 ---
 
+### [ warehouse_update_expected_count.q ]
+
+#### Update the last expected count at the time of counting .
+
+###### Variables needed:
+
+-   {d.expectedCount}
+-   {f.requestId}
+
+---
+
 ### [ warehouse_expected_count.q ]
 
 #### Get total amount of products on oracle database.

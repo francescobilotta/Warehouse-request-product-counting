@@ -3,9 +3,7 @@ For office
 */
 
 function officeUpdate(requestId, notes, dueDate) {
-    const table_data_requester = new Requester(function (result) {
-
-    });
+    const table_data_requester = new Requester(function (result) {});
     table_data_requester.query({
         q_name: "office_update_requests",
         q_data: {
@@ -21,9 +19,7 @@ function officeClose(requestId, terminationDate) {
     let month = terminationDate.split("-")[1];
     let day = terminationDate.split("-")[0];
     terminationDate = year + "-" + month + "-" + day + " 00:00:00";
-    const table_data_requester = new Requester(function (result) {
-
-    });
+    const table_data_requester = new Requester(function (result) {});
     table_data_requester.query({
         q_name: "close_requests",
         q_data: {
@@ -34,9 +30,7 @@ function officeClose(requestId, terminationDate) {
 }
 
 function officeRecount(requestId) {
-    const table_data_requester = new Requester(function (result) {
-
-    });
+    const table_data_requester = new Requester(function (result) {});
     table_data_requester.query({
         q_name: "ask_for_recount",
         q_data: {
@@ -50,28 +44,18 @@ For warehouse
 */
 function lastToPrevious(requestId, lastCount, requestState) {
     const table_data_requester = new Requester(function (result) {
-
         const savedEvent = new Event("savedCount");
-
         document.addEventListener("savedCount", () => {
-
             if (requestState === "countRequest") {
-
-
                 warehouseStateToCountDone(requestId);
-
                 warehouseUpdateRequests(requestId, lastCount);
+                warehouseLastExpectedCount(requestId, expectedCount);
+                //TODO FINISH
             } else if (requestState === "recountRequest") {
-
-
                 warehouseStateToRecountDone(requestId);
-
-
                 warehouseUpdateRequests(requestId, lastCount);
-
             }
         });
-
         document.dispatchEvent(savedEvent);
     });
     table_data_requester.query({
@@ -83,9 +67,7 @@ function lastToPrevious(requestId, lastCount, requestState) {
 }
 
 function warehouseStateToCountDone(requestId) {
-    const table_data_requester = new Requester(function (result) {
-
-    });
+    const table_data_requester = new Requester(function (result) {});
     table_data_requester.query({
         q_name: "warehouse_state_to_countDone",
         q_data: {
@@ -95,10 +77,20 @@ function warehouseStateToCountDone(requestId) {
     return true;
 }
 
-function warehouseStateToRecountDone(requestId) {
-    const table_data_requester = new Requester(function (result) {
-
+function warehouseLastExpectedCount(requestId, expectedCount) {
+    const table_data_requester = new Requester(function (result) {});
+    table_data_requester.query({
+        q_name: "warehouse_update_expectedCount",
+        q_data: {
+            "d.expectedCount": expectedCount,
+            "f.requestId": requestId,
+        },
     });
+    return true;
+}
+
+function warehouseStateToRecountDone(requestId) {
+    const table_data_requester = new Requester(function (result) {});
     table_data_requester.query({
         q_name: "warehouse_state_to_recountDone",
         q_data: {
@@ -109,9 +101,7 @@ function warehouseStateToRecountDone(requestId) {
 }
 
 function warehouseUpdateRequests(requestId, lastCount) {
-    const table_data_requester = new Requester(function (result) {
-
-    });
+    const table_data_requester = new Requester(function (result) {});
     table_data_requester.query({
         q_name: "warehouse_update_count",
         q_data: {
@@ -125,5 +115,4 @@ function warehouseCount(requestId, lastCount, requestState) {
     $("#edit-popup").hide();
 
     lastToPrevious(requestId, lastCount, requestState);
-
 }

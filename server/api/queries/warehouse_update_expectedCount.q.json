@@ -1,0 +1,4 @@
+{
+    "database": "portale",
+    "query": "UPDATE testing.Request SET expectedCount = \"{d.expectedCount}\" WHERE requestId = \"{f.requestId}\""
+}
