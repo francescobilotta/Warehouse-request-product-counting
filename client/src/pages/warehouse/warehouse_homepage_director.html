@@ -32,7 +32,7 @@
         $("#popup").addClass(element.attr("id"));
 
         //For popup
-        const table_data_requester = new Requester(function (result) {
+        const table_data_requester = new Requester(function (warehouseRequestsDetails) {
           //Get today data
           const now = new Date();
           const day = ("0" + now.getDate()).slice(-2);
@@ -40,38 +40,39 @@
           const today = now.getFullYear() + "-" + month + "-" + day;
           var image_size = "40px";
           //Format dates
-          var creationDate = result.results[0].requestDate.replace(" 00:00:00", "");
+          var creationDate = warehouseRequestsDetails.results[0].requestDate.replace(" 00:00:00", "");
           creationDate = creationDate.split("-")[1] + "-" + creationDate.split("-")[2] + "-" + creationDate.split("-")[0];
           //Product Info
-          $("#prod_code").val(result.results[0].productCode);
-          $("#prod_name").val(result.results[0].productName);
-          $("#prod_variant").val(result.results[0].productFlavour);
-          $("#notes").val(result.results[0].notes);
-          $("#date_due").val(result.results[0].dueDate.split(" ")[0]).attr({
+          $("#prod_code").val(warehouseRequestsDetails.results[0].productCode);
+          $("#prod_name").val(warehouseRequestsDetails.results[0].productName);
+          $("#prod_variant").val(warehouseRequestsDetails.results[0].productFlavour);
+          $("#notes").val(warehouseRequestsDetails.results[0].notes);
+          $("#date_due").val(warehouseRequestsDetails.results[0].dueDate.split(" ")[0]).attr({
             min: today,
           });
           $("#date_creation").val(creationDate);
 
           //EXPECTED COUNT
-          const expected_count_requester = new Requester(function (result) {
-            console.log(result.results);
-            $("#expected_count").val(result.results.N_TOT[0]);
+          const expected_count_requester = new Requester(function (warehouseExpectedCount) {
+            $("#expected_count").val(warehouseExpectedCount.results.N_TOT[0]);
           });
           expected_count_requester.query({
             q_name: "warehouse_expected_count",
             q_data: {
-              "f.productCode": result.results[0].productCode,
-              "f.productFlavour": result.results[0].productFlavour,
+              "f.productCode": warehouseRequestsDetails.results[0].productCode,
+              "f.productFlavour": warehouseRequestsDetails.results[0].productFlavour,
               "f.currentYear": now.getFullYear(),
             },
           });
           //EXPECTED GROUND COUNT
-          const expected_ground_count_requester = new Requester(function (result) {
-            console.log(result.results);
-            if (result.results.PRELEVATO) {
-              //TODO risolvi @francescobilotta
-              let ground_count = result.results.N_TOT.reduce((x, y) => x + y);
-              $("#expected_ground_count").val(ground_count);
+          const expected_ground_count_requester = new Requester(function (expectedGroundCount) {
+            console.log(expectedGroundCount);
+            const arrayOfGroundCount = expectedGroundCount.results.PRELEVATO;
+            let sumOfGroundCount = arrayOfGroundCount ? arrayOfGroundCount.reduce((a, b) => Number(a) + Number(b), 0) : 0;
+            console.log(sumOfGroundCount);
+
+            if (arrayOfGroundCount) {
+              $("#expected_ground_count").val(sumOfGroundCount);
             } else {
               $("#expected_ground_count").val(0);
             }
@@ -81,23 +82,32 @@
             q_data: {
               "d.lastYear": now.getFullYear() - 1,
               "d.currentYear": now.getFullYear(),
-              "f.productCode": result.results[0].productCode,
-              "f.productFlavour": result.results[0].productFlavour,
+              "f.productCode": warehouseRequestsDetails.results[0].productCode,
+              "f.productFlavour": warehouseRequestsDetails.results[0].productFlavour,
             },
           });
           //EXPECTED LOCATION
-          const expected_location = new Requester(function (result) {
-            if (!(result.results.ALTEZZA[0] || result.results.CORRIDOIO[0] || result.results.TRAVERSA[0] || result.results.ZONA[0])) {
+          const expected_location = new Requester(function (warehouseGetProductLocation) {
+            if (
+              !(
+                warehouseGetProductLocation.results.ALTEZZA[0] ||
+                warehouseGetProductLocation.results.CORRIDOIO[0] ||
+                warehouseGetProductLocation.results.TRAVERSA[0] ||
+                warehouseGetProductLocation.results.ZONA[0]
+              )
+            ) {
               $("#productLocation").text("No location found!");
             } else {
-              $("#productLocation").text(`${result.results.ALTEZZA[0]} ${result.results.CORRIDOIO[0]} ${result.results.TRAVERSA[0]} ${result.results.ZONA[0]}`);
+              $("#productLocation").text(
+                `${warehouseGetProductLocation.results.ALTEZZA[0]} ${warehouseGetProductLocation.results.CORRIDOIO[0]} ${warehouseGetProductLocation.results.TRAVERSA[0]} ${warehouseGetProductLocation.results.ZONA[0]}`
+              );
             }
           });
           expected_location.query({
             q_name: "warehouse_get_product_location",
             q_data: {
-              "f.productCode": result.results[0].productCode,
-              "f.productFlavour": result.results[0].productFlavour,
+              "f.productCode": warehouseRequestsDetails.results[0].productCode,
+              "f.productFlavour": warehouseRequestsDetails.results[0].productFlavour,
             },
           });
 
@@ -106,7 +116,7 @@
 
           //RequestState
           $("#req_id").val(element.attr("id"));
-          switch (result.results[0].requestState) {
+          switch (warehouseRequestsDetails.results[0].requestState) {
             case "countRequest":
               append_img_request_state("request_state", "../../assets/img/countRequest.png", image_size, "Asked for count");
               $("#btn-count").show();
@@ -172,8 +182,8 @@
           "EXPECTED IN TOTAL": "expectedCount",
           "READY TO BE SHIPPED": "expectedGroundCount",
         };
-        const table_data_requester = new Requester((result) => {
-          table_maker(result.results, "request-table-container", table_headers_strings);
+        const table_data_requester = new Requester((warehouseRequests) => {
+          table_maker(warehouseRequests.results, "request-table-container", table_headers_strings);
           register_clicks();
           $("#records_table").DataTable();
         });
