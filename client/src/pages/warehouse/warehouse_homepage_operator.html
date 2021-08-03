@@ -1,23 +1,26 @@
 <!DOCTYPE html>
 <html lang="it">
-  <head>
+<head>
     <title>Gestione Conteggi</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <link rel="icon" href="../../assets/img/favicon.png" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/css/selectize.bootstrap4.min.css" />
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/jq-3.3.1/dt-1.10.25/datatables.min.css" />
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+    <link href="../../assets/img/favicon.png" rel="icon"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" rel="stylesheet"/>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/css/selectize.bootstrap4.min.css"
+          rel="stylesheet"/>
+    <link href="https://cdn.datatables.net/v/bs5/jq-3.3.1/dt-1.10.25/datatables.min.css" rel="stylesheet"
+          type="text/css"/>
 
-    <link href="../../assets/css/common.css" rel="stylesheet" />
+    <link href="../../assets/css/common.css" rel="stylesheet"/>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/js/standalone/selectize.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/jq-3.3.1/dt-1.10.25/datatables.min.js"></script>
+    <script src="https://cdn.datatables.net/v/bs5/jq-3.3.1/dt-1.10.25/datatables.min.js"
+            type="text/javascript"></script>
 
     <script src="../../assets/js/request.js"></script>
     <script src="../../assets/js/generators.js"></script>
@@ -25,13 +28,13 @@
     <script src="../../assets/js/append_img_request_state.js"></script>
     <script src="../../assets/js/queries.js"></script>
     <script>
-      function make_editable(element) {
-        $("#edit-popup").show();
-        $("#popup").removeClass();
-        $("#popup").addClass(element.attr("id"));
+        function make_editable(element) {
+            $("#edit-popup").show();
+            $("#popup").removeClass();
+            $("#popup").addClass(element.attr("id"));
 
-              //For popup
-              const table_data_requester = new Requester(function (warehouseRequestsDetails) {
+            //For popup
+            const table_data_requester = new Requester(function (warehouseRequestsDetails) {
                 //Get today data
                 const now = new Date();
                 const day = ("0" + now.getDate()).slice(-2);
@@ -47,51 +50,51 @@
                 $("#prod_variant").val(warehouseRequestsDetails.results[0].productFlavour);
                 $("#notes").val(warehouseRequestsDetails.results[0].notes);
                 $("#date_due").val(warehouseRequestsDetails.results[0].dueDate.split(" ")[0]).attr({
-                  min: today,
+                    min: today,
                 });
                 $("#date_creation").val(creationDate);
                 //EXPECTED GROUND COUNT
                 const expected_ground_count_requester = new Requester(function (expectedGroundCount) {
-                  const arrayOfGroundCount = expectedGroundCount.results.PRELEVATO;
-                  let sumOfGroundCount = arrayOfGroundCount ? arrayOfGroundCount.reduce((a, b) => Number(a) + Number(b), 0) : 0;
-                  if (arrayOfGroundCount) {
-                    $("#expected_ground_count").val(sumOfGroundCount);
-                  } else {
-                    $("#expected_ground_count").val(0);
-                  }
+                    const arrayOfGroundCount = expectedGroundCount.results.PRELEVATO;
+                    let sumOfGroundCount = arrayOfGroundCount ? arrayOfGroundCount.reduce((a, b) => Number(a) + Number(b), 0) : 0;
+                    if (arrayOfGroundCount) {
+                        $("#expected_ground_count").val(sumOfGroundCount);
+                    } else {
+                        $("#expected_ground_count").val(0);
+                    }
                 });
                 expected_ground_count_requester.query({
-                  q_name: "warehouse_expected_ground_count",
-                  q_data: {
-                    "d.lastYear": now.getFullYear() - 1,
-                    "d.currentYear": now.getFullYear(),
-                    "f.productCode": warehouseRequestsDetails.results[0].productCode,
-                    "f.productFlavour": warehouseRequestsDetails.results[0].productFlavour,
-                  },
+                    q_name: "warehouse_expected_ground_count",
+                    q_data: {
+                        "d.lastYear": now.getFullYear() - 1,
+                        "d.currentYear": now.getFullYear(),
+                        "f.productCode": warehouseRequestsDetails.results[0].productCode,
+                        "f.productFlavour": warehouseRequestsDetails.results[0].productFlavour,
+                    },
                 });
                 //EXPECTED LOCATION
                 const expected_location = new Requester(function (warehouseGetProductLocation) {
-                  if (
-                    !(
-                      warehouseGetProductLocation.results.ALTEZZA[0] ||
-                      warehouseGetProductLocation.results.CORRIDOIO[0] ||
-                      warehouseGetProductLocation.results.TRAVERSA[0] ||
-                      warehouseGetProductLocation.results.ZONA[0]
-                    )
-                  ) {
-                    $("#productLocation").text("No location found!");
-                  } else {
-                    $("#productLocation").text(
-                      `${warehouseGetProductLocation.results.ZONA[0]} ${warehouseGetProductLocation.results.CORRIDOIO[0]} ${warehouseGetProductLocation.results.TRAVERSA[0]} ${warehouseGetProductLocation.results.ALTEZZA[0]}`
-                    );
-                  }
+                    if (
+                        !(
+                            warehouseGetProductLocation.results.ALTEZZA[0] ||
+                            warehouseGetProductLocation.results.CORRIDOIO[0] ||
+                            warehouseGetProductLocation.results.TRAVERSA[0] ||
+                            warehouseGetProductLocation.results.ZONA[0]
+                        )
+                    ) {
+                        $("#productLocation").text("No location found!");
+                    } else {
+                        $("#productLocation").text(
+                            `${warehouseGetProductLocation.results.ZONA[0]} ${warehouseGetProductLocation.results.CORRIDOIO[0]} ${warehouseGetProductLocation.results.TRAVERSA[0]} ${warehouseGetProductLocation.results.ALTEZZA[0]}`
+                        );
+                    }
                 });
                 expected_location.query({
-                  q_name: "warehouse_get_product_location",
-                  q_data: {
-                    "f.productCode": warehouseRequestsDetails.results[0].productCode,
-                    "f.productFlavour": warehouseRequestsDetails.results[0].productFlavour,
-                  },
+                    q_name: "warehouse_get_product_location",
+                    q_data: {
+                        "f.productCode": warehouseRequestsDetails.results[0].productCode,
+                        "f.productFlavour": warehouseRequestsDetails.results[0].productFlavour,
+                    },
                 });
 
                 //Hide all buttons before selecting which to show counted_items
@@ -100,240 +103,249 @@
                 //RequestState
                 $("#req_id").val(element.attr("id"));
                 switch (warehouseRequestsDetails.results[0].requestState) {
-                  case "countRequest":
-                    append_img_request_state("request_state", "../../assets/img/countRequest.png", image_size, "Richiesto Conteggio");
-                    $("#btn-count").show();
-                    break;
-                  case "recountRequest":
-                    append_img_request_state("request_state", "../../assets/img/recountRequest.png", image_size, "Richiesta Riconta");
-                    $("#btn-count").show();
-                    break;
-                  default:
+                    case "countRequest":
+                        append_img_request_state("request_state", "../../assets/img/countRequest.png", image_size, "Richiesto Conteggio");
+                        $("#btn-count").show();
+                        break;
+                    case "recountRequest":
+                        append_img_request_state("request_state", "../../assets/img/recountRequest.png", image_size, "Richiesta Riconta");
+                        $("#btn-count").show();
+                        break;
+                    default:
                 }
-              });
-              table_data_requester.query({
+            });
+            table_data_requester.query({
                 q_name: "warehouse_requests_details",
                 q_data: {
-                  "f.requestId": element.attr("id"),
+                    "f.requestId": element.attr("id"),
                 },
-              });
-            }
+            });
+        }
 
-            function register_clicks() {
-              $(".table-row").click(function (e) {
+        function register_clicks() {
+            $(".table-row").click(function (e) {
                 make_editable($(this));
-              });
+            });
 
-              $("#edit-popup").click(function (e) {
+            $("#edit-popup").click(function (e) {
                 if (e.target === this) {
-                  $(this).hide();
+                    $(this).hide();
                 }
-              });
+            });
 
-              $(".exit-button").click(function (e) {
+            $(".exit-button").click(function (e) {
                 if (e.target === this) {
-                  $("#edit-popup").hide();
+                    $("#edit-popup").hide();
                 }
-              });
-            }
+            });
+        }
 
-            //Get table data
-            $(document).ready(function () {
-              $("#edit-popup").hide();
+        //Get table data
+        $(document).ready(function () {
+            $("#edit-popup").hide();
 
-              $("#btn-count").click((e) => {
+            $("#btn-count").click((e) => {
                 if ($.isNumeric($("#counted_items").val()) && $("#counted_items").val() > 0) {
-                  if ($("#img_request_state").children("img").attr("title") == "Richiesto Conteggio") {
-                    warehouseCount($("#popup").attr("class"), $("#counted_items").val(), "countRequest");
-                    location.reload();
-                  } else if ($("#img_request_state").children("img").attr("title") == "Richiesta Riconta") {
-                    warehouseCount($("#popup").attr("class"), $("#counted_items").val(), "recountRequest");
-                    location.reload();
-                  }
+                    if ($("#img_request_state").children("img").attr("title") == "Richiesto Conteggio") {
+                        warehouseCount($("#popup").attr("class"), $("#counted_items").val(), "countRequest");
+                        location.reload();
+                    } else if ($("#img_request_state").children("img").attr("title") == "Richiesta Riconta") {
+                        warehouseCount($("#popup").attr("class"), $("#counted_items").val(), "recountRequest");
+                        location.reload();
+                    }
                 } else {
-                  alert("I campi vuoti e i numeri negativi non sono accettati");
+                    alert("I campi vuoti e i numeri negativi non sono accettati");
                 }
-              });
+            });
 
-        const table_headers_strings = {
-          STATO: "requestState",
-          PRODOTTO: "productName",
-          VARIANTE: "productFlavour",
-          NOTE: "notes",
-          "DATA RICHIESTA": "requestDate",
-          "DATA SCADENZA": "dueDate",
-        };
-        const table_data_requester = new Requester((warehouseRequests) => {
-          table_maker(warehouseRequests.results, "request-table-container", table_headers_strings);
-          register_clicks();
-          $("#records_table").DataTable();
+            const table_headers_strings = {
+                STATO: "requestState",
+                PRODOTTO: "productName",
+                VARIANTE: "productFlavour",
+                NOTE: "notes",
+                "DATA RICHIESTA": "requestDate",
+                "DATA SCADENZA": "dueDate",
+            };
+            const table_data_requester = new Requester((warehouseRequests) => {
+                table_maker(warehouseRequests.results, "request-table-container", table_headers_strings);
+                register_clicks();
+                $("#records_table").DataTable();
+            });
+            table_data_requester.query({q_name: "warehouse_requests"});
         });
-        table_data_requester.query({q_name: "warehouse_requests"});
-      });
     </script>
-  </head>
-  <body>
-    <main role="main" class="container">
-      <!--  -->
-      <!-- Popup -->
-      <!--  -->
-      <div id="edit-popup" class="popup-container">
+</head>
+<body>
+<main class="container" role="main">
+    <!--  -->
+    <!-- Popup -->
+    <!--  -->
+    <div class="popup-container" id="edit-popup">
         <div id="popup">
-          <div class="card-section exit-button-wrapper">
-            <div class="card-header-title">Dettagli</div>
-            <div class="exit-button">&times;</div>
-          </div>
-          <div id="popup-data" class="card-section form-holder">
-            <!-- Product info -->
-            <div class="row">
-              <label class="col-1 col-form-label">Informazioni Prodotto</label>
-
-              <div class="row col-11">
-                <div class="form-group col-2 no-gutters">
-                  <label class="col-12 col-form-label" for="prod_code">Codice Prodotto</label>
-                  <div class="col-12">
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <div class="input-group-text"><i class="fa fa-barcode"></i></div>
-                      </div>
-                      <input id="prod_code" name="prod_code" type="text" class="form-control" aria-describedby="prod_codeHelpBlock" required="required" readonly />
-                    </div>
-                    <span id="prod_codeHelpBlock" class="form-text text-muted">Codice assegnato al prodotto</span>
-                  </div>
-                </div>
-                  <div class="form-group col-2 no-gutters">
-                      <label for="prod_variant" class="col-12 col-form-label">Variante Prodotto</label>
-                      <div class="col-12">
-                          <div class="input-group">
-                              <div class="input-group-prepend">
-                                  <div class="input-group-text">
-                                      <i class="fa fa-archive"></i>
-                                  </div>
-                              </div>
-                              <input id="prod_variant" name="prod_variant" type="text" class="form-control"
-                                     aria-describedby="prod_variantHelpBlock" required="required" readonly/>
-                          </div>
-                          <span id="prod_variantHelpBlock" class="form-text text-muted">Variante specifica dell'articolo selezionato</span>
-                      </div>
-                  </div>
-                  <div class="form-group col-8 no-gutters">
-                      <label class="col-12 col-form-label" for="prod_name">Descrizione Prodotto</label>
-                      <div class="col-12">
-                          <div class="input-group">
-                              <div class="input-group-prepend">
-                                  <div class="input-group-text"><i class="fa fa-tag"></i></div>
-                              </div>
-                              <input id="prod_name" name="prod_name" type="text" class="form-control"
-                                     aria-describedby="prod_nameHelpBlock" required="required" readonly/>
-                          </div>
-                          <span id="prod_nameHelpBlock" class="form-text text-muted">Descrizione del prodotto selezionato</span>
-                      </div>
-                  </div>
-              </div>
+            <div class="card-section exit-button-wrapper">
+                <div class="card-header-title">Dettagli</div>
+                <div class="exit-button">&times;</div>
             </div>
+            <div class="card-section form-holder" id="popup-data">
+                <!-- Product info -->
+                <div class="row">
+                    <label class="col-1 col-form-label">Informazioni Prodotto</label>
 
-            <!-- Notes -->
-            <div class="form-group row" style="margin-top: 13px !important">
-              <label for="notes" class="col-1 col-form-label">Note</label>
-              <div class="row col-11">
-                <div class="input-group">
-                  <textarea id="notes" name="notes" cols="20" rows="2" class="form-control" aria-describedby="notesHelpBlock" readonly></textarea>
-                </div>
-              </div>
-            </div>
-
-            <!-- Dates -->
-            <div class="row">
-              <label class="col-1 col-form-label">Date</label>
-              <div class="row col-11">
-                <div class="form-group col no-gutters">
-                  <label for="date_due" class="col-12 col-form-label">Data Scadenza [mm/dd/yyyy]</label>
-                  <div class="col-12">
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <div class="input-group-text">
-                          <i class="fa fa-calendar"></i>
-                        </div>
-                      </div>
-                      <input id="date_due" name="date_due" type="date" class="form-control" aria-describedby="date_dueHelpBlock" required="required" readonly />
-                    </div>
-                  </div>
-                </div>
-
-                <div class="form-group col no-gutters">
-                  <label for="date_creation" class="col-12 col-form-label">Data Creazione [mm/dd/yyyy]</label>
-                  <div class="col-12">
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <div class="input-group-text">
-                          <i class="fa fa-calendar"></i>
-                        </div>
-                      </div>
-                      <input id="date_creation" name="date_creation" type="text" aria-describedby="date_creationHelpBlock" required="required" class="form-control" readonly />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Expected Counts -->
-            <div class="row">
-              <label class="col-1 col-form-label">Conte</label>
-              <div class="row col-11">
-                <div class="form-group col no-gutters">
-                  <label for="expected_ground_count" class="col-12 col-form-label">A Terra</label>
-                  <div class="col-12">
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <div class="input-group-text">
-                          <i class="fa fa-refresh"></i>
-                        </div>
-                      </div>
-                      <input id="expected_ground_count" name="expected_ground_count" type="number" class="form-control" readonly />
-                    </div>
-                  </div>
-                </div>
-                <div class="form-group col no-gutters">
-                  <label class="col-11 col-form-label">Articoli Contati</label>
-                  <div class="row col-11">
-                    <div class="form-group col no-gutters">
-                      <div class="col-12">
-                        <div class="input-group">
-                          <div class="input-group-prepend">
-                            <div class="input-group-text">
-                              <i class="fa fa-bar-chart-o"></i>
+                    <div class="row col-11">
+                        <div class="form-group col-2 no-gutters">
+                            <label class="col-12 col-form-label" for="prod_code">Codice Prodotto</label>
+                            <div class="col-12">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text"><i class="fa fa-barcode"></i></div>
+                                    </div>
+                                    <input aria-describedby="prod_codeHelpBlock" class="form-control" id="prod_code" name="prod_code"
+                                           readonly required="required" type="text"/>
+                                </div>
+                                <span class="form-text text-muted"
+                                      id="prod_codeHelpBlock">Codice assegnato al prodotto</span>
                             </div>
-                          </div>
-                          <input id="counted_items" name="counted_items" type="number" class="form-control margin-5" aria-describedby="counted_itemsHelpBlock" required />
                         </div>
-                      </div>
+                        <div class="form-group col-2 no-gutters">
+                            <label class="col-12 col-form-label" for="prod_variant">Variante Prodotto</label>
+                            <div class="col-12">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="fa fa-archive"></i>
+                                        </div>
+                                    </div>
+                                    <input aria-describedby="prod_variantHelpBlock" class="form-control" id="prod_variant" name="prod_variant"
+                                           readonly required="required" type="text"/>
+                                </div>
+                                <span class="form-text text-muted" id="prod_variantHelpBlock">Variante specifica dell'articolo selezionato</span>
+                            </div>
+                        </div>
+                        <div class="form-group col-8 no-gutters">
+                            <label class="col-12 col-form-label" for="prod_name">Descrizione Prodotto</label>
+                            <div class="col-12">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text"><i class="fa fa-tag"></i></div>
+                                    </div>
+                                    <input aria-describedby="prod_nameHelpBlock" class="form-control" id="prod_name" name="prod_name"
+                                           readonly required="required" type="text"/>
+                                </div>
+                                <span class="form-text text-muted" id="prod_nameHelpBlock">Descrizione del prodotto selezionato</span>
+                            </div>
+                        </div>
                     </div>
-                  </div>
                 </div>
-              </div>
-            </div>
 
-            <div class="row col-12 justify-content-center" style="padding-top: 10px">
+                <!-- Notes -->
+                <div class="form-group row" style="margin-top: 13px !important">
+                    <label class="col-1 col-form-label" for="notes">Note</label>
+                    <div class="row col-11">
+                        <div class="input-group">
+                            <textarea aria-describedby="notesHelpBlock" class="form-control" cols="20" id="notes" name="notes"
+                                      readonly rows="2"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dates -->
+                <div class="row">
+                    <label class="col-1 col-form-label">Date</label>
+                    <div class="row col-11">
+                        <div class="form-group col no-gutters">
+                            <label class="col-12 col-form-label" for="date_due">Data Scadenza [mm/dd/yyyy]</label>
+                            <div class="col-12">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                    </div>
+                                    <input aria-describedby="date_dueHelpBlock" class="form-control" id="date_due" name="date_due"
+                                           readonly required="required" type="date"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col no-gutters">
+                            <label class="col-12 col-form-label" for="date_creation">Data Creazione [mm/dd/yyyy]</label>
+                            <div class="col-12">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                    </div>
+                                    <input aria-describedby="date_creationHelpBlock" class="form-control" id="date_creation"
+                                           name="date_creation" readonly
+                                           required="required" type="text"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Expected Counts -->
+                <div class="row">
+                    <label class="col-1 col-form-label">Conte</label>
+                    <div class="row col-11">
+                        <div class="form-group col no-gutters">
+                            <label class="col-12 col-form-label" for="expected_ground_count">A Terra</label>
+                            <div class="col-12">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="fa fa-refresh"></i>
+                                        </div>
+                                    </div>
+                                    <input class="form-control" id="expected_ground_count" name="expected_ground_count"
+                                           readonly type="number"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col no-gutters">
+                            <label class="col-11 col-form-label">Articoli Contati</label>
+                            <div class="row col-11">
+                                <div class="form-group col no-gutters">
+                                    <div class="col-12">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    <i class="fa fa-bar-chart-o"></i>
+                                                </div>
+                                            </div>
+                                            <input aria-describedby="counted_itemsHelpBlock" class="form-control margin-5" id="counted_items"
+                                                   name="counted_items"
+                                                   required type="number"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row col-12 justify-content-center" style="padding-top: 10px">
               <span style="text-align: center; font-weight: 800; font-size: 1.5rem"
-                >Location standard: <span id="productLocation" style="font-weight: 600; font-size: 1.8rem"></span
+              >Location standard: <span id="productLocation" style="font-weight: 600; font-size: 1.8rem"></span
               ></span>
-            </div>
+                </div>
 
-            <div class="row col-12 justify-content-center" style="padding-top: 10px">
-              <div class="col-10 form-group row col-12 margin-10">
-                <button name="update" class="styled-btn btn-blue" id="btn-count">Articoli Contati</button>
-              </div>
+                <div class="row col-12 justify-content-center" style="padding-top: 10px">
+                    <div class="col-10 form-group row col-12 margin-10">
+                        <button class="styled-btn btn-blue" id="btn-count" name="update">Articoli Contati</button>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
+    </div>
 
-      <!--  -->
-      <!-- Header -->
-      <!--  -->
-      <div class="header weight-800">Gestione Conteggi Operatore</div>
+    <!--  -->
+    <!-- Header -->
+    <!--  -->
+    <div class="header weight-800">Gestione Conteggi Operatore</div>
 
-      <div class="request-table" id="request-table-container"></div>
-    </main>
-  </body>
+    <div class="request-table" id="request-table-container"></div>
+</main>
+</body>
 </html>

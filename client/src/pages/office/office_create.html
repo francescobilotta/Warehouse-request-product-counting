@@ -2,14 +2,14 @@
 <html lang="it">
 <head>
     <title>Crea richesta</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-    <link rel="icon" href="../../assets/img/favicon.png"/>
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+    <link href="../../assets/img/favicon.png" rel="icon"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/css/selectize.bootstrap4.min.css"/>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" rel="stylesheet"/>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/css/selectize.bootstrap4.min.css"
+          rel="stylesheet"/>
 
     <link href="../../assets/css/common.css?1334423323" rel="stylesheet"/>
 
@@ -87,8 +87,7 @@
             document.product_flavour_requester = new Requester(function (result) {
                 if (!result.results.VARIANTE || !result.results.VARIANTE[0]) {
                     flavour_builder(['.'], "flavours-container");
-                }
-                else {
+                } else {
                     flavour_builder(result.results.VARIANTE, "flavours-container")
                 }
 
@@ -126,10 +125,10 @@
     </script>
 </head>
 <body>
-<main role="main" class="container">
+<main class="container" role="main">
     <div class="header weight-800">Crea Richesta<span class="blinker"></span></div>
     <div class="request-form">
-        <form class="form" role="form" id="create-form">
+        <form class="form" id="create-form" role="form">
             <div class="row">
                 <label class="col-1 col-form-label">Prodotto</label>
                 <div class="col">
@@ -137,20 +136,20 @@
                         <div class="form-group col no-gutters">
                             <label class="col-12 col-form-label" for="prod_code">Codice Prodotto</label>
                             <div class="col-12">
-                                <div style="margin-left: 0;" class="input-group">
-<!--                                    <div class="input-group-prepend">-->
-<!--                                        <div class="input-group-text"><i class="fa fa-tag"></i></div>-->
-<!--                                    </div>-->
-                                    <select id="prod_code" name="prod_code" class="form-control"
-                                            aria-describedby="prod_codeHelpBlock" required="required"></select>
+                                <div class="input-group" style="margin-left: 0;">
+                                    <!--                                    <div class="input-group-prepend">-->
+                                    <!--                                        <div class="input-group-text"><i class="fa fa-tag"></i></div>-->
+                                    <!--                                    </div>-->
+                                    <select aria-describedby="prod_codeHelpBlock" class="form-control" id="prod_code"
+                                            name="prod_code" required="required"></select>
                                 </div>
-                                <span id="prod_codeHelpBlock" class="form-text text-muted"
+                                <span class="form-text text-muted" id="prod_codeHelpBlock"
                                 >Inerisci i dati del prodotto e seleziona l'occorrenza corretta.</span
                                 >
                             </div>
                         </div>
                         <div class="form-group col no-gutters">
-                            <label for="prod_name" class="col-2 col-form-label">Prodotto</label>
+                            <label class="col-2 col-form-label" for="prod_name">Prodotto</label>
                             <div class="col-12">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -159,16 +158,17 @@
                                         </div>
                                     </div>
                                     <input
+                                            aria-describedby="prod_nameHelpBlock"
+                                            class="form-control"
                                             id="prod_name"
                                             name="prod_name"
-                                            type="text"
-                                            class="form-control"
-                                            aria-describedby="prod_nameHelpBlock"
-                                            required="required"
                                             readonly
+                                            required="required"
+                                            type="text"
                                     />
                                 </div>
-                                <span id="prod_nameHelpBlock" class="form-text text-muted">Descrizione del prodotto.</span>
+                                <span class="form-text text-muted"
+                                      id="prod_nameHelpBlock">Descrizione del prodotto.</span>
                             </div>
                         </div>
                     </div>
@@ -177,27 +177,27 @@
             </div>
 
             <div class="form-group row">
-                <label for="notes" class="col-1 col-form-label">Note</label>
+                <label class="col-1 col-form-label" for="notes">Note</label>
                 <div class="col-11">
-                    <textarea id="notes" name="notes" cols="40" rows="3" class="form-control"
-                              aria-describedby="notesHelpBlock"></textarea>
-                    <span id="notesHelpBlock" class="form-text text-muted">Aggiungi note alla richesta</span>
+                    <textarea aria-describedby="notesHelpBlock" class="form-control" cols="40" id="notes" name="notes"
+                              rows="3"></textarea>
+                    <span class="form-text text-muted" id="notesHelpBlock">Aggiungi note alla richesta</span>
                 </div>
             </div>
             <div class="form-group row">
                 <input
+                        aria-describedby="date_creationHelpBlock"
+                        class="form-control"
                         hidden
                         id="date_creation"
                         name="date_creation"
-                        type="text"
-                        aria-describedby="date_creationHelpBlock"
-                        required="required"
-                        class="form-control"
                         readonly
+                        required="required"
+                        type="text"
                 />
             </div>
             <div class="form-group row">
-                <label for="date_due" class="col-1 col-form-label">Data Scadenza</label>
+                <label class="col-1 col-form-label" for="date_due">Data Scadenza</label>
                 <div class="col-11">
                     <div class="input-group">
                         <div class="input-group-prepend">
@@ -206,21 +206,23 @@
                             </div>
                         </div>
                         <input
+                                aria-describedby="date_dueHelpBlock"
+                                class="form-control"
                                 id="date_due"
                                 name="date_due"
-                                type="date"
-                                class="form-control"
-                                aria-describedby="date_dueHelpBlock"
                                 required="required"
+                                type="date"
                         />
                     </div>
-                    <span id="date_dueHelpBlock" class="form-text text-muted">Data di scadenza della richiesta</span>
+                    <span class="form-text text-muted" id="date_dueHelpBlock">Data di scadenza della richiesta</span>
                 </div>
             </div>
 
             <div class="form-group row col-12 justify-content-evenly">
-                <button name="submit" type="submit" class="col-5 styled-btn btn-blue">Crea</button>
-                    <a name="submit" type="submit" class="col-5 styled-btn btn-red-dark text-align-center no-text-decoration" href="office_homepage.html">Indietro</a>
+                <button class="col-5 styled-btn btn-blue" name="submit" type="submit">Crea</button>
+                <a class="col-5 styled-btn btn-red-dark text-align-center no-text-decoration" href="office_homepage.html"
+                   name="submit"
+                   type="submit">Indietro</a>
             </div>
         </form>
     </div>

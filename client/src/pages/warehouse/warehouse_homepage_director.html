@@ -2,15 +2,15 @@
 <html lang="it">
 <head>
     <title>Gestione Conteggi</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-    <link rel="icon" href="../../assets/img/favicon.png"/>
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+    <link href="../../assets/img/favicon.png" rel="icon"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/css/selectize.bootstrap4.min.css"/>
-    <link rel="stylesheet" type="text/css"
-          href="https://cdn.datatables.net/v/bs5/jq-3.3.1/dt-1.10.25/datatables.min.css"/>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" rel="stylesheet"/>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/css/selectize.bootstrap4.min.css"
+          rel="stylesheet"/>
+    <link href="https://cdn.datatables.net/v/bs5/jq-3.3.1/dt-1.10.25/datatables.min.css" rel="stylesheet"
+          type="text/css"/>
 
     <link href="../../assets/css/common.css" rel="stylesheet"/>
 
@@ -19,8 +19,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/js/standalone/selectize.min.js"></script>
-    <script type="text/javascript"
-            src="https://cdn.datatables.net/v/bs5/jq-3.3.1/dt-1.10.25/datatables.min.js"></script>
+    <script src="https://cdn.datatables.net/v/bs5/jq-3.3.1/dt-1.10.25/datatables.min.js"
+            type="text/javascript"></script>
 
     <script src="../../assets/js/request.js"></script>
     <script src="../../assets/js/generators.js"></script>
@@ -175,35 +175,35 @@
                 }
             });
 
-        const table_headers_strings = {
-          STATO: "requestState",
-          PRODOTTO: "productName",
-          VARIANTE: "productFlavour",
-          NOTE: "notes",
-          "DATA RICHIESTA [dd/mm/yyyy]": "requestDate",
-          "DATA SCADENZA [dd/mm/yyyy]": "dueDate",
-        };
-        const table_data_requester = new Requester((warehouseRequests) => {
-          table_maker(warehouseRequests.results, "request-table-container", table_headers_strings);
-          register_clicks();
-          $("#records_table").DataTable();
+            const table_headers_strings = {
+                STATO: "requestState",
+                PRODOTTO: "productName",
+                VARIANTE: "productFlavour",
+                NOTE: "notes",
+                "DATA RICHIESTA [dd/mm/yyyy]": "requestDate",
+                "DATA SCADENZA [dd/mm/yyyy]": "dueDate",
+            };
+            const table_data_requester = new Requester((warehouseRequests) => {
+                table_maker(warehouseRequests.results, "request-table-container", table_headers_strings);
+                register_clicks();
+                $("#records_table").DataTable();
+            });
+            table_data_requester.query({q_name: "warehouse_requests"});
         });
-        table_data_requester.query({q_name: "warehouse_requests"});
-      });
     </script>
 </head>
 <body>
-<main role="main" class="container">
+<main class="container" role="main">
     <!--  -->
     <!-- Popup -->
     <!--  -->
-    <div id="edit-popup" class="popup-container">
+    <div class="popup-container" id="edit-popup">
         <div id="popup">
             <div class="card-section exit-button-wrapper">
                 <div class="card-header-title">Dettagli</div>
                 <div class="exit-button">&times;</div>
             </div>
-            <div id="popup-data" class="card-section form-holder">
+            <div class="card-section form-holder" id="popup-data">
                 <!-- Product info -->
                 <div class="row">
                     <label class="col-1 col-form-label">Informazioni Prodotto</label>
@@ -216,16 +216,16 @@
                                     <div class="input-group-prepend">
                                         <div class="input-group-text"><i class="fa fa-barcode"></i></div>
                                     </div>
-                                    <input id="prod_code" name="prod_code" type="text" class="form-control"
-                                           aria-describedby="prod_codeHelpBlock" required="required" readonly/>
+                                    <input aria-describedby="prod_codeHelpBlock" class="form-control" id="prod_code" name="prod_code"
+                                           readonly required="required" type="text"/>
                                 </div>
-                                <span id="prod_codeHelpBlock"
-                                      class="form-text text-muted">Codice assegnato al prodotto</span>
+                                <span class="form-text text-muted"
+                                      id="prod_codeHelpBlock">Codice assegnato al prodotto</span>
                             </div>
                         </div>
 
                         <div class="form-group col-2 no-gutters">
-                            <label for="prod_variant" class="col-12 col-form-label">Variante Prodotto</label>
+                            <label class="col-12 col-form-label" for="prod_variant">Variante Prodotto</label>
                             <div class="col-12">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -233,10 +233,10 @@
                                             <i class="fa fa-archive"></i>
                                         </div>
                                     </div>
-                                    <input id="prod_variant" name="prod_variant" type="text" class="form-control"
-                                           aria-describedby="prod_variantHelpBlock" required="required" readonly/>
+                                    <input aria-describedby="prod_variantHelpBlock" class="form-control" id="prod_variant" name="prod_variant"
+                                           readonly required="required" type="text"/>
                                 </div>
-                                <span id="prod_variantHelpBlock" class="form-text text-muted">Variante specifica dell'articolo selezionato</span>
+                                <span class="form-text text-muted" id="prod_variantHelpBlock">Variante specifica dell'articolo selezionato</span>
                             </div>
                         </div>
                         <div class="form-group col-8 no-gutters">
@@ -246,10 +246,10 @@
                                     <div class="input-group-prepend">
                                         <div class="input-group-text"><i class="fa fa-tag"></i></div>
                                     </div>
-                                    <input id="prod_name" name="prod_name" type="text" class="form-control"
-                                           aria-describedby="prod_nameHelpBlock" required="required" readonly/>
+                                    <input aria-describedby="prod_nameHelpBlock" class="form-control" id="prod_name" name="prod_name"
+                                           readonly required="required" type="text"/>
                                 </div>
-                                <span id="prod_nameHelpBlock" class="form-text text-muted">Descrizione del prodotto selezionato</span>
+                                <span class="form-text text-muted" id="prod_nameHelpBlock">Descrizione del prodotto selezionato</span>
                             </div>
                         </div>
                     </div>
@@ -257,11 +257,11 @@
 
                 <!-- Notes -->
                 <div class="form-group row" style="margin-top: 13px !important">
-                    <label for="notes" class="col-1 col-form-label">Note</label>
+                    <label class="col-1 col-form-label" for="notes">Note</label>
                     <div class="row col-11">
                         <div class="input-group">
-                            <textarea id="notes" name="notes" cols="20" rows="2" class="form-control"
-                                      aria-describedby="notesHelpBlock" readonly></textarea>
+                            <textarea aria-describedby="notesHelpBlock" class="form-control" cols="20" id="notes" name="notes"
+                                      readonly rows="2"></textarea>
                         </div>
                     </div>
                 </div>
@@ -271,7 +271,7 @@
                     <label class="col-1 col-form-label">Date</label>
                     <div class="row col-11">
                         <div class="form-group col no-gutters">
-                            <label for="date_due" class="col-12 col-form-label">Data Scadenza [mm/dd/yyyy]</label>
+                            <label class="col-12 col-form-label" for="date_due">Data Scadenza [mm/dd/yyyy]</label>
                             <div class="col-12">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -279,14 +279,14 @@
                                             <i class="fa fa-calendar"></i>
                                         </div>
                                     </div>
-                                    <input id="date_due" name="date_due" type="date" class="form-control"
-                                           aria-describedby="date_dueHelpBlock" required="required" readonly/>
+                                    <input aria-describedby="date_dueHelpBlock" class="form-control" id="date_due" name="date_due"
+                                           readonly required="required" type="date"/>
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-group col no-gutters">
-                            <label for="date_creation" class="col-12 col-form-label">Data Creazione [mm/dd/yyyy]</label>
+                            <label class="col-12 col-form-label" for="date_creation">Data Creazione [mm/dd/yyyy]</label>
                             <div class="col-12">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -294,9 +294,9 @@
                                             <i class="fa fa-calendar"></i>
                                         </div>
                                     </div>
-                                    <input id="date_creation" name="date_creation" type="text"
-                                           aria-describedby="date_creationHelpBlock" required="required"
-                                           class="form-control" readonly/>
+                                    <input aria-describedby="date_creationHelpBlock" class="form-control" id="date_creation"
+                                           name="date_creation" readonly
+                                           required="required" type="text"/>
                                 </div>
                             </div>
                         </div>
@@ -308,7 +308,7 @@
                     <label class="col-1 col-form-label">Conteggi</label>
                     <div class="row col-11">
                         <div class="form-group col no-gutters">
-                            <label for="expected_count" class="col-12 col-form-label">Previsti Totali</label>
+                            <label class="col-12 col-form-label" for="expected_count">Previsti Totali</label>
                             <div class="col-12">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -316,14 +316,14 @@
                                             <i class="fa fa-bar-chart-o"></i>
                                         </div>
                                     </div>
-                                    <input id="expected_count" name="expected_count" type="number" class="form-control"
-                                           aria-describedby="expected_countHelpBlock" readonly/>
+                                    <input aria-describedby="expected_countHelpBlock" class="form-control" id="expected_count" name="expected_count"
+                                           readonly type="number"/>
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-group col no-gutters">
-                            <label for="expected_ground_count" class="col-12 col-form-label">A Terra</label>
+                            <label class="col-12 col-form-label" for="expected_ground_count">A Terra</label>
                             <div class="col-12">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -331,8 +331,8 @@
                                             <i class="fa fa-refresh"></i>
                                         </div>
                                     </div>
-                                    <input id="expected_ground_count" name="expected_ground_count" type="number"
-                                           class="form-control" readonly/>
+                                    <input class="form-control" id="expected_ground_count" name="expected_ground_count"
+                                           readonly type="number"/>
                                 </div>
                             </div>
                         </div>
@@ -346,9 +346,9 @@
                                             <i class="fa fa-bar-chart-o"></i>
                                         </div>
                                     </div>
-                                    <input id="counted_items" name="counted_items" type="number"
-                                           class="form-control margin-5" aria-describedby="counted_itemsHelpBlock"
-                                           required/>
+                                    <input aria-describedby="counted_itemsHelpBlock" class="form-control margin-5" id="counted_items"
+                                           name="counted_items" required
+                                           type="number"/>
                                 </div>
                             </div>
                         </div>
@@ -362,7 +362,7 @@
                 </div>
                 <div class="row col-12 justify-content-center" style="padding-top: 10px">
                     <div class="col-10 form-group row col-12 margin-10">
-                        <button name="update" class="styled-btn btn-blue" id="btn-count">Articoli Contati</button>
+                        <button class="styled-btn btn-blue" id="btn-count" name="update">Articoli Contati</button>
                     </div>
                 </div>
             </div>

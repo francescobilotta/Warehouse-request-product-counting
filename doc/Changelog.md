@@ -1,9 +1,13 @@
 ## 1. [Project setup]
 
-####- Created database connection
-####- Applied bootstrap template
-####- Created the basic structure of the table
-####- Added jQuery bindings
+#### - Created database connection
+
+#### - Applied bootstrap template
+
+#### - Created the basic structure of the table
+
+#### - Added jQuery bindings
+
 ![Project setup](changelog_images/1_1.png)<br/>
 _image of project setup_<br/><br/>
 ![Structure](changelog_images/1_2.png)<br/>
@@ -13,8 +17,10 @@ _structured file_<br/><br/>
 
 ## 2. [UI Design]
 
-####- Created style of each page
-####- Preview photos can be found in doc/UI
+#### - Created style of each page
+
+#### - Preview photos can be found in doc/UI
+
 ![Office view](UI/3_1.png)<br/>
 _Office view_<br/><br/>
 ![Warehouse view - Director](UI/3_2.png)<br/>
@@ -26,8 +32,10 @@ _Warehouse view - Operator_<br/><br/>
 
 ## 3. [Project structure]
 
-####- Created each page very basically and linked them to each css resource
-####- Fixed error in Changelog.md
+#### - Created each page very basically and linked them to each css resource
+
+#### - Fixed error in Changelog.md
+
 ![Project structure](changelog_images/3.png)<br/>
 _Project structure_<br/><br/>
 
@@ -35,10 +43,14 @@ _Project structure_<br/><br/>
 
 ## 4. [Backend data visualization + Change in database entries names + Changes in Changelog.md]
 
-####- Created each table in each page and added data retrieval processes
-####- Cleaned up some code and fixed some typos
-####- Changed lastCount, newCount in DB into respectively previousCount, lastCount
-####- Added dividers in Changelog.md
+#### - Created each table in each page and added data retrieval processes
+
+#### - Cleaned up some code and fixed some typos
+
+#### - Changed lastCount, newCount in DB into respectively previousCount, lastCount
+
+#### - Added dividers in Changelog.md
+
 ![Office homepage](changelog_images/4_1_1-Office-homepage.png)<br/>
 _Office homepage_<br/><br/>
 ![Office update](changelog_images/4_1_2-Office-update.png)<br/>
@@ -54,16 +66,18 @@ _Warehouse update operator_<br/><br/>
 
 ## 5. [Getting ready to create the API]
 
-####- Moved src folder in client folder
-####- Created API folder
-####- Renamed diagrams
+#### - Moved src folder in client folder
+
+#### - Created API folder
+
+#### - Renamed diagrams
 
 ![Getting ready to create the API](changelog_images/5.png)<br/>
 _Getting ready to create the API_<br/><br/>
 
 ## 6. [API designed + Example script]
 
-####- Designed API and created example script
+#### - Designed API and created example script
 
 ![Whole System + Example](API/6.png)<br/>
 _Whole System + Example_<br/><br/>
@@ -78,38 +92,44 @@ _Example_<br/><br/>
 
 ## 6.1 [API designed + Example script] UPDATED
 
-####- Added type field into db_name.db.json
+#### - Added type field into db_name.db.json
 
 ## 7. [Working API]
 
-####- Fixed a little bug and then the API worked with a test query
+#### - Fixed a little bug and then the API worked with a test query
+
 ![Working API](changelog_images/7.png)<br/>
 _Working API_<br/><br/>
 
 ## 8. [First use of API from client]
 
-####- Fixed some bugs
-####- Added real time updates
-####- Linked API to client
+#### - Fixed some bugs
+
+#### - Added real time updates
+
+#### - Linked API to client
+
 ![First use of API from client](changelog_images/8_1.png)<br/>
 _First use of API from client_<br/><br/>
 
 ## 9. [Worked on API]
 
-####- Added possibility to use queries with variables from API
-####- Added error handlers
+#### - Added possibility to use queries with variables from API
+
+#### - Added error handlers
 
 ## 10. [Created icons]
 
-####- Created icons for requestState
+#### - Created icons for requestState
 
 ![Icons in Inkscape](changelog_images/10.png)<br/>
 _Icons in Inkscape_<br/><br/>
 
 ## 11. [Website styled]
 
-####- Created style for website
-####- Still working on double-click popup form for requestDetails
+#### - Created style for website
+
+#### - Still working on double-click popup form for requestDetails
 
 ![Website style 1/2](changelog_images/11_1.png)<br/>
 _Website style 1/2_<br/><br/>
@@ -118,7 +138,7 @@ _Website style 2/2_<br/><br/>
 
 ## 12. [Popup created and styled]
 
-####- Completely finished to style the popup
+#### - Completely finished to style the popup
 
 ![Popup created and styled](changelog_images/12.png)<br/>
 _Popup created and styled_<br/><br/>
@@ -127,7 +147,7 @@ _Popup created and styled_<br/><br/>
 
 ## 13. [Finished UI Warehouse + Office]
 
-####- Completely finished to style the popup
+#### - Completely finished to style the popup
 
 ![Office 1/3](changelog_images/13_1.png)<br/>
 _Office 1/3_<br/><br/>
