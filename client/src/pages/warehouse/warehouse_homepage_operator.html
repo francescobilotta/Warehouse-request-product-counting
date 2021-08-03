@@ -185,27 +185,14 @@
             <div class="exit-button">&times;</div>
           </div>
           <div id="popup-data" class="card-section form-holder">
-            <!-- Request info -->
-            <div class="form-group row">
-              <label class="col-1 col-form-label">Request Id</label>
-              <!--              <label for="req_id" class="col-1 col-form-label">Request Id</label>-->
-              <div class="row col-11">
-                <div class="input-group">
-                  <div class="input-group-prepend" id="request_state"></div>
-                  <!--                  <input id="req_id" name="req_id" type="text" class="form-control" aria-describedby="req_idHelpBlock" required="required" readonly />-->
-                </div>
-                <!--                <span id="req_idHelpBlock" class="form-text text-muted">Assigned id to the current request</span>-->
-              </div>
-            </div>
-
             <!-- Product info -->
             <div class="row">
               <label class="col-1 col-form-label">Product Info</label>
 
               <div class="row col-11">
-                <div class="form-group col no-gutters">
-                  <label class="col-12 col-form-label" for="prod_code">Product Code</label>
-                  <div class="col-12">
+                <div class="form-group col">
+                  <label class="col col-form-label" for="prod_code">Product Code</label>
+                  <div class="col">
                     <div class="input-group">
                       <div class="input-group-prepend">
                         <div class="input-group-text"><i class="fa fa-barcode"></i></div>
@@ -216,22 +203,9 @@
                   </div>
                 </div>
 
-                <div class="form-group col no-gutters">
-                  <label class="col-12 col-form-label" for="prod_name">Product Name</label>
-                  <div class="col-12">
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <div class="input-group-text"><i class="fa fa-tag"></i></div>
-                      </div>
-                      <input id="prod_name" name="prod_name" type="text" class="form-control" aria-describedby="prod_nameHelpBlock" required="required" readonly />
-                    </div>
-                    <span id="prod_nameHelpBlock" class="form-text text-muted">Descriptive product name</span>
-                  </div>
-                </div>
-
-                <div class="form-group col no-gutters">
-                  <label for="prod_variant" class="col-12 col-form-label">Product flavour</label>
-                  <div class="col-12">
+                <div class="form-group col">
+                  <label for="prod_variant" class="col col-form-label">Product flavour</label>
+                  <div class="col">
                     <div class="input-group">
                       <div class="input-group-prepend">
                         <div class="input-group-text">
@@ -241,6 +215,19 @@
                       <input id="prod_variant" name="prod_variant" type="text" class="form-control" aria-describedby="prod_variantHelpBlock" required="required" readonly />
                     </div>
                     <span id="prod_variantHelpBlock" class="form-text text-muted">The specific variant of this product</span>
+                  </div>
+                </div>
+
+                <div class="form-group col">
+                  <label class="col col-form-label" for="prod_name">Product Name</label>
+                  <div class="col">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text"><i class="fa fa-tag"></i></div>
+                      </div>
+                      <input id="prod_name" name="prod_name" type="text" class="form-control" aria-describedby="prod_nameHelpBlock" required="required" readonly />
+                    </div>
+                    <span id="prod_nameHelpBlock" class="form-text text-muted">Descriptive product name</span>
                   </div>
                 </div>
               </div>

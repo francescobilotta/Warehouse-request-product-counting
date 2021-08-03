@@ -1,7 +1,5 @@
 Operation,Priority
-Aggiungi ready to be shipped in operatore,9
 Update sempre disponibile in modifica,7
-Warehouse director non vede expected count (sempre 0),9
 Traduzione,8
 Integra con rubrica. Titolo: "Gestione Conteggi",1
 Togliere tutti i log di debug,2
