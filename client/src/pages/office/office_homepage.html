@@ -4,22 +4,21 @@
         <title>Gestione Conteggi</title>
         <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport" />
 
-    <link href="../../assets/img/favicon.png" rel="icon"/>
-    <link href="../../assets/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="../../assets/css/bootstrap-theme.min.css" rel="stylesheet"/>
-    <link href="../../assets/css/font-awesome.min.css" rel="stylesheet"/>
-    <link href="../../assets/css/selectize.bootstrap4.min.css" rel="stylesheet"/>
-    <link href="../../assets/css/datatables.min.css" rel="stylesheet"/>
+        <link href="../../assets/img/favicon.png" rel="icon" />
+        <link href="../../assets/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../../assets/css/bootstrap-theme.min.css" rel="stylesheet" />
+        <link href="../../assets/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="../../assets/css/selectize.bootstrap4.min.css" rel="stylesheet" />
+        <link href="../../assets/css/datatables.min.css" rel="stylesheet" />
 
-    <link href="../../assets/css/common.css" rel="stylesheet"/>
+        <link href="../../assets/css/common.css" rel="stylesheet" />
 
+        <script src="../../assets/js/jquery.min.js"></script>
 
-    <script src="../../assets/js/jquery.min.js"></script>
-
-    <script src="../../assets/js/bootstrap.bundle.min.js"></script>
-    <script src="../../assets/js/jquery-ui.min.js"></script>
-    <script src="../../assets/js/selectize.min.js"></script>
-    <script src="../../assets/js/datatables.min.js"></script>
+        <script src="../../assets/js/bootstrap.bundle.min.js"></script>
+        <script src="../../assets/js/jquery-ui.min.js"></script>
+        <script src="../../assets/js/selectize.min.js"></script>
+        <script src="../../assets/js/datatables.min.js"></script>
 
         <script src="../../assets/js/request.js"></script>
         <script src="../../assets/js/generators.js"></script>
@@ -69,28 +68,22 @@
                         switch (result.results[0].requestState) {
                             case "countRequest":
                                 append_img_request_state("request_state", "../../assets/img/countRequest.png", image_size, "Richiesto Conteggio");
-                                $("#notes").attr("readonly", true);
-                                $("#date_due").attr("readonly", true);
+                                $("#btn-update").show();
                                 $("#btn-close").show();
                                 break;
                             case "countDone":
                                 append_img_request_state("request_state", "../../assets/img/countDone.png", image_size, "Conteggio Effettuato");
-                                $("#notes").attr("readonly", false);
-                                $("#date_due").attr("readonly", false);
                                 $("#btn-update").show();
                                 $("#btn-close").show();
                                 $("#btn-recount").show();
                                 break;
                             case "recountRequest":
                                 append_img_request_state("request_state", "../../assets/img/recountRequest.png", image_size, "Richiesta Riconta");
-                                $("#notes").attr("readonly", true);
-                                $("#date_due").attr("readonly", true);
+                                $("#btn-update").show();
                                 $("#btn-close").show();
                                 break;
                             case "recountDone":
                                 append_img_request_state("request_state", "../../assets/img/recountDone.png", image_size, "Riconta Effettuata");
-                                $("#notes").attr("readonly", false);
-                                $("#date_due").attr("readonly", false);
                                 $("#btn-update").show();
                                 $("#btn-close").show();
                                 $("#btn-recount").show();
@@ -282,7 +275,7 @@
                             <div class="row col-12">
                                 <label class="col-1 col-form-label" for="notes">Note</label>
                                 <div class="input-group">
-                                    <textarea aria-describedby="notesHelpBlock" class="form-control" cols="20" id="notes" name="notes" readonly rows="2"></textarea>
+                                    <textarea aria-describedby="notesHelpBlock" class="form-control" cols="20" id="notes" name="notes" rows="2"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -299,15 +292,7 @@
                                                     <i class="fa fa-calendar"></i>
                                                 </div>
                                             </div>
-                                            <input
-                                                aria-describedby="date_dueHelpBlock"
-                                                class="form-control"
-                                                id="date_due"
-                                                name="date_due"
-                                                readonly
-                                                required="required"
-                                                type="date"
-                                            />
+                                            <input aria-describedby="date_dueHelpBlock" class="form-control" id="date_due" name="date_due" required="required" type="date" />
                                         </div>
                                     </div>
                                 </div>
