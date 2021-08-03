@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="it">
   <head>
-    <title>Warehouse count asker</title>
+    <title>Gestione Conteggi</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <link rel="icon" href="../../assets/img/favicon.png" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" />
@@ -25,152 +25,156 @@
     <script src="../../assets/js/append_img_request_state.js"></script>
     <script src="../../assets/js/queries.js"></script>
     <script>
-      function make_editable(element) {
-        $("#edit-popup").show();
-        $("#popup").removeClass();
-        $("#popup").addClass(element.attr("id"));
+            function make_editable(element) {
+              $("#edit-popup").show();
+              $("#popup").removeClass();
+              $("#popup").addClass(element.attr("id"));
 
-        //For popup
-        const table_data_requester = new Requester(function (warehouseRequestsDetails) {
-          //Get today data
-          const now = new Date();
-          const day = ("0" + now.getDate()).slice(-2);
-          const month = ("0" + (now.getMonth() + 1)).slice(-2);
-          const today = now.getFullYear() + "-" + month + "-" + day;
-          var image_size = "40px";
-          //Format dates
-          var creationDate = warehouseRequestsDetails.results[0].requestDate.replace(" 00:00:00", "");
-          creationDate = creationDate.split("-")[1] + "-" + creationDate.split("-")[2] + "-" + creationDate.split("-")[0];
-          //Product Info
-          $("#prod_code").val(warehouseRequestsDetails.results[0].productCode);
-          $("#prod_name").val(warehouseRequestsDetails.results[0].productName);
-          $("#prod_variant").val(warehouseRequestsDetails.results[0].productFlavour);
-          $("#notes").val(warehouseRequestsDetails.results[0].notes);
-          $("#date_due").val(warehouseRequestsDetails.results[0].dueDate.split(" ")[0]).attr({
-            min: today,
-          });
-          $("#date_creation").val(creationDate);
-          //EXPECTED GROUND COUNT
-          const expected_ground_count_requester = new Requester(function (expectedGroundCount) {
-            const arrayOfGroundCount = expectedGroundCount.results.PRELEVATO;
-            let sumOfGroundCount = arrayOfGroundCount ? arrayOfGroundCount.reduce((a, b) => Number(a) + Number(b), 0) : 0;
-            if (arrayOfGroundCount) {
-              $("#expected_ground_count").val(sumOfGroundCount);
-            } else {
-              $("#expected_ground_count").val(0);
+              //For popup
+              const table_data_requester = new Requester(function (warehouseRequestsDetails) {
+                //Get today data
+                const now = new Date();
+                const day = ("0" + now.getDate()).slice(-2);
+                const month = ("0" + (now.getMonth() + 1)).slice(-2);
+                const today = now.getFullYear() + "-" + month + "-" + day;
+                const image_size = "40px";
+                //Format dates
+      <<<<<<< HEAD
+                var creationDate = warehouseRequestsDetails.results[0].requestDate.replace(" 00:00:00", "");
+      =======
+                let creationDate = result.results[0].requestDate.replace(" 00:00:00", "");
+      >>>>>>> 6e4afbcd8912c8e1329e12ba6cab0e58573ef46a
+                creationDate = creationDate.split("-")[1] + "-" + creationDate.split("-")[2] + "-" + creationDate.split("-")[0];
+                //Product Info
+                $("#prod_code").val(warehouseRequestsDetails.results[0].productCode);
+                $("#prod_name").val(warehouseRequestsDetails.results[0].productName);
+                $("#prod_variant").val(warehouseRequestsDetails.results[0].productFlavour);
+                $("#notes").val(warehouseRequestsDetails.results[0].notes);
+                $("#date_due").val(warehouseRequestsDetails.results[0].dueDate.split(" ")[0]).attr({
+                  min: today,
+                });
+                $("#date_creation").val(creationDate);
+                //EXPECTED GROUND COUNT
+                const expected_ground_count_requester = new Requester(function (expectedGroundCount) {
+                  const arrayOfGroundCount = expectedGroundCount.results.PRELEVATO;
+                  let sumOfGroundCount = arrayOfGroundCount ? arrayOfGroundCount.reduce((a, b) => Number(a) + Number(b), 0) : 0;
+                  if (arrayOfGroundCount) {
+                    $("#expected_ground_count").val(sumOfGroundCount);
+                  } else {
+                    $("#expected_ground_count").val(0);
+                  }
+                });
+                expected_ground_count_requester.query({
+                  q_name: "warehouse_expected_ground_count",
+                  q_data: {
+                    "d.lastYear": now.getFullYear() - 1,
+                    "d.currentYear": now.getFullYear(),
+                    "f.productCode": warehouseRequestsDetails.results[0].productCode,
+                    "f.productFlavour": warehouseRequestsDetails.results[0].productFlavour,
+                  },
+                });
+                //EXPECTED LOCATION
+                const expected_location = new Requester(function (warehouseGetProductLocation) {
+                  if (
+                    !(
+                      warehouseGetProductLocation.results.ALTEZZA[0] ||
+                      warehouseGetProductLocation.results.CORRIDOIO[0] ||
+                      warehouseGetProductLocation.results.TRAVERSA[0] ||
+                      warehouseGetProductLocation.results.ZONA[0]
+                    )
+                  ) {
+                    $("#productLocation").text("No location found!");
+                  } else {
+                    $("#productLocation").text(
+                      `${warehouseGetProductLocation.results.ZONA[0]} ${warehouseGetProductLocation.results.CORRIDOIO[0]} ${warehouseGetProductLocation.results.TRAVERSA[0]} ${warehouseGetProductLocation.results.ALTEZZA[0]}`
+                    );
+                  }
+                });
+                expected_location.query({
+                  q_name: "warehouse_get_product_location",
+                  q_data: {
+                    "f.productCode": warehouseRequestsDetails.results[0].productCode,
+                    "f.productFlavour": warehouseRequestsDetails.results[0].productFlavour,
+                  },
+                });
+
+                //Hide all buttons before selecting which to show counted_items
+                $("#btn-count").hide();
+
+                //RequestState
+                $("#req_id").val(element.attr("id"));
+                switch (warehouseRequestsDetails.results[0].requestState) {
+                  case "countRequest":
+                    append_img_request_state("request_state", "../../assets/img/countRequest.png", image_size, "Richiesto Conteggio");
+                    $("#btn-count").show();
+                    break;
+                  case "recountRequest":
+                    append_img_request_state("request_state", "../../assets/img/recountRequest.png", image_size, "Richiesta Riconta");
+                    $("#btn-count").show();
+                    break;
+                  default:
+                }
+              });
+              table_data_requester.query({
+                q_name: "warehouse_requests_details",
+                q_data: {
+                  "f.requestId": element.attr("id"),
+                },
+              });
             }
-          });
-          expected_ground_count_requester.query({
-            q_name: "warehouse_expected_ground_count",
-            q_data: {
-              "d.lastYear": now.getFullYear() - 1,
-              "d.currentYear": now.getFullYear(),
-              "f.productCode": warehouseRequestsDetails.results[0].productCode,
-              "f.productFlavour": warehouseRequestsDetails.results[0].productFlavour,
-            },
-          });
-          //EXPECTED LOCATION
-          const expected_location = new Requester(function (warehouseGetProductLocation) {
-            if (
-              !(
-                warehouseGetProductLocation.results.ALTEZZA[0] ||
-                warehouseGetProductLocation.results.CORRIDOIO[0] ||
-                warehouseGetProductLocation.results.TRAVERSA[0] ||
-                warehouseGetProductLocation.results.ZONA[0]
-              )
-            ) {
-              $("#productLocation").text("No location found!");
-            } else {
-              $("#productLocation").text(
-                `${warehouseGetProductLocation.results.ZONA[0]} ${warehouseGetProductLocation.results.CORRIDOIO[0]} ${warehouseGetProductLocation.results.TRAVERSA[0]} ${warehouseGetProductLocation.results.ALTEZZA[0]}`
-              );
+
+            function register_clicks() {
+              $(".table-row").click(function (e) {
+                make_editable($(this));
+              });
+
+              $("#edit-popup").click(function (e) {
+                if (e.target === this) {
+                  $(this).hide();
+                }
+              });
+
+              $(".exit-button").click(function (e) {
+                if (e.target === this) {
+                  $("#edit-popup").hide();
+                }
+              });
             }
-          });
-          expected_location.query({
-            q_name: "warehouse_get_product_location",
-            q_data: {
-              "f.productCode": warehouseRequestsDetails.results[0].productCode,
-              "f.productFlavour": warehouseRequestsDetails.results[0].productFlavour,
-            },
-          });
 
-          //Hide all buttons before selecting which to show counted_items
-          $("#btn-count").hide();
+            //Get table data
+            $(document).ready(function () {
+              $("#edit-popup").hide();
 
-          //RequestState
-          $("#req_id").val(element.attr("id"));
-          switch (warehouseRequestsDetails.results[0].requestState) {
-            case "countRequest":
-              append_img_request_state("request_state", "../../assets/img/countRequest.png", image_size, "Asked for count");
-              $("#btn-count").show();
-              break;
-            case "recountRequest":
-              append_img_request_state("request_state", "../../assets/img/recountRequest.png", image_size, "Asked for recount");
-              $("#btn-count").show();
-              break;
-            default:
-          }
-        });
-        table_data_requester.query({
-          q_name: "warehouse_requests_details",
-          q_data: {
-            "f.requestId": element.attr("id"),
-          },
-        });
-      }
+              $("#btn-count").click((e) => {
+                if ($.isNumeric($("#counted_items").val()) && $("#counted_items").val() > 0) {
+                  if ($("#img_request_state").children("img").attr("title") == "Richiesto Conteggio") {
+                    warehouseCount($("#popup").attr("class"), $("#counted_items").val(), "countRequest");
+                    location.reload();
+                  } else if ($("#img_request_state").children("img").attr("title") == "Richiesta Riconta") {
+                    warehouseCount($("#popup").attr("class"), $("#counted_items").val(), "recountRequest");
+                    location.reload();
+                  }
+                } else {
+                  alert("I campi vuoti e i numeri negativi non sono accettati");
+                }
+              });
 
-      function register_clicks() {
-        $(".table-row").click(function (e) {
-          make_editable($(this));
-        });
-
-        $("#edit-popup").click(function (e) {
-          if (e.target === this) {
-            $(this).hide();
-          }
-        });
-
-        $(".exit-button").click(function (e) {
-          if (e.target === this) {
-            $("#edit-popup").hide();
-          }
-        });
-      }
-
-      //Get table data
-      $(document).ready(function () {
-        $("#edit-popup").hide();
-
-        $("#btn-count").click((e) => {
-          if ($.isNumeric($("#counted_items").val()) && $("#counted_items").val() > 0) {
-            if ($("#img_request_state").children("img").attr("title") == "Asked for count") {
-              warehouseCount($("#popup").attr("class"), $("#counted_items").val(), "countRequest");
-              location.reload();
-            } else if ($("#img_request_state").children("img").attr("title") == "Asked for recount") {
-              warehouseCount($("#popup").attr("class"), $("#counted_items").val(), "recountRequest");
-              location.reload();
-            }
-          } else {
-            alert("No empty fields or negatives numbers are accepted");
-          }
-        });
-
-        const table_headers_strings = {
-          STATUS: "requestState",
-          PRODUCT: "productName",
-          FLAVOUR: "productFlavour",
-          NOTES: "notes",
-          "REQUEST DATE": "requestDate",
-          "DUE DATE": "dueDate",
-          "READY TO BE SHIPPED": "expectedGroundCount",
-        };
-        const table_data_requester = new Requester((warehouseRequests) => {
-          table_maker(warehouseRequests.results, "request-table-container", table_headers_strings);
-          register_clicks();
-          $("#records_table").DataTable();
-        });
-        table_data_requester.query({q_name: "warehouse_requests"});
-      });
+              const table_headers_strings = {
+                STATO: "requestState",
+                PRODOTTO: "productName",
+                VARIANTE: "productFlavour",
+                NOTE: "notes",
+                "DATA RICHIESTA": "requestDate",
+                "DATA SCADENZA": "dueDate",
+                "A TERRA": "expectedGroundCount",
+              };
+              const table_data_requester = new Requester((warehouseRequests) => {
+                table_maker(warehouseRequests.results, "request-table-container", table_headers_strings);
+                register_clicks();
+                $("#records_table").DataTable();
+              });
+              table_data_requester.query({q_name: "warehouse_requests"});
+            });
     </script>
   </head>
   <body>
@@ -181,31 +185,31 @@
       <div id="edit-popup" class="popup-container">
         <div id="popup">
           <div class="card-section exit-button-wrapper">
-            <div class="card-header-title">Details</div>
+            <div class="card-header-title">Dettagli</div>
             <div class="exit-button">&times;</div>
           </div>
           <div id="popup-data" class="card-section form-holder">
             <!-- Product info -->
             <div class="row">
-              <label class="col-1 col-form-label">Product Info</label>
+              <label class="col-1 col-form-label">Informazioni Prodotto</label>
 
               <div class="row col-11">
-                <div class="form-group col">
-                  <label class="col col-form-label" for="prod_code">Product Code</label>
-                  <div class="col">
+                <div class="form-group col no-gutters">
+                  <label class="col-12 col-form-label" for="prod_code">Codice Prodotto</label>
+                  <div class="col-12">
                     <div class="input-group">
                       <div class="input-group-prepend">
                         <div class="input-group-text"><i class="fa fa-barcode"></i></div>
                       </div>
                       <input id="prod_code" name="prod_code" type="text" class="form-control" aria-describedby="prod_codeHelpBlock" required="required" readonly />
                     </div>
-                    <span id="prod_codeHelpBlock" class="form-text text-muted">Code assigned to the product</span>
+                    <span id="prod_codeHelpBlock" class="form-text text-muted">Codice assegnato al prodotto</span>
                   </div>
                 </div>
 
-                <div class="form-group col">
-                  <label for="prod_variant" class="col col-form-label">Product flavour</label>
-                  <div class="col">
+                <div class="form-group col no-gutters">
+                  <label class="col-12 col-form-label" for="prod_name">Descrizione Prodotto</label>
+                  <div class="col-12">
                     <div class="input-group">
                       <div class="input-group-prepend">
                         <div class="input-group-text">
@@ -214,20 +218,20 @@
                       </div>
                       <input id="prod_variant" name="prod_variant" type="text" class="form-control" aria-describedby="prod_variantHelpBlock" required="required" readonly />
                     </div>
-                    <span id="prod_variantHelpBlock" class="form-text text-muted">The specific variant of this product</span>
+                    <span id="prod_nameHelpBlock" class="form-text text-muted">Descrizione del prodotto selezionato</span>
                   </div>
                 </div>
 
-                <div class="form-group col">
-                  <label class="col col-form-label" for="prod_name">Product Name</label>
-                  <div class="col">
+                <div class="form-group col no-gutters">
+                  <label for="prod_variant" class="col-12 col-form-label">Variante Prodotto</label>
+                  <div class="col-12">
                     <div class="input-group">
                       <div class="input-group-prepend">
                         <div class="input-group-text"><i class="fa fa-tag"></i></div>
                       </div>
                       <input id="prod_name" name="prod_name" type="text" class="form-control" aria-describedby="prod_nameHelpBlock" required="required" readonly />
                     </div>
-                    <span id="prod_nameHelpBlock" class="form-text text-muted">Descriptive product name</span>
+                    <span id="prod_variantHelpBlock" class="form-text text-muted">Variante specifica del prodotto selezionato</span>
                   </div>
                 </div>
               </div>
@@ -235,7 +239,7 @@
 
             <!-- Notes -->
             <div class="form-group row" style="margin-top: 13px !important">
-              <label for="notes" class="col-1 col-form-label">Notes</label>
+              <label for="notes" class="col-1 col-form-label">Note</label>
               <div class="row col-11">
                 <div class="input-group">
                   <textarea id="notes" name="notes" cols="20" rows="2" class="form-control" aria-describedby="notesHelpBlock" readonly></textarea>
@@ -245,10 +249,10 @@
 
             <!-- Dates -->
             <div class="row">
-              <label class="col-1 col-form-label">Dates</label>
+              <label class="col-1 col-form-label">Date</label>
               <div class="row col-11">
                 <div class="form-group col no-gutters">
-                  <label for="date_due" class="col-12 col-form-label">Due Date [mm/dd/yyyy]</label>
+                  <label for="date_due" class="col-12 col-form-label">Data Scadenza [mm/dd/yyyy]</label>
                   <div class="col-12">
                     <div class="input-group">
                       <div class="input-group-prepend">
@@ -262,7 +266,7 @@
                 </div>
 
                 <div class="form-group col no-gutters">
-                  <label for="date_creation" class="col-12 col-form-label">Creation Date [mm/dd/yyyy]</label>
+                  <label for="date_creation" class="col-12 col-form-label">Data Creazione [mm/dd/yyyy]</label>
                   <div class="col-12">
                     <div class="input-group">
                       <div class="input-group-prepend">
@@ -279,10 +283,10 @@
 
             <!-- Expected Counts -->
             <div class="row">
-              <label class="col-1 col-form-label">Counts</label>
+              <label class="col-1 col-form-label">Conte</label>
               <div class="row col-11">
                 <div class="form-group col no-gutters">
-                  <label for="expected_ground_count" class="col-12 col-form-label">Ready to be shipped</label>
+                  <label for="expected_ground_count" class="col-12 col-form-label">A Terra</label>
                   <div class="col-12">
                     <div class="input-group">
                       <div class="input-group-prepend">
@@ -295,7 +299,7 @@
                   </div>
                 </div>
                 <div class="form-group col no-gutters">
-                  <label class="col-11 col-form-label">Counted Items</label>
+                  <label class="col-11 col-form-label">Articoli Contati</label>
                   <div class="row col-11">
                     <div class="form-group col no-gutters">
                       <div class="col-12">
@@ -322,7 +326,7 @@
 
             <div class="row col-12 justify-content-center" style="padding-top: 10px">
               <div class="col-10 form-group row col-12 margin-10">
-                <button name="update" class="styled-btn btn-blue" id="btn-count">Items Counted</button>
+                <button name="update" class="styled-btn btn-blue" id="btn-count">Articoli Contati</button>
               </div>
             </div>
           </div>
@@ -332,7 +336,7 @@
       <!--  -->
       <!-- Header -->
       <!--  -->
-      <div class="header weight-800">Warehouse operator</div>
+      <div class="header weight-800">Gestione Conteggi Operatore</div>
 
       <div class="request-table" id="request-table-container"></div>
     </main>
