@@ -5,7 +5,7 @@
       <paths name="Portale">
         <serverdata>
           <mappings>
-            <mapping deploy="testing\countingManagement" local="$PROJECT_DIR$" web="/countingManagement" />
+            <mapping deploy="testing\gestioneConteggi" local="$PROJECT_DIR$" web="/gestioneConteggi" />
           </mappings>
         </serverdata>
       </paths>

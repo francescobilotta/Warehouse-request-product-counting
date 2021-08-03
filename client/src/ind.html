@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestione Conteggi</title>
+
+    <link rel="stylesheet" type="text/css" href="assets/css/main-menu.css" />
+
+    <link rel="stylesheet" type="text/css" href="assets/css/zeynep.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/zeynep-main.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/zeynep-left.css" />
+
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/zeynep.min.js"></script>
+    <script>
+        $(document).ready(() => {
+            // init zeynepjs side menu
+            let zeynep = $(".zeynep").zeynep({});
+
+            // handle zeynepjs overlay click
+            $(".zeynep-overlay").on("click", function() {
+                zeynep.close();
+            });
+
+            $(".section").on("click", function() {
+                zeynep.close();
+            });
+
+            // open zeynepjs side menu
+            $(".btn-open").on("click", function() {
+                zeynep.open();
+            });
+        })
+    </script>
+</head>
+
+<body>
+<div class="zeynep">
+    <ul>
+        <li class="has-submenu">
+            <a href="#" data-submenu="rubrica">Rubrica</a>
+
+            <div id="rubrica" class="submenu">
+                <div class="submenu-header">
+                    <a href="#" data-submenu-close="rubrica">Menu</a>
+                </div>
+
+                <label>Rubrica</label>
+
+                <ul>
+                    <li class="section">
+                        <a href="screens/old/rubrica.php" target="module">Rubrica Aziendale</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+
+        <li class="has-submenu">
+            <a href="#" data-submenu="logistica">Logistica</a>
+
+            <div id="logistica" class="submenu">
+                <div class="submenu-header">
+                    <a href="#" data-submenu-close="logistica">Menu</a>
+                </div>
+                <label>Logistica</label>
+                <ul>
+                    <li class="section">
+                        <a href="screens/old/caricoscarico.php" target="module">Monitor carichi e scarichi</a>
+                    </li>
+                    <li class="section">
+                        <a href="screens/old/ins_caricoscarico.php" target="module">Inserimento carico-scarico</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+
+        <li class="has-submenu">
+            <a href="#" data-submenu="gestione-conteggi">Gestione Conteggi</a>
+
+            <div id="gestione-conteggi" class="submenu">
+                <div class="submenu-header">
+                    <a href="#" data-submenu-close="gestione-conteggi">Menu</a>
+                </div>
+
+                <label>Gestione Conteggi</label>
+
+                <ul>
+                    <li class="section">
+                        <a href="screens/office/office_homepage.html" target="module">Ufficio</a>
+                    </li>
+                    <li class="section">
+                        <a href="screens/warehouse/warehouse_homepage_director.html" target="module">Magazzino</a>
+                    </li>
+                    <li class="section">
+                        <a href="screens/warehouse/warehouse_homepage_operator.html" target="module">Operatore</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+    </ul>
+</div>
+
+<div class="menu-button">
+    <button type="button" class="btn-open">
+        <span style="display: block; font-size:x-large; transform: rotate(90deg);">Menu</span>
+    </button>
+</div>
+<main>
+    <div class="module-container">
+        <iframe class="module" name="module" src="screens/old/rubrica.php" ></iframe>
+    </div>
+</main>
+
+<div class="zeynep-overlay"></div>
+</body>
+
+</html>
