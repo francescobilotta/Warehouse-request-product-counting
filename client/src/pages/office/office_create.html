@@ -1,232 +1,229 @@
 <!DOCTYPE html>
 <html lang="it">
-<head>
-    <title>Crea richesta</title>
-    <meta charset="utf-8" content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+    <head>
+        <title>Crea richesta</title>
+        <meta charset="utf-8" content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport" />
 
-    <link href="../../assets/images/favicon.png" rel="icon"/>
-    <link href="../../assets/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="../../assets/css/bootstrap-theme.min.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
-    <link href="../../assets/css/selectize.bootstrap4.min.css" rel="stylesheet"/>
-    <link href="../../assets/css/datatables.min.css" rel="stylesheet"/>
+        <link href="../../assets/images/favicon.png" rel="icon" />
+        <link href="../../assets/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../../assets/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="../../assets/css/bootstrap-theme.min.css" rel="stylesheet" />
 
-    <link href="../../assets/css/common.css" rel="stylesheet"/>
+        <link href="../../assets/css/datatables.min.css" rel="stylesheet" />
+        <link href="../../assets/css/common.css" rel="stylesheet" />
 
+        <script src="../../assets/js/jquery.min.js"></script>
 
-    <script src="../../assets/js/jquery.min.js"></script>
+        <script src="../../assets/js/bootstrap.bundle.min.js"></script>
+        <script src="../../assets/js/jquery-ui.min.js"></script>
+        <script src="../../assets/js/datatables.min.js"></script>
 
-    <script src="../../assets/js/bootstrap.bundle.min.js"></script>
-    <script src="../../assets/js/jquery-ui.min.js"></script>
-    <script src="../../assets/js/selectize.min.js"></script>
-    <script src="../../assets/js/datatables.min.js"></script>
+        <script src="../../assets/js/request.js"></script>
+        <script src="../../assets/js/generators.js"></script>
+        <script src="../../assets/js/record_edit.js"></script>
+        <script src="../../assets/js/append_img_request_state.js"></script>
+        <script src="../../assets/js/queries.js"></script>
 
-    <script src="../../assets/js/request.js"></script>
-    <script src="../../assets/js/generators.js"></script>
-    <script src="../../assets/js/record_edit.js"></script>
-    <script src="../../assets/js/append_img_request_state.js"></script>
-    <script src="../../assets/js/queries.js"></script>
-    <script>
-        function autocomplete_init(codes, descriptions) {
-            const data = codes.map((code, index) => Object.fromEntries([["code", code], ["name", descriptions[index]]]))
+        <!-- Selectize -->
+        <link href="../../assets/selectize/css/selectize.bootstrap4.css" rel="stylesheet" />
+        <script src="../../assets/selectize/js/standalone/selectize.min.js"></script>
 
-            $('#prod_code').selectize({
-                persist: false,
-                maxItems: 1,
-                valueField: 'code',
-                labelField: 'code',
-                searchField: ['code', 'name'],
-                options: data,
-                render: {
-                    item: function (item, escape) {
-                        return '<div>' +
-                            (item.name ? '<span class="name">' + escape(item.code) + '</span>' : '') +
-                            '</div>';
-                    },
-                    option: function (item, escape) {
-                        let label = item.name || item.code;
-                        return '<div>' +
-                            '<span class="label">' + escape(item.code) + '</span>' +
-                            '<div class="code-name-divider">|</div>' +
-                            '<span class="label">' + escape(item.name) + '</span>' +
-                            '</div>';
+        <script>
+            function autocomplete_init(codes, descriptions) {
+                const data = codes.map((code, index) =>
+                    Object.fromEntries([
+                        ["code", code],
+                        ["name", descriptions[index]],
+                    ])
+                );
+
+                $("#prod_code")
+                    .selectize({
+                        persist: false,
+                        maxItems: 1,
+                        valueField: "code",
+                        labelField: "code",
+                        searchField: ["code", "name"],
+                        options: data,
+                        render: {
+                            item: function (item, escape) {
+                                return "<div>" + (item.name ? '<span class="name">' + escape(item.code) + "</span>" : "") + "</div>";
+                            },
+                            option: function (item, escape) {
+                                let label = item.name || item.code;
+                                return (
+                                    "<div>" +
+                                    '<span class="label">' +
+                                    escape(item.code) +
+                                    "</span>" +
+                                    '<div class="code-name-divider">|</div>' +
+                                    '<span class="label">' +
+                                    escape(item.name) +
+                                    "</span>" +
+                                    "</div>"
+                                );
+                            },
+                        },
+                    })
+                    .on("change", function (e) {
+                        const index = codes.indexOf($(this).val());
+                        update_fields($(this).val(), descriptions[index]);
+                    });
+            }
+
+            function update_fields(productId, description) {
+                document.product_flavour_requester.query({
+                    q_name: "get_product_flavours",
+                    q_data: {"f.productCode": productId},
+                });
+                $("#prod_name").val(description);
+            }
+
+            function get_today() {
+                const now = new Date();
+                const day = ("0" + now.getDate()).slice(-2);
+                const month = ("0" + (now.getMonth() + 1)).slice(-2);
+                return now.getFullYear() + "-" + month + "-" + day;
+            }
+
+            function set_date() {
+                const today = get_today();
+
+                $("#date_due").val(today).attr({
+                    min: today,
+                });
+            }
+
+            $("document").ready(() => {
+                set_date();
+
+                document.product_flavour_requester = new Requester(function (result) {
+                    if (!result.results.VARIANTE || !result.results.VARIANTE[0]) {
+                        flavour_builder(["."], "flavours-container");
+                    } else {
+                        flavour_builder(result.results.VARIANTE, "flavours-container");
                     }
-                },
-            }).on("change", function (e) {
-                const index = codes.indexOf($(this).val());
-                update_fields($(this).val(), descriptions[index]);
+                });
+
+                document.product_codes_requester = new Requester(function (result) {
+                    autocomplete_init(result.results.COD_ARTICOLO, result.results.DESCRIZIONE);
+                });
+
+                document.product_codes_requester.query({
+                    q_name: "get_products_names",
+                });
+
+                document.request_create_sender = new Requester(function (result) {
+                    window.location.replace("office_homepage.html");
+                });
+
+                $("#create-form").submit((e) => {
+                    e.preventDefault(); // avoid to execute the actual submit of the form.
+                    const obj = {
+                        q_name: "office_create_requests",
+                        q_data: {
+                            "d.requestDate": get_today(),
+                            "d.productCode": $("#prod_code").val(),
+                            "d.productName": $("#prod_name").val(),
+                            "d.productFlavour": $("input[name='flavour']:checked").val(),
+                            "d.dueDate": $("#date_due").val(),
+                            "d.requestState": "countRequest",
+                            "d.notes": $("#notes").val(),
+                        },
+                    };
+                    document.request_create_sender.query(obj);
+                });
             });
-        }
-
-        function update_fields(productId, description) {
-
-            document.product_flavour_requester.query({
-                q_name: "get_product_flavours",
-                q_data: {"f.productCode": productId}
-            });
-            $('#prod_name').val(description);
-        }
-
-        function get_today() {
-            const now = new Date();
-            const day = ("0" + now.getDate()).slice(-2);
-            const month = ("0" + (now.getMonth() + 1)).slice(-2);
-            return now.getFullYear() + "-" + month + "-" + day;
-        }
-
-        function set_date() {
-            const today = get_today();
-
-            $("#date_due").val(today).attr({
-                min: today,
-            });
-        }
-
-        $("document").ready(() => {
-            set_date();
-
-            document.product_flavour_requester = new Requester(function (result) {
-                if (!result.results.VARIANTE || !result.results.VARIANTE[0]) {
-                    flavour_builder(['.'], "flavours-container");
-                } else {
-                    flavour_builder(result.results.VARIANTE, "flavours-container")
-                }
-
-            });
-
-            document.product_codes_requester = new Requester(function (result) {
-                autocomplete_init(result.results.COD_ARTICOLO, result.results.DESCRIZIONE)
-            });
-
-            document.product_codes_requester.query({
-                q_name: "get_products_names"
-            });
-
-            document.request_create_sender = new Requester(function (result) {
-                window.location.replace("office_homepage.html");
-            });
-
-            $('#create-form').submit((e) => {
-                e.preventDefault(); // avoid to execute the actual submit of the form.
-                const obj = {
-                    q_name: "office_create_requests",
-                    q_data: {
-                        "d.requestDate": get_today(),
-                        "d.productCode": $('#prod_code').val(),
-                        "d.productName": $('#prod_name').val(),
-                        "d.productFlavour": $("input[name='flavour']:checked").val(),
-                        "d.dueDate": $('#date_due').val(),
-                        "d.requestState": "countRequest",
-                        "d.notes": $('#notes').val()
-                    }
-                };
-                document.request_create_sender.query(obj);
-            });
-        });
-    </script>
-</head>
-<body>
-<main class="container" role="main">
-    <div class="header weight-800">Crea Richesta<span class="blinker"></span></div>
-    <div class="request-form">
-        <form class="form" id="create-form" role="form">
-            <div class="row">
-                <label class="col-1 col-form-label">Prodotto</label>
-                <div class="col">
+        </script>
+    </head>
+    <body>
+        <main class="container" role="main">
+            <div class="header weight-800">Crea Richesta<span class="blinker"></span></div>
+            <div class="request-form">
+                <form class="form" id="create-form" role="form">
                     <div class="row">
-                        <div class="form-group col no-gutters">
-                            <label class="col-12 col-form-label" for="prod_code">Codice Prodotto</label>
-                            <div class="col-12">
-                                <div class="input-group" style="margin-left: 0;">
-                                    <!--                                    <div class="input-group-prepend">-->
-                                    <!--                                        <div class="input-group-text"><i class="fa fa-tag"></i></div>-->
-                                    <!--                                    </div>-->
-                                    <select aria-describedby="prod_codeHelpBlock" class="form-control" id="prod_code"
-                                            name="prod_code" required="required"></select>
-                                </div>
-                                <span class="form-text text-muted" id="prod_codeHelpBlock"
-                                >Inerisci i dati del prodotto e seleziona l'occorrenza corretta.</span
-                                >
-                            </div>
-                        </div>
-                        <div class="form-group col no-gutters">
-                            <label class="col-2 col-form-label" for="prod_name">Prodotto</label>
-                            <div class="col-12">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">
-                                            <i class="fa fa-archive"></i>
+                        <label class="col-1 col-form-label">Prodotto</label>
+                        <div class="col">
+                            <div class="row">
+                                <div class="form-group col no-gutters">
+                                    <label class="col-12 col-form-label" for="prod_code">Codice Prodotto</label>
+                                    <div class="col-12">
+                                        <div class="input-group" style="margin-left: 0">
+                                            <!--                                    <div class="input-group-prepend">-->
+                                            <!--                                        <div class="input-group-text"><i class="fa fa-tag"></i></div>-->
+                                            <!--                                    </div>-->
+                                            <select aria-describedby="prod_codeHelpBlock" class="form-control" id="prod_code" name="prod_code" required="required"></select>
                                         </div>
+                                        <span class="form-text text-muted" id="prod_codeHelpBlock">Inerisci i dati del prodotto e seleziona l'occorrenza corretta.</span>
                                     </div>
-                                    <input
-                                            aria-describedby="prod_nameHelpBlock"
-                                            class="form-control"
-                                            id="prod_name"
-                                            name="prod_name"
-                                            readonly
-                                            required="required"
-                                            type="text"
-                                    />
                                 </div>
-                                <span class="form-text text-muted"
-                                      id="prod_nameHelpBlock">Descrizione del prodotto.</span>
+                                <div class="form-group col no-gutters">
+                                    <label class="col-2 col-form-label" for="prod_name">Prodotto</label>
+                                    <div class="col-12">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    <i class="fa fa-archive"></i>
+                                                </div>
+                                            </div>
+                                            <input
+                                                aria-describedby="prod_nameHelpBlock"
+                                                class="form-control"
+                                                id="prod_name"
+                                                name="prod_name"
+                                                readonly
+                                                required="required"
+                                                type="text"
+                                            />
+                                        </div>
+                                        <span class="form-text text-muted" id="prod_nameHelpBlock">Descrizione del prodotto.</span>
+                                    </div>
+                                </div>
                             </div>
+                            <div class="row" id="flavours-container"></div>
                         </div>
                     </div>
-                    <div class="row" id="flavours-container"></div>
-                </div>
-            </div>
 
-            <div class="form-group row">
-                <label class="col-1 col-form-label" for="notes">Note</label>
-                <div class="col-11">
-                    <textarea aria-describedby="notesHelpBlock" class="form-control" cols="40" id="notes" name="notes"
-                              rows="3"></textarea>
-                    <span class="form-text text-muted" id="notesHelpBlock">Aggiungi note alla richesta</span>
-                </div>
-            </div>
-            <div class="form-group row">
-                <input
-                        aria-describedby="date_creationHelpBlock"
-                        class="form-control"
-                        hidden
-                        id="date_creation"
-                        name="date_creation"
-                        readonly
-                        required="required"
-                        type="text"
-                />
-            </div>
-            <div class="form-group row">
-                <label class="col-1 col-form-label" for="date_due">Data Scadenza</label>
-                <div class="col-11">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">
-                                <i class="fa fa-calendar"></i>
-                            </div>
+                    <div class="form-group row">
+                        <label class="col-1 col-form-label" for="notes">Note</label>
+                        <div class="col-11">
+                            <textarea aria-describedby="notesHelpBlock" class="form-control" cols="40" id="notes" name="notes" rows="3"></textarea>
+                            <span class="form-text text-muted" id="notesHelpBlock">Aggiungi note alla richesta</span>
                         </div>
+                    </div>
+                    <div class="form-group row">
                         <input
-                                aria-describedby="date_dueHelpBlock"
-                                class="form-control"
-                                id="date_due"
-                                name="date_due"
-                                required="required"
-                                type="date"
+                            aria-describedby="date_creationHelpBlock"
+                            class="form-control"
+                            hidden
+                            id="date_creation"
+                            name="date_creation"
+                            readonly
+                            required="required"
+                            type="text"
                         />
                     </div>
-                    <span class="form-text text-muted" id="date_dueHelpBlock">Data di scadenza della richiesta</span>
-                </div>
-            </div>
+                    <div class="form-group row">
+                        <label class="col-1 col-form-label" for="date_due">Data Scadenza</label>
+                        <div class="col-11">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                </div>
+                                <input aria-describedby="date_dueHelpBlock" class="form-control" id="date_due" name="date_due" required="required" type="date" />
+                            </div>
+                            <span class="form-text text-muted" id="date_dueHelpBlock">Data di scadenza della richiesta</span>
+                        </div>
+                    </div>
 
-            <div class="form-group row col-12 justify-content-evenly">
-                <button class="col-5 styled-btn btn-blue" name="submit" type="submit">Crea</button>
-                <a class="col-5 styled-btn btn-red-dark text-align-center no-text-decoration" href="office_homepage.html"
-                   name="submit"
-                   type="submit">Indietro</a>
+                    <div class="form-group row col-12 justify-content-evenly">
+                        <button class="col-5 styled-btn btn-blue" name="submit" type="submit">Crea</button>
+                        <a class="col-5 styled-btn btn-red-dark text-align-center no-text-decoration" href="office_homepage.html" name="submit" type="submit">Indietro</a>
+                    </div>
+                </form>
             </div>
-        </form>
-    </div>
-</main>
-</body>
+        </main>
+    </body>
 </html>
