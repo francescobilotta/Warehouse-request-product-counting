@@ -42,18 +42,18 @@ function officeRecount(requestId) {
 /*
 For warehouse
 */
-function lastToPrevious(requestId, lastCount, requestState) {
+function lastToPrevious(requestId, lastCount, requestState, previousExpectedCount) {
     const table_data_requester = new Requester(function (result) {
         const savedEvent = new Event("savedCount");
         document.addEventListener("savedCount", () => {
             if (requestState === "countRequest") {
                 warehouseStateToCountDone(requestId);
                 warehouseUpdateRequests(requestId, lastCount);
-                warehouseLastExpectedCount(requestId, expectedCount);
-                //TODO FINISH
+                warehouseLastExpectedCount(requestId, previousExpectedCount);
             } else if (requestState === "recountRequest") {
                 warehouseStateToRecountDone(requestId);
                 warehouseUpdateRequests(requestId, lastCount);
+                warehouseLastExpectedCount(requestId, previousExpectedCount);
             }
         });
         document.dispatchEvent(savedEvent);
@@ -111,8 +111,8 @@ function warehouseUpdateRequests(requestId, lastCount) {
     });
 }
 
-function warehouseCount(requestId, lastCount, requestState) {
+function warehouseCount(requestId, lastCount, requestState, previousExpectedCount) {
     $("#edit-popup").hide();
 
-    lastToPrevious(requestId, lastCount, requestState);
+    lastToPrevious(requestId, lastCount, requestState, previousExpectedCount);
 }

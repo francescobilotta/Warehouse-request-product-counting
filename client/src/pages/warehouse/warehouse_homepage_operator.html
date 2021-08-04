@@ -52,6 +52,19 @@
                         min: today,
                     });
                     $("#date_creation").val(creationDate);
+                    //EXPECTED COUNT - Not going to be shown, needed for query
+                    previousExpectedCount = 0;
+                    const expected_count_requester = new Requester(function (warehouseExpectedCount) {
+                        previousExpectedCount = warehouseExpectedCount.results.N_TOT[0];
+                    });
+                    expected_count_requester.query({
+                        q_name: "warehouse_expected_count",
+                        q_data: {
+                            "f.productCode": warehouseRequestsDetails.results[0].productCode,
+                            "f.productFlavour": warehouseRequestsDetails.results[0].productFlavour,
+                            "f.currentYear": now.getFullYear(),
+                        },
+                    });
                     //EXPECTED GROUND COUNT
                     const expected_ground_count_requester = new Requester(function (expectedGroundCount) {
                         const arrayOfGroundCount = expectedGroundCount.results.PRELEVATO;
@@ -105,7 +118,6 @@
                             LOTTO: "lotto",
                             "TIPO UDM": "tipoudm",
                         };
-                        console.log(warehouseGetDynamicLocations);
                         $("#dynamic-locations-table-container").empty();
                         $("#notFoundLocations").empty();
                         if (warehouseGetDynamicLocations.results.length !== 0) {
@@ -142,10 +154,10 @@
                     $("#btn-count").click((e) => {
                         if ($.isNumeric($("#counted_items").val()) && $("#counted_items").val() > 0) {
                             if (requestState == "countRequest") {
-                                warehouseCount($("#popup").attr("class"), $("#counted_items").val(), "countRequest");
+                                warehouseCount($("#popup").attr("class"), $("#counted_items").val(), "countRequest", previousExpectedCount);
                                 location.reload();
                             } else if (requestState == "recountRequest") {
-                                warehouseCount($("#popup").attr("class"), $("#counted_items").val(), "recountRequest");
+                                warehouseCount($("#popup").attr("class"), $("#counted_items").val(), "recountRequest", previousExpectedCount);
                                 location.reload();
                             }
                         } else {
