@@ -26,36 +26,39 @@ function table_maker(table_data, destination_id, headers) {
                 );
             } else if (headers[key] === "isClosed" && row[headers[key]] === "0") {
                 current_row.append(
-                    $("<td>").append($("<img src='../../assets/images/closed_icon.png' height='" + image_size + "' width='" + image_size + "' title='Request open'>"), $("<p>Request open</p>"))
+                    $("<td>").append(
+                        $("<img src='../../assets/images/closed_icon.png' height='" + image_size + "' width='" + image_size + "' title='Request open'>"),
+                        $("<p>Request open</p>")
+                    )
                 );
             } else if (headers[key] == "requestDate" && row[headers[key]]) {
                 current_row.append(
                     $("<td>").text(
                         row[headers[key]].replace(" 00:00:00", "").split("-")[2] +
-                        "-" +
-                        row[headers[key]].replace(" 00:00:00", "").split("-")[1] +
-                        "-" +
-                        row[headers[key]].replace(" 00:00:00", "").split("-")[0]
+                            "-" +
+                            row[headers[key]].replace(" 00:00:00", "").split("-")[1] +
+                            "-" +
+                            row[headers[key]].replace(" 00:00:00", "").split("-")[0]
                     )
                 );
             } else if (headers[key] == "dueDate" && row[headers[key]]) {
                 current_row.append(
                     $("<td>").text(
                         row[headers[key]].replace(" 00:00:00", "").split("-")[2] +
-                        "-" +
-                        row[headers[key]].replace(" 00:00:00", "").split("-")[1] +
-                        "-" +
-                        row[headers[key]].replace(" 00:00:00", "").split("-")[0]
+                            "-" +
+                            row[headers[key]].replace(" 00:00:00", "").split("-")[1] +
+                            "-" +
+                            row[headers[key]].replace(" 00:00:00", "").split("-")[0]
                     )
                 );
             } else if (headers[key] == "terminationDate" && row[headers[key]]) {
                 current_row.append(
                     $("<td>").text(
                         row[headers[key]].replace(" 00:00:00", "").split("-")[2] +
-                        "-" +
-                        row[headers[key]].replace(" 00:00:00", "").split("-")[1] +
-                        "-" +
-                        row[headers[key]].replace(" 00:00:00", "").split("-")[0]
+                            "-" +
+                            row[headers[key]].replace(" 00:00:00", "").split("-")[1] +
+                            "-" +
+                            row[headers[key]].replace(" 00:00:00", "").split("-")[0]
                     )
                 );
             } else {
@@ -64,20 +67,28 @@ function table_maker(table_data, destination_id, headers) {
                     switch (row[headers[key]]) {
                         case "countRequest":
                             current_row.append(
-                                $("<td>").append($("<img src='../../assets/images/countRequest.png' height='" + image_size + "' width='" + image_size + "' title='Conta richiesta'>"))
+                                $("<td>").append(
+                                    $("<img src='../../assets/images/countRequest.png' height='" + image_size + "' width='" + image_size + "' title='Conta richiesta'>")
+                                )
                             );
                             break;
                         case "countDone":
-                            current_row.append($("<td>").append($("<img src='../../assets/images/countDone.png' height='" + image_size + "' width='" + image_size + "' title='Conta effettuata'>")));
+                            current_row.append(
+                                $("<td>").append($("<img src='../../assets/images/countDone.png' height='" + image_size + "' width='" + image_size + "' title='Conta effettuata'>"))
+                            );
                             break;
                         case "recountRequest":
                             current_row.append(
-                                $("<td>").append($("<img src='../../assets/images/recountRequest.png' height='" + image_size + "' width='" + image_size + "' title='Riconta richiesta'>"))
+                                $("<td>").append(
+                                    $("<img src='../../assets/images/recountRequest.png' height='" + image_size + "' width='" + image_size + "' title='Riconta richiesta'>")
+                                )
                             );
                             break;
                         case "recountDone":
                             current_row.append(
-                                $("<td>").append($("<img src='../../assets/images/recountDone.png' height='" + image_size + "' width='" + image_size + "' title='Riconta effettuata'>"))
+                                $("<td>").append(
+                                    $("<img src='../../assets/images/recountDone.png' height='" + image_size + "' width='" + image_size + "' title='Riconta effettuata'>")
+                                )
                             );
                             break;
                         default:
@@ -90,7 +101,7 @@ function table_maker(table_data, destination_id, headers) {
         tbody.append(current_row);
     }
     $("#" + destination_id).html(table);
-    return $("#"+table_id).DataTable();
+    return $("#" + table_id).DataTable();
 }
 
 function create_flavour(flavour) {
@@ -118,12 +129,10 @@ function flavour_builder(flavours, container_id) {
     container.empty();
     const flavour_group = $("<div>").addClass("form-group col no-gutters").appendTo(container);
     flavours[0] === "." ? container.hide() : container.show();
-    const label = $("<label>").addClass("col-2").text("Flavour").appendTo(flavour_group);
+    const label = $("<label>").addClass("col-2").text("Variante").appendTo(flavour_group);
     const helper = $("<div>").addClass("col-12").appendTo(flavour_group);
 
     for (const flavour of flavours) {
         create_flavour(flavour).appendTo(helper);
     }
-
-    const span = $("<span>").addClass("form-text text-muted").text("Select the flavour of the product").attr("id", "flavourHelpBlock").appendTo(helper);
 }

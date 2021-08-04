@@ -178,3 +178,42 @@ _Warehouse operator 2/2_<br/><br/>
 _Added search input_<br/><br/>
 ![CHECKPOINT: Fixed Bugs + Added Product Locations](changelog_images/14_2.png)<br/>
 _CHECKPOINT: Fixed Bugs + Added Product Locations_<br/><br/>
+
+## 15. [CHECKPOINT: Finished application + Fixed Bugs]
+
+#### - Fixed bugs of imports (removed CDNs)
+
+#### - Translated some English text in Italian
+
+#### - Fixed styling
+
+#### - Added functionalities like previousExpectedCount
+
+![Office Homepage](changelog_images/15_1_1.png)<br/>
+_Office Homepage_<br/><br/>
+![Menu](changelog_images/15_1_2.png)<br/>
+_Menu_<br/><br/>
+![Filter to show closed requests](changelog_images/15_1_3.png)<br/>
+_Filter to show closed requests_<br/><br/>
+![Autocomple search](changelog_images/15_1_4.png)<br/>
+_Autocomple search_<br/><br/>
+![Flavour selection](changelog_images/15_1_5.png)<br/>
+_Flavour selection_<br/><br/>
+
+---
+
+![Warehouse Director Homepage](changelog_images/15_2_1.png)<br/>
+_Warehouse Director Homepage_<br/><br/>
+![Director popup](changelog_images/15_2_2.png)<br/>
+_Director popup_<br/><br/>
+![Dynamic product locations](changelog_images/15_2_3.png)<br/>
+_Dynamic product locations_<br/><br/>
+
+---
+
+![Warehouse Operator Homepage](changelog_images/15_3_1.png)<br/>
+_Warehouse Operator Homepage_<br/><br/>
+![Operator popup](changelog_images/15_3_2.png)<br/>
+_Operator popup_<br/><br/>
+![Dynamic product locations](changelog_images/15_3_3.png)<br/>
+_Dynamic product locations_<br/><br/>
