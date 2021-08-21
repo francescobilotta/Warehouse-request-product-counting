@@ -1,7 +1,7 @@
 {
-  "host": "192.9.200.19",
-  "port": "1521",
-  "username": "acme1",
-  "password": "bbeep",
+  "host": "redacted",
+  "port": "redacted",
+  "username": "redacted",
+  "password": "redacted",
   "dialect": "oracle"
 }
