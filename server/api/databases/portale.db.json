@@ -1,7 +1,7 @@
 {
-  "host": "redacted",
-  "port": "redacted",
-  "username": "redacted",
-  "password": "redacted",
+  "host": "portale",
+  "port": "3306",
+  "username": "root",
+  "password": "basilicagoiano",
   "dialect": "mysql"
 }

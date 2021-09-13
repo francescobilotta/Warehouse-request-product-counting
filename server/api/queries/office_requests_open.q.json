@@ -1,4 +1,4 @@
 {
-  "database": "portale",
-  "query": "SELECT requestId, requestState, productName, productFlavour, notes, requestDate, dueDate, terminationDate, previousCount, lastCount, isClosed FROM testing.Request WHERE isClosed = '0' ORDER BY dueDate"
+    "database": "portale",
+    "query": "SELECT requestId, requestState, productCode, productName, productFlavour, notes, requestDate, dueDate, terminationDate, previousCount, lastCount, isClosed, expectedCount FROM testing.Request WHERE isClosed = '0' ORDER BY dueDate"
 }

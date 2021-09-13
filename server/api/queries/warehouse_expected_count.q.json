@@ -1,4 +1,4 @@
 {
-  "database": "gestionale",
-  "query": "select s.cod_articolo, s.cod_combiprogr, s.n_tot from salmv165 s where s.cod_azienda = 'FG' and s.cod_deposito = 'FG' and s.area_utilizzo = 'M' and s.cod_articolo = '{f.productCode}' and s.cod_combiprogr = '{f.productFlavour}' and s.cod_esercizio = '{f.currentYear}'"
+    "database": "gestionale",
+    "query": "select s.cod_articolo, s.cod_combiprogr, s.n_tot from salmv165 s where s.cod_azienda = 'FG' and s.cod_deposito = 'FG' and s.area_utilizzo = 'M' and s.cod_articolo = '{f.productCode}' and s.cod_combiprogr = '{f.productFlavour}' and s.cod_esercizio = '{f.currentYear}'"
 }

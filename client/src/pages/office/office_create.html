@@ -8,19 +8,18 @@
         <link href="../../assets/css/bootstrap.min.css" rel="stylesheet" />
         <link href="../../assets/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
         <link href="../../assets/css/bootstrap-theme.min.css" rel="stylesheet" />
-
         <link href="../../assets/css/datatables.min.css" rel="stylesheet" />
+
         <link href="../../assets/css/common.css" rel="stylesheet" />
 
-        <script src="../../assets/js/jquery.min.js"></script>
+        <script src="../../assets/jQuery/jquery-3.6.0.min.js"></script>
+        <script src="../../assets/jQuery-UI/jquery-ui.min.js"></script>
 
         <script src="../../assets/js/bootstrap.bundle.min.js"></script>
-        <script src="../../assets/js/jquery-ui.min.js"></script>
         <script src="../../assets/js/datatables.min.js"></script>
 
-        <script src="../../assets/js/request.js"></script>
+        <script src="../../assets/js/utility_functions.js"></script>
         <script src="../../assets/js/generators.js"></script>
-        <script src="../../assets/js/record_edit.js"></script>
         <script src="../../assets/js/append_img_request_state.js"></script>
         <script src="../../assets/js/queries.js"></script>
 
@@ -29,7 +28,7 @@
         <script src="../../assets/selectize/js/standalone/selectize.min.js"></script>
 
         <script>
-            function autocomplete_init(codes, descriptions) {
+            function autocompleteInit(codes, descriptions) {
                 const data = codes.map((code, index) =>
                     Object.fromEntries([
                         ["code", code],
@@ -67,71 +66,22 @@
                     })
                     .on("change", function (e) {
                         const index = codes.indexOf($(this).val());
-                        update_fields($(this).val(), descriptions[index]);
+                        UpdateCreateRequestFields($(this).val(), descriptions[index]);
                     });
             }
 
-            function update_fields(productId, description) {
-                document.product_flavour_requester.query({
-                    q_name: "get_product_flavours",
-                    q_data: {"f.productCode": productId},
-                });
+            function UpdateCreateRequestFields(productCode, description) {
+                productFlavourRequester(productCode, flavourBuilder);
                 $("#prod_name").val(description);
             }
 
-            function get_today() {
-                const now = new Date();
-                const day = ("0" + now.getDate()).slice(-2);
-                const month = ("0" + (now.getMonth() + 1)).slice(-2);
-                return now.getFullYear() + "-" + month + "-" + day;
-            }
-
-            function set_date() {
-                const today = get_today();
-
-                $("#date_due").val(today).attr({
-                    min: today,
-                });
-            }
-
             $("document").ready(() => {
-                set_date();
-
-                document.product_flavour_requester = new Requester(function (result) {
-                    if (!result.results.VARIANTE || !result.results.VARIANTE[0]) {
-                        flavour_builder(["."], "flavours-container");
-                    } else {
-                        flavour_builder(result.results.VARIANTE, "flavours-container");
-                    }
-                });
-
-                document.product_codes_requester = new Requester(function (result) {
-                    autocomplete_init(result.results.COD_ARTICOLO, result.results.DESCRIZIONE);
-                });
-
-                document.product_codes_requester.query({
-                    q_name: "get_products_names",
-                });
-
-                document.request_create_sender = new Requester(function (result) {
-                    window.location.replace("office_homepage.html");
-                });
+                setDateDueMin(getTodayFormattedForInput());
+                productCodesRequester(autocompleteInit);
 
                 $("#create-form").submit((e) => {
                     e.preventDefault(); // avoid to execute the actual submit of the form.
-                    const obj = {
-                        q_name: "office_create_requests",
-                        q_data: {
-                            "d.requestDate": get_today(),
-                            "d.productCode": $("#prod_code").val(),
-                            "d.productName": $("#prod_name").val(),
-                            "d.productFlavour": $("input[name='flavour']:checked").val(),
-                            "d.dueDate": $("#date_due").val(),
-                            "d.requestState": "countRequest",
-                            "d.notes": $("#notes").val(),
-                        },
-                    };
-                    document.request_create_sender.query(obj);
+                    createRequest(window, getTodayFormattedForInput());
                 });
             });
         </script>
@@ -187,18 +137,18 @@
                     </div>
                     <div class="form-group row">
                         <input
-                            aria-describedby="date_creationHelpBlock"
+                            aria-describedby="dateCreationInputHelpBlock"
                             class="form-control"
                             hidden
-                            id="date_creation"
-                            name="date_creation"
+                            id="dateCreationInput"
+                            name="dateCreationInput"
                             readonly
                             required="required"
                             type="text"
                         />
                     </div>
                     <div class="form-group row margin-top-20">
-                        <label class="col-1 col-form-label" for="date_due">Data Scadenza</label>
+                        <label class="col-1 col-form-label" for="dateDuePicker">Data Scadenza [mm/dd/yyyy]</label>
                         <div class="col-11">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -206,7 +156,7 @@
                                         <i class="fa fa-calendar"></i>
                                     </div>
                                 </div>
-                                <input aria-describedby="date_dueHelpBlock" class="form-control" id="date_due" name="date_due" required="required" type="date" />
+                                <input aria-describedby="dateDuePickerHelpBlock" class="form-control" id="dateDuePicker" name="dateDuePicker" required="required" type="date" />
                             </div>
                         </div>
                     </div>

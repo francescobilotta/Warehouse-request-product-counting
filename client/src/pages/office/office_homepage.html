@@ -13,166 +13,59 @@
 
         <link href="../../assets/css/common.css" rel="stylesheet" />
 
-        <script src="../../assets/js/jquery.min.js"></script>
+        <script src="../../assets/jQuery/jquery-3.6.0.min.js"></script>
+        <script src="../../assets/jQuery-UI/jquery-ui.min.js"></script>
 
         <script src="../../assets/js/bootstrap.bundle.min.js"></script>
-        <script src="../../assets/js/jquery-ui.min.js"></script>
         <script src="../../assets/js/selectize.min.js"></script>
         <script src="../../assets/js/datatables.min.js"></script>
 
-        <script src="../../assets/js/request.js"></script>
+        <script src="../../assets/js/utility_functions.js"></script>
         <script src="../../assets/js/generators.js"></script>
-        <script src="../../assets/js/record_edit.js"></script>
         <script src="../../assets/js/append_img_request_state.js"></script>
         <script src="../../assets/js/queries.js"></script>
 
         <script>
-            function get_today() {
-                //Get today data
-                const now = new Date();
-                const day = ("0" + now.getDate()).slice(-2);
-                const month = ("0" + (now.getMonth() + 1)).slice(-2);
-                return day + "-" + month + "-" + now.getFullYear();
-            }
+            const table_headers_strings = {
+                CHIUSA: "isClosed",
+                STATO: "requestState",
+                PRODOTTO: "productCode",
+                DESCRIZIONE: "productName",
+                VARIANTE: "productFlavour",
+                NOTE: "notes",
+                "DATA RICHIESTA [dd/mm/yyyy]": "requestDate",
+                "DATA SCADENZA [dd/mm/yyyy]": "dueDate",
+                "DATA CHIUSURA [dd/mm/yyyy]": "terminationDate",
+                "ULTIMO CONTEGGIO": "lastCount",
+                PREVISTI: "expectedCount",
+                DIFFERENZA: "differenceLastAndExpected",
+            };
 
-            function make_editable(element) {
-                $("#edit-popup").show();
-                $("#popup").removeClass().addClass(element.attr("id"));
-                //For popup
-                const table_data_requester = new Requester(function (result) {
-                    var image_size = "40px";
-                    //Format dates
-                    var creationDate = result.results[0].requestDate.replace(" 00:00:00", "");
-                    creationDate = creationDate.split("-")[1] + "-" + creationDate.split("-")[2] + "-" + creationDate.split("-")[0];
-                    //Product Info
-                    $("#prod_code").val(result.results[0].productCode);
-                    $("#prod_name").val(result.results[0].productName);
-                    $("#prod_variant").val(result.results[0].productFlavour);
-                    $("#notes").val(result.results[0].notes);
-                    $("#date_due").val(result.results[0].dueDate.split(" ")[0]).attr({
-                        min: get_today(),
-                    });
-                    $("#date_creation").val(creationDate);
-
-                    $("#expected_previous").val(result.results[0].expectedCount);
-                    $("#count_previous").val(result.results[0].previousCount);
-                    $("#count_last").val(result.results[0].lastCount);
-
-                    //Hide all buttons before selecting which to show
-                    $("#btn-update").hide();
-                    $("#btn-close").hide();
-                    $("#btn-recount").hide();
-
-                    //RequestState
-                    $("#req_id").val(element.attr("id"));
-                    if (result.results[0].isClosed == 0) {
-                        switch (result.results[0].requestState) {
-                            case "countRequest":
-                                append_img_request_state("request_state", "../../assets/images/countRequest.png", image_size, "Richiesto Conteggio");
-                                $("#btn-update").show();
-                                $("#btn-close").show();
-                                break;
-                            case "countDone":
-                                append_img_request_state("request_state", "../../assets/images/countDone.png", image_size, "Conteggio Effettuato");
-                                $("#btn-update").show();
-                                $("#btn-close").show();
-                                $("#btn-recount").show();
-                                break;
-                            case "recountRequest":
-                                append_img_request_state("request_state", "../../assets/images/recountRequest.png", image_size, "Richiesta Riconta");
-                                $("#btn-update").show();
-                                $("#btn-close").show();
-                                break;
-                            case "recountDone":
-                                append_img_request_state("request_state", "../../assets/images/recountDone.png", image_size, "Riconta Effettuata");
-                                $("#btn-update").show();
-                                $("#btn-close").show();
-                                $("#btn-recount").show();
-                                break;
-                            default:
-                        }
-                    } else {
-                        append_img_request_state("request_state", "../../assets/images/closed.png", image_size, "Riconta Effettuata");
-                    }
-                });
-                table_data_requester.query({
-                    q_name: "office_requests_details",
-                    q_data: {
-                        "f.requestId": element.attr("id"),
-                    },
-                });
-            }
-
-            function register_clicks() {
-                $(".table-row").dblclick(function (e) {
-                    make_editable($(this));
-                });
-
-                $("#edit-popup").click(function (e) {
-                    if (e.target === this) {
-                        $(this).hide();
-                    }
-                });
-
-                $(".exit-button").click(function (e) {
-                    if (e.target === this) {
-                        $("#edit-popup").hide();
-                    }
-                });
-            }
-
-            //Get table data
             $(document).ready(function () {
                 $("#edit-popup").hide();
-
-                //Update button
                 $("#btn-update").click((e) => {
-                    officeUpdate($("#popup").attr("class"), $("#notes").val(), $("#date_due").val());
-                    location.reload();
+                    officeUpdate($("#popup").attr("class"), $("#notes").val(), $("#dateDuePicker").val());
                 });
-                //Close button
                 $("#btn-close").click((e) => {
-                    officeClose($("#popup").attr("class"), get_today());
-                    location.reload();
+                    officeClose($("#popup").attr("class"), getToday());
                 });
-                //Recount button
                 $("#btn-recount").click((e) => {
                     officeRecount($("#popup").attr("class"));
-                    location.reload();
                 });
-
-                const table_headers_strings = {
-                    CHIUSA: "isClosed",
-                    STATO: "requestState",
-                    PRODOTTO: "productName",
-                    VARIANTE: "productFlavour",
-                    NOTE: "notes",
-                    "DATA RICHIESTA [dd/mm/yyyy]": "requestDate",
-                    "DATA SCADENZA [dd/mm/yyyy]": "dueDate",
-                    "DATA CHIUSURA [dd/mm/yyyy]": "terminationDate",
-                    "ULTIMO CONTEGGIO": "lastCount",
-                };
-
-                const table_data_requester = new Requester((result) => {
-                    table_maker(result.results, "request-table-container", table_headers_strings);
-                    register_clicks();
-                });
-
-                table_data_requester.query({q_name: "office_requests_open"});
-
-                //Table filter
                 $("#btn-show-closed")
                     .parent()
                     .click(() => {
                         $("#records_table").remove();
                         if ($("#btn-show-closed").is(":checked")) {
                             $("#btn-show-closed").prop("checked", false);
-                            table_data_requester.query({q_name: "office_requests"});
+                            officeRequests(table_headers_strings);
                         } else {
                             $("#btn-show-closed").prop("checked", true);
-                            table_data_requester.query({q_name: "office_requests_open"});
+                            officeRequestsOpen(table_headers_strings);
                         }
                     });
+
+                officeRequestsOpen(table_headers_strings);
             });
         </script>
     </head>
@@ -188,21 +81,19 @@
                         <div class="exit-button">&times;</div>
                     </div>
                     <div class="card-section form-holder" id="popup-data">
-                        <!-- Request info -->
-                        <div class="form-group row">
-                            <div class="row col-12">
-                                <label class="col-1 col-form-label" for="req_id">Id Richesta</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend" id="request_state"></div>
-                                    <input aria-describedby="req_idHelpBlock" class="form-control" id="req_id" name="req_id" readonly required="required" type="text" />
-                                </div>
-                                <span class="form-text text-muted" id="req_idHelpBlock">Identificativo della richesta</span>
-                            </div>
-                        </div>
-
                         <!-- Product info -->
                         <div class="row">
                             <div class="row col-12">
+                                <div class="form-group col-2 no-gutters">
+                                    <label class="col-12 col-form-label" for="prod_code">Id Richiesta</label>
+                                    <div class="col-12">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend" id="request_state"></div>
+                                            <input aria-describedby="req_idHelpBlock" class="form-control" id="req_id" name="req_id" readonly required="required" type="text" />
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="form-group col-2 no-gutters">
                                     <label class="col-12 col-form-label" for="prod_code">Codice Prodotto</label>
                                     <div class="col-12">
@@ -220,7 +111,6 @@
                                                 type="text"
                                             />
                                         </div>
-                                        <span class="form-text text-muted" id="prod_codeHelpBlock">Codice assegnato al prodotto</span>
                                     </div>
                                 </div>
 
@@ -243,11 +133,10 @@
                                                 type="text"
                                             />
                                         </div>
-                                        <span class="form-text text-muted" id="prod_variantHelpBlock">Variante specifica del prodotto selezionato</span>
                                     </div>
                                 </div>
 
-                                <div class="form-group col-8 no-gutters">
+                                <div class="form-group col-6 no-gutters">
                                     <label class="col-12 col-form-label" for="prod_name">Descrizione Prodotto</label>
                                     <div class="col-12">
                                         <div class="input-group">
@@ -264,7 +153,6 @@
                                                 type="text"
                                             />
                                         </div>
-                                        <span class="form-text text-muted" id="prod_nameHelpBlock">Descrizione del prodotto selezionato</span>
                                     </div>
                                 </div>
                             </div>
@@ -284,21 +172,7 @@
                         <div class="row">
                             <div class="row col-12">
                                 <div class="form-group col no-gutters">
-                                    <label class="col-12 col-form-label" for="date_due">Data Scadenza [mm/dd/yyyy]</label>
-                                    <div class="col-12">
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <div class="input-group-text">
-                                                    <i class="fa fa-calendar"></i>
-                                                </div>
-                                            </div>
-                                            <input aria-describedby="date_dueHelpBlock" class="form-control" id="date_due" name="date_due" required="required" type="date" />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="form-group col no-gutters">
-                                    <label class="col-12 col-form-label" for="date_creation">Data Creazione [mm/dd/yyyy]</label>
+                                    <label class="col-12 col-form-label" for="dateDuePicker">Data Scadenza [mm/dd/yyyy]</label>
                                     <div class="col-12">
                                         <div class="input-group">
                                             <div class="input-group-prepend">
@@ -307,10 +181,31 @@
                                                 </div>
                                             </div>
                                             <input
-                                                aria-describedby="date_creationHelpBlock"
+                                                aria-describedby="dateDuePickerHelpBlock"
                                                 class="form-control"
-                                                id="date_creation"
-                                                name="date_creation"
+                                                id="dateDuePicker"
+                                                name="dateDuePicker"
+                                                required="required"
+                                                type="date"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col no-gutters">
+                                    <label class="col-12 col-form-label" for="dateCreationInput">Data Creazione [mm/dd/yyyy]</label>
+                                    <div class="col-12">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    <i class="fa fa-calendar"></i>
+                                                </div>
+                                            </div>
+                                            <input
+                                                aria-describedby="dateCreationInputHelpBlock"
+                                                class="form-control"
+                                                id="dateCreationInput"
+                                                name="dateCreationInput"
                                                 readonly
                                                 required="required"
                                                 type="text"
@@ -377,14 +272,14 @@
 
                         <div class="row col-12 justify-content-center" style="padding-top: 10px">
                             <div class="col-10 form-group row col-10 margin-10">
-                                <button class="styled-btn btn-blue" id="btn-update" name="update" type="submit">Modifica</button>
+                                <button class="styled-btn btn-blue" id="btn-update" name="update" type="submit" title="Aggiorna richiesta">Modifica</button>
                             </div>
                             <div class="row col-12 popup-buttons-wrapper justify-content-evenly margin-10">
-                                <button class="col-5 styled-btn btn-red" id="btn-close" name="close" type="submit">
-                                    <img alt="Close" src="../../assets/images/closed_icon.png" />
+                                <button class="col-5 styled-btn btn-red" id="btn-close" name="close" type="submit" title="Chiudi richiesta">
+                                    <img alt="Close" src="../../assets/images/requestClosed.png" />
                                 </button>
 
-                                <button class="col-5 styled-btn btn-yellow" id="btn-recount" name="recount" type="submit">
+                                <button class="col-5 styled-btn btn-yellow" id="btn-recount" name="recount" type="submit" title="Riconta">
                                     <img alt="Recount" src="../../assets/images/recountRequest_icon.png" />
                                 </button>
                             </div>
